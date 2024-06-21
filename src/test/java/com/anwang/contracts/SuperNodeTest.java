@@ -142,6 +142,13 @@ public class SuperNodeTest {
     }
 
     @Test
+    public void testExistID() throws Exception {
+        Boolean flag = safe4.supernode.existID(BigInteger.ONE);
+        System.out.println(flag);
+        Assertions.assertTrue(flag);
+    }
+
+    @Test
     public void testExistName() throws Exception {
         Boolean flag = safe4.supernode.existName("sn-5");
         System.out.println(flag);

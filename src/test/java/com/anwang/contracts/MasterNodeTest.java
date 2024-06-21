@@ -134,6 +134,13 @@ public class MasterNodeTest {
     }
 
     @Test
+    public void testExistID() throws Exception {
+        Boolean flag = safe4.masternode.existID(BigInteger.ONE);
+        System.out.println(flag);
+        Assertions.assertTrue(flag);
+    }
+
+    @Test
     public void testExistEnode() throws Exception {
         String enode = "enode://f687439863fce1ff70dc40bec0fe5ea1ad0833a2672c29590b0aa9001e1488013e42e8adc96a6a9312ed1426d6bea47026d057df57a5856970b207afac771f09@10.0.0.3:30303";
         Boolean flag = safe4.masternode.existEnode(enode);
