@@ -26,7 +26,7 @@ public class SysPropertyTest {
     @Test
     public void testApplyUpdate() throws Exception {
         // sn: 0x556b5868919008607ef24f4eb2bde6feda3e42f2, privateKey: 0x73fc4be2c4a1d44f41c09ef138717a7994726461c9c256f25b36c3f3b570d9dd
-        String txid = safe4.sysproperty.applyUpdate("0x73fc4be2c4a1d44f41c09ef138717a7994726461c9c256f25b36c3f3b570d9dd", "block_space", BigInteger.valueOf(1), "this is a test");
+        String txid = safe4.sysproperty.applyUpdate("0x73fc4be2c4a1d44f41c09ef138717a7994726461c9c256f25b36c3f3b570d9dd", "block_space", BigInteger.valueOf(2), "this is a test");
         System.out.println(txid);
         Assertions.assertTrue((txid.length() > 0));
     }

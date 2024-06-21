@@ -134,7 +134,7 @@ public class SNVoteTest {
     }
 
     @Test
-    public void testGetTotalNum() throws Exception {
+    public void testGetTotalVoteNum() throws Exception {
         BigInteger voteNum = safe4.snvote.getTotalVoteNum(new Address("0x4d244c17d2a957f4a150408f8f4d19382ae8e2c8"));
         System.out.println(voteNum);
         Assertions.assertTrue(voteNum.compareTo(BigInteger.ZERO) > 0);
