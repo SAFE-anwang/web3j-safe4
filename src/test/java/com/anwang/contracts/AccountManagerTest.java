@@ -53,15 +53,14 @@ public class AccountManagerTest {
 
     @Test
     public void testTransfer() throws Exception {
-        String txid = safe4.account.transfer("0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010", new Address("0xd6ebea69f2d81b9ca259c0b6ed3d9ad6aa206ef1"), new BigInteger("100000000000000000"), BigInteger.ONE);
+        String txid = safe4.account.transfer("0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010", new Address("0x64ae0d18085d0c3ec202a208e96bc2fc24e4a7e8"), new BigInteger("100000000000000000"), BigInteger.ONE);
         System.out.println(txid);
         Assertions.assertTrue((txid.length() > 0));
     }
 
     @Test
     public void testAddLockDay() throws Exception {
-        // 0xd6ebea69f2d81b9ca259c0b6ed3d9ad6aa206ef1: privateKey: 0x2bbcb53447c2f785a871af25f828e6ec2b21c2c8b3b809153b9062f0a46dcfff
-        String txid = safe4.account.addLockDay("0x2bbcb53447c2f785a871af25f828e6ec2b21c2c8b3b809153b9062f0a46dcfff", BigInteger.valueOf(12), BigInteger.ONE);
+        String txid = safe4.account.addLockDay("0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010", BigInteger.valueOf(12), BigInteger.ONE);
         System.out.println(txid);
         Assertions.assertTrue((txid.length() > 0));
     }
