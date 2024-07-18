@@ -1,17 +1,11 @@
 package com.anwang.types.proposal;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 import org.web3j.abi.datatypes.Address;
 import org.web3j.abi.datatypes.StaticStruct;
 import org.web3j.abi.datatypes.generated.Uint256;
 
 import java.math.BigInteger;
 
-@Getter
-@Setter
-@ToString
 public class ProposalVoteInfo extends StaticStruct {
     private Address voter;
     private BigInteger voteResult;
@@ -31,5 +25,29 @@ public class ProposalVoteInfo extends StaticStruct {
         super(voter, voteResult);
         this.voter = voter;
         this.voteResult = voteResult.getValue();
+    }
+
+    public Address getVoter() {
+        return voter;
+    }
+
+    public void setVoter(Address voter) {
+        this.voter = voter;
+    }
+
+    public BigInteger getVoteResult() {
+        return voteResult;
+    }
+
+    public void setVoteResult(BigInteger voteResult) {
+        this.voteResult = voteResult;
+    }
+
+    @Override
+    public String toString() {
+        return "ProposalVoteInfo{" +
+                "voter=" + voter +
+                ", voteResult=" + voteResult +
+                '}';
     }
 }

@@ -1,16 +1,10 @@
 package com.anwang.types.accountmanager;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 import org.web3j.abi.datatypes.StaticStruct;
 import org.web3j.abi.datatypes.generated.Uint256;
 
 import java.math.BigInteger;
 
-@Getter
-@Setter
-@ToString
 public class AccountAmountInfo extends StaticStruct {
     private BigInteger amount;
     private BigInteger num;
@@ -30,5 +24,29 @@ public class AccountAmountInfo extends StaticStruct {
         super(amount, num);
         this.amount = amount.getValue();
         this.num = num.getValue();
+    }
+
+    public BigInteger getAmount() {
+        return amount;
+    }
+
+    public void setAmount(BigInteger amount) {
+        this.amount = amount;
+    }
+
+    public BigInteger getNum() {
+        return num;
+    }
+
+    public void setNum(BigInteger num) {
+        this.num = num;
+    }
+
+    @Override
+    public String toString() {
+        return "AccountAmountInfo{" +
+                "amount=" + amount +
+                ", num=" + num +
+                '}';
     }
 }

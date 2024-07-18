@@ -1,17 +1,11 @@
 package com.anwang.types.accountmanager;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 import org.web3j.abi.datatypes.Address;
 import org.web3j.abi.datatypes.StaticStruct;
 import org.web3j.abi.datatypes.generated.Uint256;
 
 import java.math.BigInteger;
 
-@Getter
-@Setter
-@ToString
 public class AccountRecord extends StaticStruct {
     private BigInteger id;
     private Address addr;
@@ -47,5 +41,65 @@ public class AccountRecord extends StaticStruct {
         this.lockDay = lockDay.getValue();
         this.startHeight = startHeight.getValue();
         this.unlockHeight = unlockHeight.getValue();
+    }
+
+    public BigInteger getId() {
+        return id;
+    }
+
+    public void setId(BigInteger id) {
+        this.id = id;
+    }
+
+    public Address getAddr() {
+        return addr;
+    }
+
+    public void setAddr(Address addr) {
+        this.addr = addr;
+    }
+
+    public BigInteger getAmount() {
+        return amount;
+    }
+
+    public void setAmount(BigInteger amount) {
+        this.amount = amount;
+    }
+
+    public BigInteger getLockDay() {
+        return lockDay;
+    }
+
+    public void setLockDay(BigInteger lockDay) {
+        this.lockDay = lockDay;
+    }
+
+    public BigInteger getStartHeight() {
+        return startHeight;
+    }
+
+    public void setStartHeight(BigInteger startHeight) {
+        this.startHeight = startHeight;
+    }
+
+    public BigInteger getUnlockHeight() {
+        return unlockHeight;
+    }
+
+    public void setUnlockHeight(BigInteger unlockHeight) {
+        this.unlockHeight = unlockHeight;
+    }
+
+    @Override
+    public String toString() {
+        return "AccountRecord{" +
+                "id=" + id +
+                ", addr=" + addr +
+                ", amount=" + amount +
+                ", lockDay=" + lockDay +
+                ", startHeight=" + startHeight +
+                ", unlockHeight=" + unlockHeight +
+                '}';
     }
 }

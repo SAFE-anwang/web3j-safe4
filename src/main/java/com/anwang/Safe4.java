@@ -4,7 +4,6 @@ import com.anwang.contracts.*;
 import lombok.Getter;
 import org.web3j.protocol.Web3j;
 
-@Getter
 public class Safe4 {
     public final AccountManager account;
     public final SysProperty sysproperty;

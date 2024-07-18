@@ -1,8 +1,5 @@
 package com.anwang.types.masternode;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 import org.web3j.abi.datatypes.*;
 import org.web3j.abi.datatypes.generated.Uint256;
 import org.web3j.abi.datatypes.reflection.Parameterized;
@@ -11,9 +8,6 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@Setter
-@ToString
 public class MasterNodeInfo extends DynamicStruct {
     private BigInteger id;
     private Address addr;
@@ -95,5 +89,119 @@ public class MasterNodeInfo extends DynamicStruct {
         this.lastRewardHeight = lastRewardHeight.getValue();
         this.createHeight = createHeight.getValue();
         this.updateHeight = updateHeight.getValue();
+    }
+
+    public BigInteger getId() {
+        return id;
+    }
+
+    public void setId(BigInteger id) {
+        this.id = id;
+    }
+
+    public Address getAddr() {
+        return addr;
+    }
+
+    public void setAddr(Address addr) {
+        this.addr = addr;
+    }
+
+    public Address getCreator() {
+        return creator;
+    }
+
+    public void setCreator(Address creator) {
+        this.creator = creator;
+    }
+
+    public String getEnode() {
+        return enode;
+    }
+
+    public void setEnode(String enode) {
+        this.enode = enode;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Boolean getOfficial() {
+        return isOfficial;
+    }
+
+    public void setOfficial(Boolean official) {
+        isOfficial = official;
+    }
+
+    public BigInteger getState() {
+        return state;
+    }
+
+    public void setState(BigInteger state) {
+        this.state = state;
+    }
+
+    public List<MasterNodeMemberInfo> getFounders() {
+        return founders;
+    }
+
+    public void setFounders(List<MasterNodeMemberInfo> founders) {
+        this.founders = founders;
+    }
+
+    public MasterNodeIncentivePlan getIncentivePlan() {
+        return incentivePlan;
+    }
+
+    public void setIncentivePlan(MasterNodeIncentivePlan incentivePlan) {
+        this.incentivePlan = incentivePlan;
+    }
+
+    public BigInteger getLastRewardHeight() {
+        return lastRewardHeight;
+    }
+
+    public void setLastRewardHeight(BigInteger lastRewardHeight) {
+        this.lastRewardHeight = lastRewardHeight;
+    }
+
+    public BigInteger getCreateHeight() {
+        return createHeight;
+    }
+
+    public void setCreateHeight(BigInteger createHeight) {
+        this.createHeight = createHeight;
+    }
+
+    public BigInteger getUpdateHeight() {
+        return updateHeight;
+    }
+
+    public void setUpdateHeight(BigInteger updateHeight) {
+        this.updateHeight = updateHeight;
+    }
+
+    @Override
+    public String toString() {
+        return "MasterNodeInfo{" +
+                "id=" + id +
+                ", addr=" + addr +
+                ", creator=" + creator +
+                ", enode='" + enode + '\'' +
+                ", description='" + description + '\'' +
+                ", isOfficial=" + isOfficial +
+                ", state=" + state +
+                ", founders=" + founders +
+                ", incentivePlan=" + incentivePlan +
+                ", lastRewardHeight=" + lastRewardHeight +
+                ", createHeight=" + createHeight +
+                ", updateHeight=" + updateHeight +
+                '}';
     }
 }

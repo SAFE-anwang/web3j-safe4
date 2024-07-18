@@ -1,8 +1,5 @@
 package com.anwang.types.proposal;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 import org.web3j.abi.datatypes.Address;
 import org.web3j.abi.datatypes.DynamicStruct;
 import org.web3j.abi.datatypes.Utf8String;
@@ -10,9 +7,6 @@ import org.web3j.abi.datatypes.generated.Uint256;
 
 import java.math.BigInteger;
 
-@Getter
-@Setter
-@ToString
 public class ProposalInfo extends DynamicStruct {
     private BigInteger id;
     private Address creator;
@@ -78,5 +72,110 @@ public class ProposalInfo extends DynamicStruct {
         this.state = state.getValue();
         this.createHeight = createHeight.getValue();
         this.updateHeight = updateHeight.getValue();
+    }
+
+    public BigInteger getId() {
+        return id;
+    }
+
+    public void setId(BigInteger id) {
+        this.id = id;
+    }
+
+    public Address getCreator() {
+        return creator;
+    }
+
+    public void setCreator(Address creator) {
+        this.creator = creator;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public BigInteger getPayAmount() {
+        return payAmount;
+    }
+
+    public void setPayAmount(BigInteger payAmount) {
+        this.payAmount = payAmount;
+    }
+
+    public BigInteger getPayTimes() {
+        return payTimes;
+    }
+
+    public void setPayTimes(BigInteger payTimes) {
+        this.payTimes = payTimes;
+    }
+
+    public BigInteger getStartPayTime() {
+        return startPayTime;
+    }
+
+    public void setStartPayTime(BigInteger startPayTime) {
+        this.startPayTime = startPayTime;
+    }
+
+    public BigInteger getEndPayTime() {
+        return endPayTime;
+    }
+
+    public void setEndPayTime(BigInteger endPayTime) {
+        this.endPayTime = endPayTime;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public BigInteger getState() {
+        return state;
+    }
+
+    public void setState(BigInteger state) {
+        this.state = state;
+    }
+
+    public BigInteger getCreateHeight() {
+        return createHeight;
+    }
+
+    public void setCreateHeight(BigInteger createHeight) {
+        this.createHeight = createHeight;
+    }
+
+    public BigInteger getUpdateHeight() {
+        return updateHeight;
+    }
+
+    public void setUpdateHeight(BigInteger updateHeight) {
+        this.updateHeight = updateHeight;
+    }
+
+    @Override
+    public String toString() {
+        return "ProposalInfo{" +
+                "id=" + id +
+                ", creator=" + creator +
+                ", title='" + title + '\'' +
+                ", payAmount=" + payAmount +
+                ", payTimes=" + payTimes +
+                ", startPayTime=" + startPayTime +
+                ", endPayTime=" + endPayTime +
+                ", description='" + description + '\'' +
+                ", state=" + state +
+                ", createHeight=" + createHeight +
+                ", updateHeight=" + updateHeight +
+                '}';
     }
 }

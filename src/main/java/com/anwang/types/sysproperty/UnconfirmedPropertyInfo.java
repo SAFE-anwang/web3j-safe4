@@ -1,8 +1,5 @@
 package com.anwang.types.sysproperty;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 import org.web3j.abi.Utils;
 import org.web3j.abi.datatypes.Address;
 import org.web3j.abi.datatypes.DynamicArray;
@@ -16,9 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Getter
-@Setter
-@ToString
 public class UnconfirmedPropertyInfo extends DynamicStruct {
     private String name;
     private BigInteger val;
@@ -70,5 +64,75 @@ public class UnconfirmedPropertyInfo extends DynamicStruct {
         this.voteResults = voteResults.getValue().stream().map(v -> v.getValue()).collect(Collectors.toList());
         this.reason = reason.getValue();
         this.applyHeight = applyHeight.getValue();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public BigInteger getV() {
+        return val;
+    }
+
+    // can't be setVal, otherwise panic
+    public void setV(BigInteger val) {
+        this.val = val;
+    }
+
+    public Address getApplicant() {
+        return applicant;
+    }
+
+    public void setApplicant(Address applicant) {
+        this.applicant = applicant;
+    }
+
+    public List<Address> getVoters() {
+        return voters;
+    }
+
+    public void setVoters(List<Address> voters) {
+        this.voters = voters;
+    }
+
+    public List<BigInteger> getVoteResults() {
+        return voteResults;
+    }
+
+    public void setVoteResults(List<BigInteger> voteResults) {
+        this.voteResults = voteResults;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
+
+    public BigInteger getApplyHeight() {
+        return applyHeight;
+    }
+
+    public void setApplyHeight(BigInteger applyHeight) {
+        this.applyHeight = applyHeight;
+    }
+
+    @Override
+    public String toString() {
+        return "UnconfirmedPropertyInfo{" +
+                "name='" + name + '\'' +
+                ", val=" + val +
+                ", applicant=" + applicant +
+                ", voters=" + voters +
+                ", voteResults=" + voteResults +
+                ", reason='" + reason + '\'' +
+                ", applyHeight=" + applyHeight +
+                '}';
     }
 }

@@ -1,8 +1,5 @@
 package com.anwang.types.snvote;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 import org.web3j.abi.Utils;
 import org.web3j.abi.datatypes.Address;
 import org.web3j.abi.datatypes.DynamicArray;
@@ -15,9 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Getter
-@Setter
-@ToString
 public class SNVoteRetInfo extends DynamicStruct {
     private List<Address> addrs;
     private List<BigInteger> voteNums;
@@ -39,5 +33,29 @@ public class SNVoteRetInfo extends DynamicStruct {
         super(addrs, voteNums);
         this.addrs = addrs.getValue();
         this.voteNums = voteNums.getValue().stream().map(v -> v.getValue()).collect(Collectors.toList());
+    }
+
+    public List<Address> getAddrs() {
+        return addrs;
+    }
+
+    public void setAddrs(List<Address> addrs) {
+        this.addrs = addrs;
+    }
+
+    public List<BigInteger> getVoteNums() {
+        return voteNums;
+    }
+
+    public void setVoteNums(List<BigInteger> voteNums) {
+        this.voteNums = voteNums;
+    }
+
+    @Override
+    public String toString() {
+        return "SNVoteRetInfo{" +
+                "addrs=" + addrs +
+                ", voteNums=" + voteNums +
+                '}';
     }
 }

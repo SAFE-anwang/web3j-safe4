@@ -1,17 +1,11 @@
 package com.anwang.types.masternode;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 import org.web3j.abi.datatypes.Address;
 import org.web3j.abi.datatypes.StaticStruct;
 import org.web3j.abi.datatypes.generated.Uint256;
 
 import java.math.BigInteger;
 
-@Getter
-@Setter
-@ToString
 public class MasterNodeMemberInfo extends StaticStruct {
     private BigInteger lockID;
     private Address addr;
@@ -39,5 +33,47 @@ public class MasterNodeMemberInfo extends StaticStruct {
         this.addr = addr;
         this.amount = amount.getValue();
         this.height = height.getValue();
+    }
+
+    public BigInteger getLockID() {
+        return lockID;
+    }
+
+    public void setLockID(BigInteger lockID) {
+        this.lockID = lockID;
+    }
+
+    public Address getAddr() {
+        return addr;
+    }
+
+    public void setAddr(Address addr) {
+        this.addr = addr;
+    }
+
+    public BigInteger getAmount() {
+        return amount;
+    }
+
+    public void setAmount(BigInteger amount) {
+        this.amount = amount;
+    }
+
+    public BigInteger getHeight() {
+        return height;
+    }
+
+    public void setHeight(BigInteger height) {
+        this.height = height;
+    }
+
+    @Override
+    public String toString() {
+        return "MasterNodeMemberInfo{" +
+                "lockID=" + lockID +
+                ", addr=" + addr +
+                ", amount=" + amount +
+                ", height=" + height +
+                '}';
     }
 }

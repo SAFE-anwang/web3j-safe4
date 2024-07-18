@@ -1,17 +1,11 @@
 package com.anwang.types.sysproperty;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 import org.web3j.abi.datatypes.DynamicStruct;
 import org.web3j.abi.datatypes.Utf8String;
 import org.web3j.abi.datatypes.generated.Uint256;
 
 import java.math.BigInteger;
 
-@Getter
-@Setter
-@ToString
 public class PropertyInfo extends DynamicStruct {
     private String name;
     private BigInteger val;
@@ -43,5 +37,57 @@ public class PropertyInfo extends DynamicStruct {
         this.description = description.getValue();
         this.createHeight = createHeight.getValue();
         this.updateHeight = updateHeight.getValue();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public BigInteger getV() {
+        return val;
+    }
+
+    // can't be setVal, otherwise panic
+    public void setV(BigInteger val) {
+        this.val = val;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public BigInteger getCreateHeight() {
+        return createHeight;
+    }
+
+    public void setCreateHeight(BigInteger createHeight) {
+        this.createHeight = createHeight;
+    }
+
+    public BigInteger getUpdateHeight() {
+        return updateHeight;
+    }
+
+    public void setUpdateHeight(BigInteger updateHeight) {
+        this.updateHeight = updateHeight;
+    }
+
+    @Override
+    public String toString() {
+        return "PropertyInfo{" +
+                "name='" + name + '\'' +
+                ", val=" + val +
+                ", description='" + description + '\'' +
+                ", createHeight=" + createHeight +
+                ", updateHeight=" + updateHeight +
+                '}';
     }
 }
