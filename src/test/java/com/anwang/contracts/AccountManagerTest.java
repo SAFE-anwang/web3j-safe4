@@ -35,6 +35,25 @@ public class AccountManagerTest {
     }
 
     @Test
+    public void testBatchDeposit4One() throws Exception {
+        // 0xa5cec2b8cda30da3f3170b4505cb44226b6c9dd2: privateKey: 0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010
+        String txid = safe4.account.batchDeposit4One("0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010", new BigInteger("2000000000000000000"), new Address("0xa5cec2b8cda30da3f3170b4505cb44226b6c9dd2"), BigInteger.valueOf(3), BigInteger.ONE, BigInteger.ONE);
+        System.out.println(txid);
+        Assertions.assertTrue((txid.length() > 0));
+    }
+
+    @Test
+    public void testBatchDeposit4Multi() throws Exception {
+        // 0xa5cec2b8cda30da3f3170b4505cb44226b6c9dd2: privateKey: 0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010
+        List<Address> addrs = new ArrayList<>();
+        addrs.add(new Address("0xa5cec2b8cda30da3f3170b4505cb44226b6c9dd2"));
+        addrs.add(new Address("0x64ae0d18085d0c3ec202a208e96bc2fc24e4a7e8"));
+        String txid = safe4.account.batchDeposit4Multi("0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010", new BigInteger("2000000000000000000"), addrs, BigInteger.valueOf(2), BigInteger.ONE, BigInteger.ONE);
+        System.out.println(txid);
+        Assertions.assertTrue((txid.length() > 0));
+    }
+
+    @Test
     public void testWithdraw() throws Exception {
         String txid = safe4.account.withdraw("0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010");
         System.out.println(txid);

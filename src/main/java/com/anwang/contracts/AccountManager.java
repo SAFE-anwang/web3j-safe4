@@ -6,10 +6,7 @@ import com.anwang.types.accountmanager.RecordUseInfo;
 import com.anwang.utils.Safe4Contract;
 import org.web3j.abi.TypeReference;
 import org.web3j.abi.Utils;
-import org.web3j.abi.datatypes.Address;
-import org.web3j.abi.datatypes.DynamicArray;
-import org.web3j.abi.datatypes.Function;
-import org.web3j.abi.datatypes.Type;
+import org.web3j.abi.datatypes.*;
 import org.web3j.abi.datatypes.generated.Uint256;
 import org.web3j.protocol.Web3j;
 
@@ -27,6 +24,16 @@ public class AccountManager extends AbstractContract {
 
     public String deposit(String privateKey, BigInteger value, Address to, BigInteger lockDay) throws Exception {
         Function function = new Function("deposit", Arrays.asList(to, new Uint256(lockDay)), Collections.singletonList(new TypeReference<Uint256>() {}));
+        return call(privateKey, value, function);
+    }
+
+    public String batchDeposit4One(String privateKey, BigInteger value, Address to, BigInteger times, BigInteger spaceDay, BigInteger startDay) throws Exception {
+        Function function = new Function("batchDeposit4One", Arrays.asList(to, new Uint256(times), new Uint256(spaceDay), new Uint(startDay)), Collections.singletonList(new TypeReference<DynamicArray<Uint256>>() {}));
+        return call(privateKey, value, function);
+    }
+
+    public String batchDeposit4Multi(String privateKey, BigInteger value, List<Address> addrs, BigInteger times, BigInteger spaceDay, BigInteger startDay) throws Exception {
+        Function function = new Function("batchDeposit4Multi", Arrays.asList(new DynamicArray<>(Address.class, addrs), new Uint256(times), new Uint256(spaceDay), new Uint256(startDay)), Collections.singletonList(new TypeReference<DynamicArray<Uint256>>() {}));
         return call(privateKey, value, function);
     }
 
