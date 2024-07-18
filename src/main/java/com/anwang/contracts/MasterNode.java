@@ -97,6 +97,18 @@ public class MasterNode {
         return ((DynamicArray<Address>) someTypes.get(0)).getValue();
     }
 
+    public BigInteger getAddrNum4Creator(Address creator) throws Exception {
+        Function function = new Function("getAddrNum4Creator", Collections.singletonList(creator), Collections.singletonList(new TypeReference<Uint256>() {}));
+        List<Type> someTypes = storageContract.query(function);
+        return ((Uint256) someTypes.get(0)).getValue();
+    }
+
+    public List<Address> getAddrs4Creator(Address creator, BigInteger start, BigInteger count) throws Exception {
+        Function function = new Function("getAddrs4Creator", Arrays.asList(creator, new Uint256(start), new Uint256(count)), Collections.singletonList(new TypeReference<DynamicArray<Address>>() {}));
+        List<Type> someTypes = storageContract.query(function);
+        return ((DynamicArray<Address>) someTypes.get(0)).getValue();
+    }
+
     public List<Address> getOfficials() throws Exception {
         Function function = new Function("getOfficials", Collections.emptyList(), Collections.singletonList(new TypeReference<DynamicArray<Address>>() {}));
         List<Type> someTypes = storageContract.query(function);

@@ -120,6 +120,22 @@ public class MasterNodeTest {
     }
 
     @Test
+    public void testGetAddrNum4Creator() throws Exception {
+        Address creator = new Address("0x69a6d725f772e44f11bd6d21ec5a92fdc7eab652");
+        BigInteger num = safe4.masternode.getAddrNum4Creator(creator);
+        System.out.println(num);
+        Assertions.assertTrue(num.compareTo(BigInteger.ZERO) > 0);
+    }
+
+    @Test
+    public void testGetAddrs4Creator() throws Exception {
+        Address creator = new Address("0x69a6d725f772e44f11bd6d21ec5a92fdc7eab652");
+        List<Address> addrs = safe4.masternode.getAddrs4Creator(creator, BigInteger.ZERO, BigInteger.valueOf(100));
+        System.out.println(addrs);
+        Assertions.assertTrue(addrs.size() > 0);
+    }
+
+    @Test
     public void testGetOfficials() throws Exception {
         List<Address> addrs = safe4.masternode.getOfficials();
         System.out.println(addrs);

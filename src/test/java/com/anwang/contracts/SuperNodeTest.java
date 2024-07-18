@@ -121,6 +121,22 @@ public class SuperNodeTest {
     }
 
     @Test
+    public void testGetAddrNum4Creator() throws Exception {
+        Address creator = new Address("0xa5cec2b8cda30da3f3170b4505cb44226b6c9dd2");
+        BigInteger num = safe4.supernode.getAddrNum4Creator(creator);
+        System.out.println(num);
+        Assertions.assertTrue(num.compareTo(BigInteger.ZERO) > 0);
+    }
+
+    @Test
+    public void testGetAddrs4Creator() throws Exception {
+        Address creator = new Address("0xa5cec2b8cda30da3f3170b4505cb44226b6c9dd2");
+        List<Address> addrs = safe4.supernode.getAddrs4Creator(creator, BigInteger.ZERO, BigInteger.valueOf(100));
+        System.out.println(addrs);
+        Assertions.assertTrue(addrs.size() > 0);
+    }
+
+    @Test
     public void testGetTops() throws Exception {
         List<Address> addrs = safe4.supernode.getTops();
         System.out.println(addrs);
