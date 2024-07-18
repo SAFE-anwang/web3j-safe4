@@ -167,4 +167,32 @@ public class SNVoteTest {
         System.out.println(ids);
         Assertions.assertTrue(ids.size() > 0);
     }
+
+    @Test
+    public void testGetAllAmount() throws Exception {
+        BigInteger allAmount = safe4.snvote.getAllAmount();
+        System.out.println(allAmount);
+        Assertions.assertTrue(allAmount.compareTo(BigInteger.ZERO) > 0);
+    }
+
+    @Test
+    public void testGetAllVoteNum() throws Exception {
+        BigInteger allVoteNum = safe4.snvote.getAllVoteNum();
+        System.out.println(allVoteNum);
+        Assertions.assertTrue(allVoteNum.compareTo(BigInteger.ZERO) > 0);
+    }
+
+    @Test
+    public void testGetAllProxiedAmount() throws Exception {
+        BigInteger allProxiedAmount = safe4.snvote.getAllProxiedAmount();
+        System.out.println(allProxiedAmount);
+        Assertions.assertTrue(allProxiedAmount.compareTo(BigInteger.ZERO) > 0);
+    }
+
+    @Test
+    public void testGetAllProxiedVoteNum() throws Exception {
+        BigInteger allProxiedVoteNum = safe4.snvote.getAllProxiedVoteNum();
+        System.out.println(allProxiedVoteNum);
+        Assertions.assertTrue(allProxiedVoteNum.compareTo(BigInteger.ZERO) > 0);
+    }
 }

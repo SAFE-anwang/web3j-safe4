@@ -147,4 +147,28 @@ public class SNVote extends AbstractContract {
         List<Type> someTypes = query(function);
         return ((DynamicArray<Uint256>) someTypes.get(0)).getValue().stream().map(v -> v.getValue()).collect(Collectors.toList());
     }
+
+    public BigInteger getAllAmount() throws Exception {
+        Function function = new Function("getAllAmount", Collections.emptyList(), Collections.singletonList(new TypeReference<Uint256>() {}));
+        List<Type> someTypes = query(function);
+        return ((Uint256) someTypes.get(0)).getValue();
+    }
+
+    public BigInteger getAllVoteNum() throws Exception {
+        Function function = new Function("getAllVoteNum", Collections.emptyList(), Collections.singletonList(new TypeReference<Uint256>() {}));
+        List<Type> someTypes = query(function);
+        return ((Uint256) someTypes.get(0)).getValue();
+    }
+
+    public BigInteger getAllProxiedAmount() throws Exception {
+        Function function = new Function("getAllProxiedAmount", Collections.emptyList(), Collections.singletonList(new TypeReference<Uint256>() {}));
+        List<Type> someTypes = query(function);
+        return ((Uint256) someTypes.get(0)).getValue();
+    }
+
+    public BigInteger getAllProxiedVoteNum() throws Exception {
+        Function function = new Function("getAllProxiedVoteNum", Collections.emptyList(), Collections.singletonList(new TypeReference<Uint256>() {}));
+        List<Type> someTypes = query(function);
+        return ((Uint256) someTypes.get(0)).getValue();
+    }
 }
