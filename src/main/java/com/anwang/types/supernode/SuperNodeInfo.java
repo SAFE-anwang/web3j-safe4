@@ -23,22 +23,6 @@ public class SuperNodeInfo extends DynamicStruct {
     private BigInteger createHeight;
     private BigInteger updateHeight;
 
-    public SuperNodeInfo() {
-        this.id = BigInteger.ZERO;
-        this.name = "";
-        this.addr = Address.DEFAULT;
-        this.creator = Address.DEFAULT;
-        this.enode = "";
-        this.description = "";
-        this.isOfficial = false;
-        this.state = BigInteger.ZERO;
-        this.founders = new ArrayList<>();
-        this.incentivePlan = new SuperNodeIncentivePlan();
-        this.lastRewardHeight = BigInteger.ZERO;
-        this.createHeight = BigInteger.ZERO;
-        this.updateHeight = BigInteger.ZERO;
-    }
-
     public SuperNodeInfo(BigInteger id, String name, Address addr, Address creator, String enode, String description, Boolean isOfficial, BigInteger state, List<SuperNodeMemberInfo> founders, SuperNodeIncentivePlan incentivePlan, BigInteger lastRewardHeight, BigInteger createHeight, BigInteger updateHeight) {
         super(new Uint256(id),
                 new Utf8String(name),

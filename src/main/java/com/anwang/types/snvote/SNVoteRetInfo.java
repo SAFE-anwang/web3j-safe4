@@ -16,11 +16,6 @@ public class SNVoteRetInfo extends DynamicStruct {
     private List<Address> addrs;
     private List<BigInteger> voteNums;
 
-    public SNVoteRetInfo() {
-        this.addrs = new ArrayList<>();
-        this.voteNums = new ArrayList<>();
-    }
-
     public SNVoteRetInfo(List<Address> addrs, List<BigInteger> voteNums) {
         super(new DynamicArray<>(Address.class, addrs),
                 new DynamicArray<>(Uint256.class, Utils.typeMap(voteNums, Uint256.class)));

@@ -22,16 +22,6 @@ public class UnconfirmedPropertyInfo extends DynamicStruct {
     private String reason;
     private BigInteger applyHeight;
 
-    public UnconfirmedPropertyInfo() {
-        this.name = "";
-        this.val = BigInteger.ZERO;
-        this.applicant = Address.DEFAULT;
-        this.voters = new ArrayList<>();
-        this.voteResults = new ArrayList<>();
-        this.reason = "";
-        this.applyHeight = BigInteger.ZERO;
-    }
-
     public UnconfirmedPropertyInfo(String name, BigInteger val, Address applicant, List<Address> voters, List<BigInteger> voteResults, String reason, BigInteger applyHeight) {
         super(new Utf8String(name),
                 new Uint256(val),

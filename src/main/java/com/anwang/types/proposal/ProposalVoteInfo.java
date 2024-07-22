@@ -10,11 +10,6 @@ public class ProposalVoteInfo extends StaticStruct {
     private Address voter;
     private BigInteger voteResult;
 
-    public ProposalVoteInfo() {
-        this.voter = Address.DEFAULT;
-        this.voteResult = BigInteger.ZERO;
-    }
-
     public ProposalVoteInfo(Address voter, BigInteger voteResult) {
         super(voter, new Uint256(voteResult));
         this.voter = voter;

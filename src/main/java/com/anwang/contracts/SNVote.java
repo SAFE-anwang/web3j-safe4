@@ -62,10 +62,7 @@ public class SNVote extends AbstractContract {
         Function function = new Function("getSNs4Voter", Arrays.asList(voterAddr, new Uint256(start), new Uint256(count)), Arrays.asList(new TypeReference<DynamicArray<Address>>() {
         }, new TypeReference<DynamicArray<Uint256>>() {}));
         List<Type> someTypes = query(function);
-        SNVoteRetInfo info = new SNVoteRetInfo();
-        info.setAddrs(((DynamicArray<Address>) someTypes.get(0)).getValue());
-        info.setVoteNums(((DynamicArray<Uint256>) someTypes.get(1)).getValue().stream().map(v -> v.getValue()).collect(Collectors.toList()));
-        return info;
+        return new SNVoteRetInfo(((DynamicArray<Address>) someTypes.get(0)).getValue(), ((DynamicArray<Uint256>) someTypes.get(1)).getValue().stream().map(v -> v.getValue()).collect(Collectors.toList()));
     }
 
     public BigInteger getProxyNum4Voter(Address voterAddr) throws Exception {
@@ -78,10 +75,7 @@ public class SNVote extends AbstractContract {
         Function function = new Function("getProxies4Voter", Arrays.asList(voterAddr, new Uint256(start), new Uint256(count)), Arrays.asList(new TypeReference<DynamicArray<Address>>() {
         }, new TypeReference<DynamicArray<Uint256>>() {}));
         List<Type> someTypes = query(function);
-        SNVoteRetInfo info = new SNVoteRetInfo();
-        info.setAddrs(((DynamicArray<Address>) someTypes.get(0)).getValue());
-        info.setVoteNums(((DynamicArray<Uint256>) someTypes.get(1)).getValue().stream().map(v -> v.getValue()).collect(Collectors.toList()));
-        return info;
+        return new SNVoteRetInfo(((DynamicArray<Address>) someTypes.get(0)).getValue(), ((DynamicArray<Uint256>) someTypes.get(1)).getValue().stream().map(v -> v.getValue()).collect(Collectors.toList()));
     }
 
     public BigInteger getVotedIDNum4Voter(Address voterAddr) throws Exception {
@@ -130,10 +124,7 @@ public class SNVote extends AbstractContract {
         Function function = new Function("getVoters", Arrays.asList(addr, new Uint256(start), new Uint256(count)), Arrays.asList(new TypeReference<DynamicArray<Address>>() {
         }, new TypeReference<DynamicArray<Uint256>>() {}));
         List<Type> someTypes = query(function);
-        SNVoteRetInfo info = new SNVoteRetInfo();
-        info.setAddrs(((DynamicArray<Address>) someTypes.get(0)).getValue());
-        info.setVoteNums(((DynamicArray<Uint256>) someTypes.get(1)).getValue().stream().map(v -> v.getValue()).collect(Collectors.toList()));
-        return info;
+        return new SNVoteRetInfo(((DynamicArray<Address>) someTypes.get(0)).getValue(), ((DynamicArray<Uint256>) someTypes.get(1)).getValue().stream().map(v -> v.getValue()).collect(Collectors.toList()));
     }
 
     public BigInteger getIDNum(Address addr) throws Exception {

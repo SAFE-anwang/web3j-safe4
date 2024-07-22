@@ -9,11 +9,6 @@ public class AccountAmountInfo extends StaticStruct {
     private BigInteger amount;
     private BigInteger num;
 
-    public AccountAmountInfo() {
-        this.amount = BigInteger.ZERO;
-        this.num = BigInteger.ZERO;
-    }
-
     public AccountAmountInfo(BigInteger amount, BigInteger num) {
         super(new Uint256(amount), new Uint256(num));
         this.amount = amount;

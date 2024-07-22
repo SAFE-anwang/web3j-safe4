@@ -14,15 +14,6 @@ public class RecordUseInfo extends StaticStruct {
     private BigInteger voteHeight;
     private BigInteger releaseHeight;
 
-    public RecordUseInfo() {
-        this.frozenAddr = Address.DEFAULT;
-        this.freezeHeight = BigInteger.ZERO;
-        this.unfreezeHeight = BigInteger.ZERO;
-        this.votedAddr = Address.DEFAULT;
-        this.voteHeight = BigInteger.ZERO;
-        this.releaseHeight = BigInteger.ZERO;
-    }
-
     public RecordUseInfo(Address frozenAddr, BigInteger freezeHeight, BigInteger unfreezeHeight, Address votedAddr, BigInteger voteHeight, BigInteger releaseHeight) {
         super(frozenAddr, new Uint256(freezeHeight), new Uint256(unfreezeHeight), votedAddr, new Uint256(voteHeight), new Uint256(releaseHeight));
         this.frozenAddr = frozenAddr;

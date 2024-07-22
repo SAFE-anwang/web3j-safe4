@@ -20,20 +20,6 @@ public class ProposalInfo extends DynamicStruct {
     private BigInteger createHeight;
     private BigInteger updateHeight;
 
-    public ProposalInfo() {
-        this.id = BigInteger.ZERO;
-        this.creator = Address.DEFAULT;
-        this.title = "";
-        this.payAmount = BigInteger.ZERO;
-        this.payTimes = BigInteger.ZERO;
-        this.startPayTime = BigInteger.ZERO;
-        this.endPayTime = BigInteger.ZERO;
-        this.description = "";
-        this.state = BigInteger.ZERO;
-        this.createHeight = BigInteger.ZERO;
-        this.updateHeight = BigInteger.ZERO;
-    }
-
     public ProposalInfo(BigInteger id, Address creator, String title, BigInteger payAmount, BigInteger payTimes, BigInteger startPayTime, BigInteger endPayTime, String description, BigInteger state, BigInteger createHeight, BigInteger updateHeight) {
         super(new Uint256(id),
                 creator,

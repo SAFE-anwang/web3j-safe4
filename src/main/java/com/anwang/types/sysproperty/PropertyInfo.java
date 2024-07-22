@@ -13,14 +13,6 @@ public class PropertyInfo extends DynamicStruct {
     private BigInteger createHeight;
     private BigInteger updateHeight;
 
-    public PropertyInfo() {
-        this.name = "";
-        this.val = BigInteger.ZERO;
-        this.description = "";
-        this.createHeight = BigInteger.ZERO;
-        this.updateHeight = BigInteger.ZERO;
-    }
-
     public PropertyInfo(String name, BigInteger val, String description, BigInteger createHeight, BigInteger updateHeight) {
         super(new Utf8String(name), new Uint256(val), new Utf8String(description), new Uint256(createHeight), new Uint256(updateHeight));
         this.name = name;

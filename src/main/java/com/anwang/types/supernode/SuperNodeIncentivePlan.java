@@ -10,12 +10,6 @@ public class SuperNodeIncentivePlan extends StaticStruct {
     private BigInteger partner;
     private BigInteger voter;
 
-    public SuperNodeIncentivePlan() {
-        this.creator = BigInteger.ZERO;
-        this.partner = BigInteger.ZERO;
-        this.voter = BigInteger.ZERO;
-    }
-
     public SuperNodeIncentivePlan(BigInteger creator, BigInteger partner, BigInteger voter) {
         super(new Uint256(creator), new Uint256(partner), new Uint256(voter));
         this.creator = creator;

@@ -12,13 +12,6 @@ public class MasterNodeMemberInfo extends StaticStruct {
     private BigInteger amount;
     private BigInteger height;
 
-    public MasterNodeMemberInfo() {
-        this.lockID = BigInteger.ZERO;
-        this.addr = Address.DEFAULT;
-        this.amount = BigInteger.ZERO;
-        this.height = BigInteger.ZERO;
-    }
-
     public MasterNodeMemberInfo(BigInteger lockID, Address addr, BigInteger amount, BigInteger height) {
         super(new Uint256(lockID), addr, new Uint256(amount), new Uint256(height));
         this.lockID = lockID;

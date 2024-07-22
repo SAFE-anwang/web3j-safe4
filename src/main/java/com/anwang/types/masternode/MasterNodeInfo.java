@@ -22,21 +22,6 @@ public class MasterNodeInfo extends DynamicStruct {
     private BigInteger createHeight;
     private BigInteger updateHeight;
 
-    public MasterNodeInfo() {
-        this.id = BigInteger.ZERO;
-        this.addr = Address.DEFAULT;
-        this.creator = Address.DEFAULT;
-        this.enode = "";
-        this.description = "";
-        this.isOfficial = false;
-        this.state = BigInteger.ZERO;
-        this.founders = new ArrayList<>();
-        this.incentivePlan = new MasterNodeIncentivePlan();
-        this.lastRewardHeight = BigInteger.ZERO;
-        this.createHeight = BigInteger.ZERO;
-        this.updateHeight = BigInteger.ZERO;
-    }
-
     public MasterNodeInfo(BigInteger id, Address addr, Address creator, String enode, String description, Boolean isOfficial, BigInteger state, List<MasterNodeMemberInfo> founders, MasterNodeIncentivePlan incentivePlan, BigInteger lastRewardHeight, BigInteger createHeight, BigInteger updateHeight) {
         super(new Uint256(id),
                 addr,

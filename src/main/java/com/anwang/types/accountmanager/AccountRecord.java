@@ -14,15 +14,6 @@ public class AccountRecord extends StaticStruct {
     private BigInteger startHeight;
     private BigInteger unlockHeight;
 
-    public AccountRecord() {
-        this.id = BigInteger.ZERO;
-        this.addr = Address.DEFAULT;
-        this.amount = BigInteger.ZERO;
-        this.lockDay = BigInteger.ZERO;
-        this.startHeight = BigInteger.ZERO;
-        this.unlockHeight = BigInteger.ZERO;
-    }
-
     public AccountRecord(BigInteger id, Address addr, BigInteger amount, BigInteger lockDay, BigInteger startHeight, BigInteger unlockHeight) {
         super(new Uint256(id), addr, new Uint256(amount), new Uint256(lockDay), new Uint256(startHeight), new Uint256(unlockHeight));
         this.id = id;
