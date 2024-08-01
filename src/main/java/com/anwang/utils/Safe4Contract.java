@@ -16,4 +16,6 @@ public class Safe4Contract {
     public static String SNVoteContractAddr = "0x0000000000000000000000000000000000001040";
 
     public static String ProposalContractAddr = "0x0000000000000000000000000000000000001070";
+
+    public static String Safe3ContractAddr = "0x0000000000000000000000000000000000001090";
 }
