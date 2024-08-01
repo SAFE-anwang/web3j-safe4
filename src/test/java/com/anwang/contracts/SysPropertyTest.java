@@ -44,14 +44,14 @@ public class SysPropertyTest {
     public void testGetInfo() throws Exception {
         PropertyInfo info = safe4.sysproperty.getInfo("block_space");
         System.out.println(info.toString());
-        Assertions.assertTrue(info.getName().length() > 0);
+        Assertions.assertTrue(info.name.length() > 0);
     }
 
     @Test
     public void testGetUnconfirmedInfo() throws Exception {
         UnconfirmedPropertyInfo info = safe4.sysproperty.getUnconfirmedInfo("block_space");
         System.out.println(info.toString());
-        Assertions.assertTrue(info.getVoters().size() > 0);
+        Assertions.assertTrue(info.voters.size() > 0);
     }
 
     @Test

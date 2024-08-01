@@ -7,12 +7,12 @@ import org.web3j.abi.datatypes.generated.Uint256;
 import java.math.BigInteger;
 
 public class AccountRecord extends StaticStruct {
-    private BigInteger id;
-    private Address addr;
-    private BigInteger amount;
-    private BigInteger lockDay;
-    private BigInteger startHeight;
-    private BigInteger unlockHeight;
+    public BigInteger id;
+    public Address addr;
+    public BigInteger amount;
+    public BigInteger lockDay;
+    public BigInteger startHeight;
+    public BigInteger unlockHeight;
 
     public AccountRecord(BigInteger id, Address addr, BigInteger amount, BigInteger lockDay, BigInteger startHeight, BigInteger unlockHeight) {
         super(new Uint256(id), addr, new Uint256(amount), new Uint256(lockDay), new Uint256(startHeight), new Uint256(unlockHeight));
@@ -32,54 +32,6 @@ public class AccountRecord extends StaticStruct {
         this.lockDay = lockDay.getValue();
         this.startHeight = startHeight.getValue();
         this.unlockHeight = unlockHeight.getValue();
-    }
-
-    public BigInteger getId() {
-        return id;
-    }
-
-    public void setId(BigInteger id) {
-        this.id = id;
-    }
-
-    public Address getAddr() {
-        return addr;
-    }
-
-    public void setAddr(Address addr) {
-        this.addr = addr;
-    }
-
-    public BigInteger getAmount() {
-        return amount;
-    }
-
-    public void setAmount(BigInteger amount) {
-        this.amount = amount;
-    }
-
-    public BigInteger getLockDay() {
-        return lockDay;
-    }
-
-    public void setLockDay(BigInteger lockDay) {
-        this.lockDay = lockDay;
-    }
-
-    public BigInteger getStartHeight() {
-        return startHeight;
-    }
-
-    public void setStartHeight(BigInteger startHeight) {
-        this.startHeight = startHeight;
-    }
-
-    public BigInteger getUnlockHeight() {
-        return unlockHeight;
-    }
-
-    public void setUnlockHeight(BigInteger unlockHeight) {
-        this.unlockHeight = unlockHeight;
     }
 
     @Override

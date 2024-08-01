@@ -88,7 +88,7 @@ public class AccountManagerTest {
     public void testGetTotalAmount() throws Exception {
         AccountAmountInfo info = safe4.account.getTotalAmount(new Address("0x64ae0d18085d0c3ec202a208e96bc2fc24e4a7e8"));
         System.out.println(info.toString());
-        Assertions.assertTrue(info.getAmount().compareTo(BigInteger.ZERO) > 0);
+        Assertions.assertTrue(info.amount.compareTo(BigInteger.ZERO) > 0);
     }
 
     @Test
@@ -102,7 +102,7 @@ public class AccountManagerTest {
     public void testGetAvailableAmount() throws Exception {
         AccountAmountInfo info = safe4.account.getAvailableAmount(new Address("0x64ae0d18085d0c3ec202a208e96bc2fc24e4a7e8"));
         System.out.println(info.toString());
-        Assertions.assertTrue(info.getAmount().compareTo(BigInteger.ZERO) > 0);
+        Assertions.assertTrue(info.amount.compareTo(BigInteger.ZERO) > 0);
     }
 
     @Test
@@ -116,7 +116,7 @@ public class AccountManagerTest {
     public void testGetLockedAmount() throws Exception {
         AccountAmountInfo info = safe4.account.getLockedAmount(new Address("0x64ae0d18085d0c3ec202a208e96bc2fc24e4a7e8"));
         System.out.println(info.toString());
-        Assertions.assertTrue(info.getAmount().compareTo(BigInteger.ZERO) > 0);
+        Assertions.assertTrue(info.amount.compareTo(BigInteger.ZERO) > 0);
     }
 
     @Test
@@ -130,7 +130,7 @@ public class AccountManagerTest {
     public void testGetUsedAmount() throws Exception {
         AccountAmountInfo info = safe4.account.getUsedAmount(new Address("0x64ae0d18085d0c3ec202a208e96bc2fc24e4a7e8"));
         System.out.println(info.toString());
-        Assertions.assertTrue(info.getAmount().compareTo(BigInteger.ZERO) > 0);
+        Assertions.assertTrue(info.amount.compareTo(BigInteger.ZERO) > 0);
     }
 
     @Test
@@ -144,20 +144,20 @@ public class AccountManagerTest {
     public void testGetRecord0() throws Exception {
         AccountRecord record = safe4.account.getRecord0(new Address("0x64ae0d18085d0c3ec202a208e96bc2fc24e4a7e8"));
         System.out.println(record.toString());
-        Assertions.assertTrue(record.getAmount().compareTo(BigInteger.ZERO) > 0);
+        Assertions.assertTrue(record.amount.compareTo(BigInteger.ZERO) > 0);
     }
 
     @Test
     public void testGetRecordByID() throws Exception {
         AccountRecord record = safe4.account.getRecordByID(BigInteger.valueOf(1));
         System.out.println(record.toString());
-        Assertions.assertTrue(record.getAmount().compareTo(BigInteger.ZERO) > 0);
+        Assertions.assertTrue(record.amount.compareTo(BigInteger.ZERO) > 0);
     }
 
     @Test
     public void testGetRecordUseInfo() throws Exception {
         RecordUseInfo info = safe4.account.getRecordUseInfo(BigInteger.valueOf(1));
         System.out.println(info.toString());
-        Assertions.assertTrue(info.getUnfreezeHeight().compareTo(BigInteger.ZERO) > 0);
+        Assertions.assertTrue(info.unfreezeHeight.compareTo(BigInteger.ZERO) > 0);
     }
 }

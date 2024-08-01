@@ -7,8 +7,8 @@ import org.web3j.abi.datatypes.generated.Uint256;
 import java.math.BigInteger;
 
 public class ProposalVoteInfo extends StaticStruct {
-    private Address voter;
-    private BigInteger voteResult;
+    public Address voter;
+    public BigInteger voteResult;
 
     public ProposalVoteInfo(Address voter, BigInteger voteResult) {
         super(voter, new Uint256(voteResult));
@@ -20,22 +20,6 @@ public class ProposalVoteInfo extends StaticStruct {
         super(voter, voteResult);
         this.voter = voter;
         this.voteResult = voteResult.getValue();
-    }
-
-    public Address getVoter() {
-        return voter;
-    }
-
-    public void setVoter(Address voter) {
-        this.voter = voter;
-    }
-
-    public BigInteger getVoteResult() {
-        return voteResult;
-    }
-
-    public void setVoteResult(BigInteger voteResult) {
-        this.voteResult = voteResult;
     }
 
     @Override

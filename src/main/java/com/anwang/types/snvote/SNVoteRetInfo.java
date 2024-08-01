@@ -12,8 +12,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class SNVoteRetInfo extends DynamicStruct {
-    private List<Address> addrs;
-    private List<BigInteger> voteNums;
+    public List<Address> addrs;
+    public List<BigInteger> voteNums;
 
     public SNVoteRetInfo(List<Address> addrs, List<BigInteger> voteNums) {
         super(new DynamicArray<>(Address.class, addrs),
@@ -27,22 +27,6 @@ public class SNVoteRetInfo extends DynamicStruct {
         super(addrs, voteNums);
         this.addrs = addrs.getValue();
         this.voteNums = voteNums.getValue().stream().map(v -> v.getValue()).collect(Collectors.toList());
-    }
-
-    public List<Address> getAddrs() {
-        return addrs;
-    }
-
-    public void setAddrs(List<Address> addrs) {
-        this.addrs = addrs;
-    }
-
-    public List<BigInteger> getVoteNums() {
-        return voteNums;
-    }
-
-    public void setVoteNums(List<BigInteger> voteNums) {
-        this.voteNums = voteNums;
     }
 
     @Override

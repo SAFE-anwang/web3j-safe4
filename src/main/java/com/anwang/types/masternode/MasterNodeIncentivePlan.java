@@ -6,9 +6,9 @@ import org.web3j.abi.datatypes.generated.Uint256;
 import java.math.BigInteger;
 
 public class MasterNodeIncentivePlan extends StaticStruct {
-    private BigInteger creator;
-    private BigInteger partner;
-    private BigInteger voter;
+    public BigInteger creator;
+    public BigInteger partner;
+    public BigInteger voter;
 
     public MasterNodeIncentivePlan(BigInteger creator, BigInteger partner, BigInteger voter) {
         super(new Uint256(creator), new Uint256(partner), new Uint256(voter));
@@ -22,30 +22,6 @@ public class MasterNodeIncentivePlan extends StaticStruct {
         this.creator = creator.getValue();
         this.partner = partner.getValue();
         this.voter = voter.getValue();
-    }
-
-    public BigInteger getCreator() {
-        return creator;
-    }
-
-    public void setCreator(BigInteger creator) {
-        this.creator = creator;
-    }
-
-    public BigInteger getPartner() {
-        return partner;
-    }
-
-    public void setPartner(BigInteger partner) {
-        this.partner = partner;
-    }
-
-    public BigInteger getVoter() {
-        return voter;
-    }
-
-    public void setVoter(BigInteger voter) {
-        this.voter = voter;
     }
 
     @Override

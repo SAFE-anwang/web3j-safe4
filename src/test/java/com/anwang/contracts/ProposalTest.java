@@ -100,7 +100,7 @@ public class ProposalTest {
     public void testGetInfo() throws Exception {
         ProposalInfo info = safe4.proposal.getInfo(BigInteger.valueOf(2));
         System.out.println(info.toString());
-        Assertions.assertTrue(info.getTitle().length() > 0);
+        Assertions.assertTrue(info.title.length() > 0);
     }
 
     @Test

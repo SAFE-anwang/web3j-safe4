@@ -96,14 +96,14 @@ public class SuperNodeTest {
     public void testGetInfo() throws Exception {
         SuperNodeInfo info = safe4.supernode.getInfo(new Address("0xd6ebea69f2d81b9ca259c0b6ed3d9ad6aa206ef1"));
         System.out.println(info.toString());
-        Assertions.assertTrue(info.getName().length() > 0);
+        Assertions.assertTrue(info.name.length() > 0);
     }
 
     @Test
     public void testGetInfoByID() throws Exception {
         SuperNodeInfo info = safe4.supernode.getInfoByID(BigInteger.valueOf(5));
         System.out.println(info.toString());
-        Assertions.assertTrue(info.getName().length() > 0);
+        Assertions.assertTrue(info.name.length() > 0);
     }
 
     @Test

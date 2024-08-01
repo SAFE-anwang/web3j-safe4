@@ -88,14 +88,14 @@ public class MasterNodeTest {
     public void testGetInfo() throws Exception {
         MasterNodeInfo info = safe4.masternode.getInfo(new Address("0xd52114c4071b5bfbd06a657a3db538bfd559a481"));
         System.out.println(info.toString());
-        Assertions.assertTrue(info.getId().compareTo(BigInteger.ZERO) > 0);
+        Assertions.assertTrue(info.id.compareTo(BigInteger.ZERO) > 0);
     }
 
     @Test
     public void testGetInfoByID() throws Exception {
         MasterNodeInfo info = safe4.masternode.getInfoByID(BigInteger.valueOf(3));
         System.out.println(info.toString());
-        Assertions.assertTrue(info.getId().compareTo(BigInteger.ZERO) > 0);
+        Assertions.assertTrue(info.id.compareTo(BigInteger.ZERO) > 0);
     }
 
     @Test

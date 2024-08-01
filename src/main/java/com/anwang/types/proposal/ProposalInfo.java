@@ -8,17 +8,17 @@ import org.web3j.abi.datatypes.generated.Uint256;
 import java.math.BigInteger;
 
 public class ProposalInfo extends DynamicStruct {
-    private BigInteger id;
-    private Address creator;
-    private String title;
-    private BigInteger payAmount;
-    private BigInteger payTimes;
-    private BigInteger startPayTime;
-    private BigInteger endPayTime;
-    private String description;
-    private BigInteger state;
-    private BigInteger createHeight;
-    private BigInteger updateHeight;
+    public BigInteger id;
+    public Address creator;
+    public String title;
+    public BigInteger payAmount;
+    public BigInteger payTimes;
+    public BigInteger startPayTime;
+    public BigInteger endPayTime;
+    public String description;
+    public BigInteger state;
+    public BigInteger createHeight;
+    public BigInteger updateHeight;
 
     public ProposalInfo(BigInteger id, Address creator, String title, BigInteger payAmount, BigInteger payTimes, BigInteger startPayTime, BigInteger endPayTime, String description, BigInteger state, BigInteger createHeight, BigInteger updateHeight) {
         super(new Uint256(id),
@@ -58,94 +58,6 @@ public class ProposalInfo extends DynamicStruct {
         this.state = state.getValue();
         this.createHeight = createHeight.getValue();
         this.updateHeight = updateHeight.getValue();
-    }
-
-    public BigInteger getId() {
-        return id;
-    }
-
-    public void setId(BigInteger id) {
-        this.id = id;
-    }
-
-    public Address getCreator() {
-        return creator;
-    }
-
-    public void setCreator(Address creator) {
-        this.creator = creator;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public BigInteger getPayAmount() {
-        return payAmount;
-    }
-
-    public void setPayAmount(BigInteger payAmount) {
-        this.payAmount = payAmount;
-    }
-
-    public BigInteger getPayTimes() {
-        return payTimes;
-    }
-
-    public void setPayTimes(BigInteger payTimes) {
-        this.payTimes = payTimes;
-    }
-
-    public BigInteger getStartPayTime() {
-        return startPayTime;
-    }
-
-    public void setStartPayTime(BigInteger startPayTime) {
-        this.startPayTime = startPayTime;
-    }
-
-    public BigInteger getEndPayTime() {
-        return endPayTime;
-    }
-
-    public void setEndPayTime(BigInteger endPayTime) {
-        this.endPayTime = endPayTime;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public BigInteger getState() {
-        return state;
-    }
-
-    public void setState(BigInteger state) {
-        this.state = state;
-    }
-
-    public BigInteger getCreateHeight() {
-        return createHeight;
-    }
-
-    public void setCreateHeight(BigInteger createHeight) {
-        this.createHeight = createHeight;
-    }
-
-    public BigInteger getUpdateHeight() {
-        return updateHeight;
-    }
-
-    public void setUpdateHeight(BigInteger updateHeight) {
-        this.updateHeight = updateHeight;
     }
 
     @Override

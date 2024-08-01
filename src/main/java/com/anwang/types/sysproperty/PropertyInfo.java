@@ -7,11 +7,11 @@ import org.web3j.abi.datatypes.generated.Uint256;
 import java.math.BigInteger;
 
 public class PropertyInfo extends DynamicStruct {
-    private String name;
-    private BigInteger val;
-    private String description;
-    private BigInteger createHeight;
-    private BigInteger updateHeight;
+    public String name;
+    public BigInteger val;
+    public String description;
+    public BigInteger createHeight;
+    public BigInteger updateHeight;
 
     public PropertyInfo(String name, BigInteger val, String description, BigInteger createHeight, BigInteger updateHeight) {
         super(new Utf8String(name), new Uint256(val), new Utf8String(description), new Uint256(createHeight), new Uint256(updateHeight));
@@ -29,47 +29,6 @@ public class PropertyInfo extends DynamicStruct {
         this.description = description.getValue();
         this.createHeight = createHeight.getValue();
         this.updateHeight = updateHeight.getValue();
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public BigInteger getV() {
-        return val;
-    }
-
-    // can't be setVal, otherwise panic
-    public void setV(BigInteger val) {
-        this.val = val;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public BigInteger getCreateHeight() {
-        return createHeight;
-    }
-
-    public void setCreateHeight(BigInteger createHeight) {
-        this.createHeight = createHeight;
-    }
-
-    public BigInteger getUpdateHeight() {
-        return updateHeight;
-    }
-
-    public void setUpdateHeight(BigInteger updateHeight) {
-        this.updateHeight = updateHeight;
     }
 
     @Override

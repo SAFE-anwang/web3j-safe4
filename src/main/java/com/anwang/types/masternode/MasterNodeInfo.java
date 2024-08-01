@@ -8,18 +8,18 @@ import java.math.BigInteger;
 import java.util.List;
 
 public class MasterNodeInfo extends DynamicStruct {
-    private BigInteger id;
-    private Address addr;
-    private Address creator;
-    private String enode;
-    private String description;
-    private Boolean isOfficial;
-    private BigInteger state;
-    private List<MasterNodeMemberInfo> founders;
-    private MasterNodeIncentivePlan incentivePlan;
-    private BigInteger lastRewardHeight;
-    private BigInteger createHeight;
-    private BigInteger updateHeight;
+    public BigInteger id;
+    public Address addr;
+    public Address creator;
+    public String enode;
+    public String description;
+    public Boolean isOfficial;
+    public BigInteger state;
+    public List<MasterNodeMemberInfo> founders;
+    public MasterNodeIncentivePlan incentivePlan;
+    public BigInteger lastRewardHeight;
+    public BigInteger createHeight;
+    public BigInteger updateHeight;
 
     public MasterNodeInfo(BigInteger id, Address addr, Address creator, String enode, String description, Boolean isOfficial, BigInteger state, List<MasterNodeMemberInfo> founders, MasterNodeIncentivePlan incentivePlan, BigInteger lastRewardHeight, BigInteger createHeight, BigInteger updateHeight) {
         super(new Uint256(id),
@@ -73,102 +73,6 @@ public class MasterNodeInfo extends DynamicStruct {
         this.lastRewardHeight = lastRewardHeight.getValue();
         this.createHeight = createHeight.getValue();
         this.updateHeight = updateHeight.getValue();
-    }
-
-    public BigInteger getId() {
-        return id;
-    }
-
-    public void setId(BigInteger id) {
-        this.id = id;
-    }
-
-    public Address getAddr() {
-        return addr;
-    }
-
-    public void setAddr(Address addr) {
-        this.addr = addr;
-    }
-
-    public Address getCreator() {
-        return creator;
-    }
-
-    public void setCreator(Address creator) {
-        this.creator = creator;
-    }
-
-    public String getEnode() {
-        return enode;
-    }
-
-    public void setEnode(String enode) {
-        this.enode = enode;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Boolean getOfficial() {
-        return isOfficial;
-    }
-
-    public void setOfficial(Boolean official) {
-        isOfficial = official;
-    }
-
-    public BigInteger getState() {
-        return state;
-    }
-
-    public void setState(BigInteger state) {
-        this.state = state;
-    }
-
-    public List<MasterNodeMemberInfo> getFounders() {
-        return founders;
-    }
-
-    public void setFounders(List<MasterNodeMemberInfo> founders) {
-        this.founders = founders;
-    }
-
-    public MasterNodeIncentivePlan getIncentivePlan() {
-        return incentivePlan;
-    }
-
-    public void setIncentivePlan(MasterNodeIncentivePlan incentivePlan) {
-        this.incentivePlan = incentivePlan;
-    }
-
-    public BigInteger getLastRewardHeight() {
-        return lastRewardHeight;
-    }
-
-    public void setLastRewardHeight(BigInteger lastRewardHeight) {
-        this.lastRewardHeight = lastRewardHeight;
-    }
-
-    public BigInteger getCreateHeight() {
-        return createHeight;
-    }
-
-    public void setCreateHeight(BigInteger createHeight) {
-        this.createHeight = createHeight;
-    }
-
-    public BigInteger getUpdateHeight() {
-        return updateHeight;
-    }
-
-    public void setUpdateHeight(BigInteger updateHeight) {
-        this.updateHeight = updateHeight;
     }
 
     @Override

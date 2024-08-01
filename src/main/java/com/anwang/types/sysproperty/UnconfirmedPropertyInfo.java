@@ -13,13 +13,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class UnconfirmedPropertyInfo extends DynamicStruct {
-    private String name;
-    private BigInteger val;
-    private Address applicant;
-    private List<Address> voters;
-    private List<BigInteger> voteResults;
-    private String reason;
-    private BigInteger applyHeight;
+    public String name;
+    public BigInteger val;
+    public Address applicant;
+    public List<Address> voters;
+    public List<BigInteger> voteResults;
+    public String reason;
+    public BigInteger applyHeight;
 
     public UnconfirmedPropertyInfo(String name, BigInteger val, Address applicant, List<Address> voters, List<BigInteger> voteResults, String reason, BigInteger applyHeight) {
         super(new Utf8String(name),
@@ -53,63 +53,6 @@ public class UnconfirmedPropertyInfo extends DynamicStruct {
         this.voteResults = voteResults.getValue().stream().map(v -> v.getValue()).collect(Collectors.toList());
         this.reason = reason.getValue();
         this.applyHeight = applyHeight.getValue();
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public BigInteger getV() {
-        return val;
-    }
-
-    // can't be setVal, otherwise panic
-    public void setV(BigInteger val) {
-        this.val = val;
-    }
-
-    public Address getApplicant() {
-        return applicant;
-    }
-
-    public void setApplicant(Address applicant) {
-        this.applicant = applicant;
-    }
-
-    public List<Address> getVoters() {
-        return voters;
-    }
-
-    public void setVoters(List<Address> voters) {
-        this.voters = voters;
-    }
-
-    public List<BigInteger> getVoteResults() {
-        return voteResults;
-    }
-
-    public void setVoteResults(List<BigInteger> voteResults) {
-        this.voteResults = voteResults;
-    }
-
-    public String getReason() {
-        return reason;
-    }
-
-    public void setReason(String reason) {
-        this.reason = reason;
-    }
-
-    public BigInteger getApplyHeight() {
-        return applyHeight;
-    }
-
-    public void setApplyHeight(BigInteger applyHeight) {
-        this.applyHeight = applyHeight;
     }
 
     @Override

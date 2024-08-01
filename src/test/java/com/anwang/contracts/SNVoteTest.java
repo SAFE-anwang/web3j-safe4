@@ -81,7 +81,7 @@ public class SNVoteTest {
     public void testGetSNs4Voter() throws Exception {
         SNVoteRetInfo info = safe4.snvote.getSNs4Voter(new Address("0xd52114c4071b5bfbd06a657a3db538bfd559a481"), BigInteger.ZERO, BigInteger.valueOf(100));
         System.out.println(info.toString());
-        Assertions.assertTrue(info.getAddrs().size() > 0);
+        Assertions.assertTrue(info.addrs.size() > 0);
     }
 
     @Test
@@ -95,7 +95,7 @@ public class SNVoteTest {
     public void testGetProxies4Voter() throws Exception {
         SNVoteRetInfo info = safe4.snvote.getProxies4Voter(new Address("0xd52114c4071b5bfbd06a657a3db538bfd559a481"), BigInteger.ZERO, BigInteger.valueOf(100));
         System.out.println(info.toString());
-        Assertions.assertTrue(info.getAddrs().size() > 0);
+        Assertions.assertTrue(info.addrs.size() > 0);
     }
 
     @Test
@@ -151,7 +151,7 @@ public class SNVoteTest {
     public void testGetVoters() throws Exception {
         SNVoteRetInfo info = safe4.snvote.getVoters(new Address("0x4d244c17d2a957f4a150408f8f4d19382ae8e2c8"), BigInteger.ZERO, BigInteger.valueOf(100));
         System.out.println(info.toString());
-        Assertions.assertTrue(info.getAddrs().size() > 0);
+        Assertions.assertTrue(info.addrs.size() > 0);
     }
 
     @Test
