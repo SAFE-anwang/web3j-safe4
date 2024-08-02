@@ -68,6 +68,9 @@ public abstract class AbstractContract {
         RawTransaction rawTransaction = RawTransaction.createTransaction(nonce, gasPrice, gasLimit, contractAddr, value, data);
         final String signedTransactionData = Numeric.toHexString(TransactionEncoder.signMessage(rawTransaction, chainId, credentials));
         EthSendTransaction ethSendTransaction = web3j.ethSendRawTransaction(signedTransactionData).sendAsync().get();
+        if (ethSendTransaction.hasError()) {
+            throw new Exception(ethSendTransaction.getError().getMessage());
+        }
         return ethSendTransaction.getTransactionHash();
     }
 
