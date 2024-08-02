@@ -31,13 +31,13 @@ public class Safe3 extends AbstractContract {
         BigInteger privKey = Numeric.toBigInt(privateKey);
         BigInteger compressedPublicKey = Safe3Util.getCompressedPublicKey(privKey);
         String compressedSafe3Addr = Safe3Util.getSafe3Addr(compressedPublicKey);
-        BigInteger uncompressedPublicKey = Safe3Util.getCompressedPublicKey(privKey);
+        BigInteger uncompressedPublicKey = Safe3Util.getUncompressedPublicKey(privKey);
         String uncompressedSafe3Addr = Safe3Util.getSafe3Addr(uncompressedPublicKey);
 
         // 1. Available Safe3
         // 1-1. compressed address
         AvailableSafe3Info info = getAvailableInfo(compressedSafe3Addr);
-        if (!info.amount.equals(0) && info.redeemHeight.equals(0)) {
+        if (info.amount.intValue() != 0 && info.redeemHeight.intValue() == 0) {
             byte[] hash = Hash.sha256(compressedSafe3Addr.getBytes());
             byte[] sig = Safe4Util.signMessage(hash, privKey);
             Function function = new Function("redeemAvailable", Arrays.asList(new DynamicBytes(compressedPublicKey.toByteArray()), new DynamicBytes(sig)), Collections.emptyList());
@@ -45,7 +45,7 @@ public class Safe3 extends AbstractContract {
         }
         // 1-2. uncompressed address
         info = getAvailableInfo(uncompressedSafe3Addr);
-        if (!info.amount.equals(0) && info.redeemHeight.equals(0)) {
+        if (info.amount.intValue() != 0 && info.redeemHeight.intValue() == 0) {
             byte[] hash = Hash.sha256(uncompressedSafe3Addr.getBytes());
             byte[] sig = Safe4Util.signMessage(hash, privKey);
             Function function = new Function("redeemAvailable", Arrays.asList(new DynamicBytes(uncompressedPublicKey.toByteArray()), new DynamicBytes(sig)), Collections.emptyList());
@@ -55,7 +55,7 @@ public class Safe3 extends AbstractContract {
         // 2. Locked Safe3
         // 2-1. compressed address
         BigInteger lockedNum = getLockedNum(compressedSafe3Addr);
-        if (!lockedNum.equals(0)) {
+        if (lockedNum.intValue() != 0) {
             byte[] hash = Hash.sha256(compressedSafe3Addr.getBytes());
             byte[] sig = Safe4Util.signMessage(hash, privKey);
             Function function = new Function("redeemLocked", Arrays.asList(new DynamicBytes(compressedPublicKey.toByteArray()), new DynamicBytes(sig)), Collections.emptyList());
@@ -63,8 +63,9 @@ public class Safe3 extends AbstractContract {
         }
 
         // 2-2. uncompressed address
+        System.out.println(getLockedNum(uncompressedSafe3Addr));
         lockedNum = getLockedNum(uncompressedSafe3Addr);
-        if (!lockedNum.equals(0)) {
+        if (lockedNum.intValue() != 0) {
             byte[] hash = Hash.sha256(uncompressedSafe3Addr.getBytes());
             byte[] sig = Safe4Util.signMessage(hash, privKey);
             Function function = new Function("redeemLocked", Arrays.asList(new DynamicBytes(uncompressedPublicKey.toByteArray()), new DynamicBytes(sig)), Collections.emptyList());
@@ -87,20 +88,24 @@ public class Safe3 extends AbstractContract {
         // 1. compressed address
         BigInteger pubKey = Safe3Util.getCompressedPublicKey(privKey);
         String safe3Addr = Safe3Util.getSafe3Addr(pubKey);
-        byte[] hash = Hash.sha256(safe3Addr.getBytes());
-        byte[] sig = Safe4Util.signMessage(hash, privKey);
-        Function function = new Function("redeemMasterNode", Arrays.asList(new DynamicBytes(pubKey.toByteArray()), new DynamicBytes(sig), new Utf8String(enode)), Collections.emptyList());
-        String txid = call(privateKey, function);
-        txids.add(txid);
+        BigInteger lockedNum = getLockedNum(safe3Addr);
+        if (lockedNum.intValue() != 0) {
+            byte[] hash = Hash.sha256(safe3Addr.getBytes());
+            byte[] sig = Safe4Util.signMessage(hash, privKey);
+            Function function = new Function("redeemMasterNode", Arrays.asList(new DynamicBytes(pubKey.toByteArray()), new DynamicBytes(sig), new Utf8String(enode)), Collections.emptyList());
+            txids.add(call(privateKey, function));
+        }
 
         // 2. uncompressed address
         pubKey = Safe3Util.getUncompressedPublicKey(privKey);
         safe3Addr = Safe3Util.getSafe3Addr(pubKey);
-        hash = Hash.sha256(safe3Addr.getBytes());
-        sig = Safe4Util.signMessage(hash, privKey);
-        function = new Function("redeemMasterNode", Arrays.asList(new DynamicBytes(pubKey.toByteArray()), new DynamicBytes(sig), new Utf8String(enode)), Collections.emptyList());
-        txid = call(privateKey, function);
-        txids.add(txid);
+        lockedNum = getLockedNum(safe3Addr);
+        if (lockedNum.intValue() != 0) {
+            byte[] hash = Hash.sha256(safe3Addr.getBytes());
+            byte[] sig = Safe4Util.signMessage(hash, privKey);
+            Function function = new Function("redeemMasterNode", Arrays.asList(new DynamicBytes(pubKey.toByteArray()), new DynamicBytes(sig), new Utf8String(enode)), Collections.emptyList());
+            txids.add(call(privateKey, function));
+        }
 
         return txids;
     }

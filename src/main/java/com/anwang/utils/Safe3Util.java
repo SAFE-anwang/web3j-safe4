@@ -2,22 +2,22 @@ package com.anwang.utils;
 
 import io.github.novacrypto.base58.Base58;
 import org.bouncycastle.crypto.digests.RIPEMD160Digest;
-import org.bouncycastle.util.encoders.Hex;
 import org.web3j.crypto.Hash;
 import org.web3j.crypto.Sign;
+import org.web3j.utils.Numeric;
 
 import java.math.BigInteger;
 
 public class Safe3Util {
     public static BigInteger getUncompressedPublicKey(BigInteger privateKey) {
         BigInteger publicKey = Sign.publicKeyFromPrivate(privateKey);
-        return new BigInteger("04" + Hex.toHexString(publicKey.toByteArray()), 16);
+        return new BigInteger("04" + Numeric.toHexStringNoPrefixZeroPadded(publicKey, 128), 16);
     }
 
     public static BigInteger getCompressedPublicKey(BigInteger privateKey) {
         BigInteger publicKey = Sign.publicKeyFromPrivate(privateKey);
         String prefix = publicKey.testBit(0) ? "03" : "02";
-        String xHex = Hex.toHexString(publicKey.toByteArray()).substring(0, 64);
+        String xHex = Numeric.toHexStringNoPrefixZeroPadded(publicKey, 128).substring(0, 64);
         return new BigInteger(prefix + xHex, 16);
     }
 
