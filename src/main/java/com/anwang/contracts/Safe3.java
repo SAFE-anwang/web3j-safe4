@@ -36,16 +36,14 @@ public class Safe3 extends AbstractContract {
 
         // 1. Available Safe3
         // 1-1. compressed address
-        AvailableSafe3Info info = getAvailableInfo(compressedSafe3Addr);
-        if (info.amount.intValue() != 0 && info.redeemHeight.intValue() == 0) {
+        if (existAvailableNeedToRedeem(compressedSafe3Addr)) {
             byte[] hash = Hash.sha256(compressedSafe3Addr.getBytes());
             byte[] sig = Safe4Util.signMessage(hash, privKey);
             Function function = new Function("redeemAvailable", Arrays.asList(new DynamicBytes(compressedPublicKey.toByteArray()), new DynamicBytes(sig)), Collections.emptyList());
             availableTxids.add(call(privateKey, function));
         }
         // 1-2. uncompressed address
-        info = getAvailableInfo(uncompressedSafe3Addr);
-        if (info.amount.intValue() != 0 && info.redeemHeight.intValue() == 0) {
+        if (existAvailableNeedToRedeem(uncompressedSafe3Addr)) {
             byte[] hash = Hash.sha256(uncompressedSafe3Addr.getBytes());
             byte[] sig = Safe4Util.signMessage(hash, privKey);
             Function function = new Function("redeemAvailable", Arrays.asList(new DynamicBytes(uncompressedPublicKey.toByteArray()), new DynamicBytes(sig)), Collections.emptyList());
@@ -54,8 +52,7 @@ public class Safe3 extends AbstractContract {
 
         // 2. Locked Safe3
         // 2-1. compressed address
-        BigInteger lockedNum = getLockedNum(compressedSafe3Addr);
-        if (lockedNum.intValue() != 0) {
+        if (existLockedNeedToRedeem(compressedSafe3Addr)) {
             byte[] hash = Hash.sha256(compressedSafe3Addr.getBytes());
             byte[] sig = Safe4Util.signMessage(hash, privKey);
             Function function = new Function("redeemLocked", Arrays.asList(new DynamicBytes(compressedPublicKey.toByteArray()), new DynamicBytes(sig)), Collections.emptyList());
@@ -63,9 +60,7 @@ public class Safe3 extends AbstractContract {
         }
 
         // 2-2. uncompressed address
-        System.out.println(getLockedNum(uncompressedSafe3Addr));
-        lockedNum = getLockedNum(uncompressedSafe3Addr);
-        if (lockedNum.intValue() != 0) {
+        if (existLockedNeedToRedeem(uncompressedSafe3Addr)) {
             byte[] hash = Hash.sha256(uncompressedSafe3Addr.getBytes());
             byte[] sig = Safe4Util.signMessage(hash, privKey);
             Function function = new Function("redeemLocked", Arrays.asList(new DynamicBytes(uncompressedPublicKey.toByteArray()), new DynamicBytes(sig)), Collections.emptyList());
@@ -88,8 +83,7 @@ public class Safe3 extends AbstractContract {
         // 1. compressed address
         BigInteger pubKey = Safe3Util.getCompressedPublicKey(privKey);
         String safe3Addr = Safe3Util.getSafe3Addr(pubKey);
-        BigInteger lockedNum = getLockedNum(safe3Addr);
-        if (lockedNum.intValue() != 0) {
+        if (existMasterNodeNeedToRedeem(safe3Addr)) {
             byte[] hash = Hash.sha256(safe3Addr.getBytes());
             byte[] sig = Safe4Util.signMessage(hash, privKey);
             Function function = new Function("redeemMasterNode", Arrays.asList(new DynamicBytes(pubKey.toByteArray()), new DynamicBytes(sig), new Utf8String(enode)), Collections.emptyList());
@@ -99,8 +93,7 @@ public class Safe3 extends AbstractContract {
         // 2. uncompressed address
         pubKey = Safe3Util.getUncompressedPublicKey(privKey);
         safe3Addr = Safe3Util.getSafe3Addr(pubKey);
-        lockedNum = getLockedNum(safe3Addr);
-        if (lockedNum.intValue() != 0) {
+        if (existMasterNodeNeedToRedeem(safe3Addr)) {
             byte[] hash = Hash.sha256(safe3Addr.getBytes());
             byte[] sig = Safe4Util.signMessage(hash, privKey);
             Function function = new Function("redeemMasterNode", Arrays.asList(new DynamicBytes(pubKey.toByteArray()), new DynamicBytes(sig), new Utf8String(enode)), Collections.emptyList());
@@ -156,5 +149,23 @@ public class Safe3 extends AbstractContract {
         Function function = new Function("getLockedInfo", Arrays.asList(new Utf8String(safe3Addr), new Uint256(start), new Uint256(count)), Collections.singletonList(new TypeReference<DynamicArray<LockedSafe3Info>>() {}));
         List<Type> someTypes = query(function);
         return ((DynamicArray<LockedSafe3Info>) someTypes.get(0)).getValue();
+    }
+
+    public boolean existAvailableNeedToRedeem(String safe3Addr) throws Exception {
+        Function function = new Function("existAvailableNeedToRedeem", Collections.singletonList(new Utf8String(safe3Addr)), Collections.singletonList(new TypeReference<Bool>() {}));
+        List<Type> someTypes = query(function);
+        return ((Bool) someTypes.get(0)).getValue();
+    }
+
+    public boolean existLockedNeedToRedeem(String safe3Addr) throws Exception {
+        Function function = new Function("existLockedNeedToRedeem", Collections.singletonList(new Utf8String(safe3Addr)), Collections.singletonList(new TypeReference<Bool>() {}));
+        List<Type> someTypes = query(function);
+        return ((Bool) someTypes.get(0)).getValue();
+    }
+
+    public boolean existMasterNodeNeedToRedeem(String safe3Addr) throws Exception {
+        Function function = new Function("existMasterNodeNeedToRedeem", Collections.singletonList(new Utf8String(safe3Addr)), Collections.singletonList(new TypeReference<Bool>() {}));
+        List<Type> someTypes = query(function);
+        return ((Bool) someTypes.get(0)).getValue();
     }
 }
