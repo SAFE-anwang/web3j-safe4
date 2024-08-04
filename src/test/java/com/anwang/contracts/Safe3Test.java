@@ -21,23 +21,23 @@ public class Safe3Test {
     @BeforeEach
     public void init() {
         web3j = Web3j.build(new HttpService("http://127.0.0.1:8545"));
-        safe4 = new Safe4(web3j, 6666667);
+        safe4 = new Safe4(web3j, 6666666);
     }
 
     @Test
     public void testRedeemSafe() throws Exception {
-        // compressed-addr: XeT5MPR5BH6i2Z66XHRXqRjVFs3iAp4Rco, privateKey: 0x8ae21af0b29effa683e16213e5bb63774a38032281623160ce9b0c570c908134
-        // uncompressed-addr: XoDaRYyQ2r8UqsJWa7UC2L6JaHSdq7AYRw, privateKey: 0x8ae21af0b29effa683e16213e5bb63774a38032281623160ce9b0c570c908134
-        Map<String, List<String>> txids = safe4.safe3.redeemSafe3("0x8ae21af0b29effa683e16213e5bb63774a38032281623160ce9b0c570c908134");
+        // compressed-addr: Xy3pSqGgGHfS6suRbUFk2mYaBD8oTYApAZ, privateKey: 0x18E14A7B6A307F426A94F8114701E7C8E774E7F9A47E2C2035DB29A206321725
+        // uncompressed-addr: XanKmaz3PS6CCMFyh4o9BLM5bWyowyrnGR, privateKey: 0x18E14A7B6A307F426A94F8114701E7C8E774E7F9A47E2C2035DB29A206321725
+        Map<String, List<String>> txids = safe4.safe3.redeemSafe3("0x18E14A7B6A307F426A94F8114701E7C8E774E7F9A47E2C2035DB29A206321725");
         System.out.println(txids);
         Assertions.assertTrue(txids.size() > 0);
     }
 
     @Test
     public void testRedeemMasterNode() throws Exception {
-        // compressed-addr: XeT5MPR5BH6i2Z66XHRXqRjVFs3iAp4Rco, privateKey: 0x8ae21af0b29effa683e16213e5bb63774a38032281623160ce9b0c570c908134
-        // uncompressed-addr: XoDaRYyQ2r8UqsJWa7UC2L6JaHSdq7AYRw, privateKey: 0x8ae21af0b29effa683e16213e5bb63774a38032281623160ce9b0c570c908134
-        List<String> txids = safe4.safe3.redeemMasterNode("0x8ae21af0b29effa683e16213e5bb63774a38032281623160ce9b0c570c908134", "waitting for enode");
+        // compressed-addr: Xy3pSqGgGHfS6suRbUFk2mYaBD8oTYApAZ, privateKey: 0x18E14A7B6A307F426A94F8114701E7C8E774E7F9A47E2C2035DB29A206321725
+        // uncompressed-addr: XanKmaz3PS6CCMFyh4o9BLM5bWyowyrnGR, privateKey: 0x18E14A7B6A307F426A94F8114701E7C8E774E7F9A47E2C2035DB29A206321725
+        List<String> txids = safe4.safe3.redeemMasterNode("0x18E14A7B6A307F426A94F8114701E7C8E774E7F9A47E2C2035DB29A206321725", "enode://NodeInfo@127.0.0.1:8545");
         System.out.println(txids);
         Assertions.assertTrue(txids.size() > 0);
     }

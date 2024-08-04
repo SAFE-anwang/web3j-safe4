@@ -20,7 +20,7 @@ public class SysPropertyTest {
     @BeforeEach
     public void init() {
         web3j = Web3j.build(new HttpService("http://127.0.0.1:8545"));
-        safe4 = new Safe4(web3j, 6666667);
+        safe4 = new Safe4(web3j, 6666666);
     }
 
     @Test
