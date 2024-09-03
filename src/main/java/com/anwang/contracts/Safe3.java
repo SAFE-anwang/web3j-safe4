@@ -6,6 +6,7 @@ import com.anwang.utils.Safe3Util;
 import com.anwang.utils.Safe4Contract;
 import com.anwang.utils.Safe4Util;
 import org.web3j.abi.TypeReference;
+import org.web3j.abi.Utils;
 import org.web3j.abi.datatypes.*;
 import org.web3j.abi.datatypes.generated.Uint256;
 import org.web3j.crypto.Hash;
@@ -13,7 +14,10 @@ import org.web3j.protocol.Web3j;
 import org.web3j.utils.Numeric;
 
 import java.math.BigInteger;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class Safe3 extends AbstractContract {
@@ -23,83 +27,82 @@ public class Safe3 extends AbstractContract {
     }
 
     // redeem for available & locked SAFE3
-    public Map<String, List<String>> redeemSafe3(String privateKey) throws Exception {
-        Map<String, List<String>> ret = new HashMap<>();
-        List<String> availableTxids = new ArrayList<>();
-        List<String> lockedTxids = new ArrayList<>();
+    public List<String> batchRedeemSafe3(String callerPrivateKey, List<String> privateKeys) throws Exception {
+        BigInteger privKey;
+        BigInteger pubKey;
+        String safe3Addr;
+        List<byte[]> availablePubKeys = new ArrayList<>();
+        List<byte[]> availableSigs = new ArrayList<>();
+        List<byte[]> lockedPubKeys = new ArrayList<>();
+        List<byte[]> lockedSigs = new ArrayList<>();
+        for (String privateKey : privateKeys) {
+            privKey = Numeric.toBigInt(privateKey);
+            pubKey = Safe3Util.getCompressedPublicKey(privKey);
+            safe3Addr = Safe3Util.getSafe3Addr(pubKey);
+            if (existAvailableNeedToRedeem(safe3Addr)) {
+                availablePubKeys.add(pubKey.toByteArray());
+                availableSigs.add(Safe4Util.signMessage(Hash.sha256(safe3Addr.getBytes()), privKey));
+            }
+            if (existLockedNeedToRedeem(safe3Addr)) {
+                lockedPubKeys.add(pubKey.toByteArray());
+                lockedSigs.add(Safe4Util.signMessage(Hash.sha256(safe3Addr.getBytes()), privKey));
+            }
 
-        BigInteger privKey = Numeric.toBigInt(privateKey);
-        BigInteger compressedPublicKey = Safe3Util.getCompressedPublicKey(privKey);
-        String compressedSafe3Addr = Safe3Util.getSafe3Addr(compressedPublicKey);
-        BigInteger uncompressedPublicKey = Safe3Util.getUncompressedPublicKey(privKey);
-        String uncompressedSafe3Addr = Safe3Util.getSafe3Addr(uncompressedPublicKey);
-
-        // 1. Available Safe3
-        // 1-1. compressed address
-        if (existAvailableNeedToRedeem(compressedSafe3Addr)) {
-            byte[] hash = Hash.sha256(compressedSafe3Addr.getBytes());
-            byte[] sig = Safe4Util.signMessage(hash, privKey);
-            Function function = new Function("redeemAvailable", Arrays.asList(new DynamicBytes(compressedPublicKey.toByteArray()), new DynamicBytes(sig)), Collections.emptyList());
-            availableTxids.add(call(privateKey, function));
-        }
-        // 1-2. uncompressed address
-        if (existAvailableNeedToRedeem(uncompressedSafe3Addr)) {
-            byte[] hash = Hash.sha256(uncompressedSafe3Addr.getBytes());
-            byte[] sig = Safe4Util.signMessage(hash, privKey);
-            Function function = new Function("redeemAvailable", Arrays.asList(new DynamicBytes(uncompressedPublicKey.toByteArray()), new DynamicBytes(sig)), Collections.emptyList());
-            availableTxids.add(call(privateKey, function));
-        }
-
-        // 2. Locked Safe3
-        // 2-1. compressed address
-        if (existLockedNeedToRedeem(compressedSafe3Addr)) {
-            byte[] hash = Hash.sha256(compressedSafe3Addr.getBytes());
-            byte[] sig = Safe4Util.signMessage(hash, privKey);
-            Function function = new Function("redeemLocked", Arrays.asList(new DynamicBytes(compressedPublicKey.toByteArray()), new DynamicBytes(sig)), Collections.emptyList());
-            lockedTxids.add(call(privateKey, function));
+            pubKey = Safe3Util.getUncompressedPublicKey(privKey);
+            safe3Addr = Safe3Util.getSafe3Addr(pubKey);
+            if (existAvailableNeedToRedeem(safe3Addr)) {
+                availablePubKeys.add(pubKey.toByteArray());
+                availableSigs.add(Safe4Util.signMessage(Hash.sha256(safe3Addr.getBytes()), privKey));
+            }
+            if (existLockedNeedToRedeem(safe3Addr)) {
+                lockedPubKeys.add(pubKey.toByteArray());
+                lockedSigs.add(Safe4Util.signMessage(Hash.sha256(safe3Addr.getBytes()), privKey));
+            }
         }
 
-        // 2-2. uncompressed address
-        if (existLockedNeedToRedeem(uncompressedSafe3Addr)) {
-            byte[] hash = Hash.sha256(uncompressedSafe3Addr.getBytes());
-            byte[] sig = Safe4Util.signMessage(hash, privKey);
-            Function function = new Function("redeemLocked", Arrays.asList(new DynamicBytes(uncompressedPublicKey.toByteArray()), new DynamicBytes(sig)), Collections.emptyList());
-            lockedTxids.add(call(privateKey, function));
+        List<String> txids = new ArrayList<>();
+        if (availablePubKeys.size() != 0) {
+            Function function = new Function("batchRedeemAvailable", Arrays.asList(new DynamicArray<>(DynamicBytes.class, Utils.typeMap(availablePubKeys, DynamicBytes.class)), new DynamicArray<>(DynamicBytes.class, Utils.typeMap(availableSigs, DynamicBytes.class))), Collections.emptyList());
+            txids.add(call(callerPrivateKey, function));
         }
 
-        if (availableTxids.size() > 0) {
-            ret.put("available", availableTxids);
+        if (lockedPubKeys.size() != 0) {
+            Function function = new Function("batchRedeemLocked", Arrays.asList(new DynamicArray<>(DynamicBytes.class, Utils.typeMap(availablePubKeys, DynamicBytes.class)), new DynamicArray<>(DynamicBytes.class, Utils.typeMap(availableSigs, DynamicBytes.class))), Collections.emptyList());
+            txids.add(call(callerPrivateKey, function));
         }
-        if (lockedTxids.size() > 0) {
-            ret.put("locked", lockedTxids);
-        }
-        return ret;
+        return txids;
     }
 
-    public List<String> redeemMasterNode(String privateKey, String enode) throws Exception {
+    public List<String> redeemMasterNode(String callerPrivateKey, List<String> privateKeys, List<String> enodes) throws Exception {
+        BigInteger privKey;
+        BigInteger pubKey;
+        String safe3Addr;
+        List<byte[]> pubKeys = new ArrayList<>();
+        List<byte[]> sigs = new ArrayList<>();
+        List<byte[]> lockedPubKeys = new ArrayList<>();
+        List<byte[]> lockedSigs = new ArrayList<>();
+        for (String privateKey : privateKeys) {
+            privKey = Numeric.toBigInt(privateKey);
+            pubKey = Safe3Util.getCompressedPublicKey(privKey);
+            safe3Addr = Safe3Util.getSafe3Addr(pubKey);
+            if (existMasterNodeNeedToRedeem(safe3Addr)) {
+                pubKeys.add(pubKey.toByteArray());
+                sigs.add(Safe4Util.signMessage(Hash.sha256(safe3Addr.getBytes()), privKey));
+            }
+
+            pubKey = Safe3Util.getUncompressedPublicKey(privKey);
+            safe3Addr = Safe3Util.getSafe3Addr(pubKey);
+            if (existMasterNodeNeedToRedeem(safe3Addr)) {
+                pubKeys.add(pubKey.toByteArray());
+                sigs.add(Safe4Util.signMessage(Hash.sha256(safe3Addr.getBytes()), privKey));
+            }
+        }
+
         List<String> txids = new ArrayList<>();
-        BigInteger privKey = Numeric.toBigInt(privateKey);
-
-        // 1. compressed address
-        BigInteger pubKey = Safe3Util.getCompressedPublicKey(privKey);
-        String safe3Addr = Safe3Util.getSafe3Addr(pubKey);
-        if (existMasterNodeNeedToRedeem(safe3Addr)) {
-            byte[] hash = Hash.sha256(safe3Addr.getBytes());
-            byte[] sig = Safe4Util.signMessage(hash, privKey);
-            Function function = new Function("redeemMasterNode", Arrays.asList(new DynamicBytes(pubKey.toByteArray()), new DynamicBytes(sig), new Utf8String(enode)), Collections.emptyList());
-            txids.add(call(privateKey, function));
+        if (pubKeys.size() != 0) {
+            Function function = new Function("batchRedeemMasterNode", Arrays.asList(new DynamicArray<>(DynamicBytes.class, Utils.typeMap(pubKeys, DynamicBytes.class)), new DynamicArray<>(DynamicBytes.class, Utils.typeMap(sigs, DynamicBytes.class)), new DynamicArray<>(Utf8String.class, Utils.typeMap(enodes, Utf8String.class))), Collections.emptyList());
+            txids.add(call(callerPrivateKey, function));
         }
-
-        // 2. uncompressed address
-        pubKey = Safe3Util.getUncompressedPublicKey(privKey);
-        safe3Addr = Safe3Util.getSafe3Addr(pubKey);
-        if (existMasterNodeNeedToRedeem(safe3Addr)) {
-            byte[] hash = Hash.sha256(safe3Addr.getBytes());
-            byte[] sig = Safe4Util.signMessage(hash, privKey);
-            Function function = new Function("redeemMasterNode", Arrays.asList(new DynamicBytes(pubKey.toByteArray()), new DynamicBytes(sig), new Utf8String(enode)), Collections.emptyList());
-            txids.add(call(privateKey, function));
-        }
-
         return txids;
     }
 

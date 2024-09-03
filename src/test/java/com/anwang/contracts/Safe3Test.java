@@ -10,8 +10,8 @@ import org.web3j.protocol.Web3j;
 import org.web3j.protocol.http.HttpService;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class Safe3Test {
 
@@ -26,18 +26,42 @@ public class Safe3Test {
 
     @Test
     public void testRedeemSafe() throws Exception {
-        // compressed-addr: Xy3pSqGgGHfS6suRbUFk2mYaBD8oTYApAZ, privateKey: 0x18E14A7B6A307F426A94F8114701E7C8E774E7F9A47E2C2035DB29A206321725
-        // uncompressed-addr: XanKmaz3PS6CCMFyh4o9BLM5bWyowyrnGR, privateKey: 0x18E14A7B6A307F426A94F8114701E7C8E774E7F9A47E2C2035DB29A206321725
-        Map<String, List<String>> txids = safe4.safe3.redeemSafe3("0x18E14A7B6A307F426A94F8114701E7C8E774E7F9A47E2C2035DB29A206321725");
+        List<String> privateKeys = new ArrayList<>();
+        privateKeys.add("0x7f5eb9b7027b6c138caf1c48317d75589101956a9cf370258737bed0f5613a9a");
+        privateKeys.add("0xeb8d00dc153abb29a37ecd479692263881b1abd898215b285cbd6eef4d7b9701");
+        privateKeys.add("0xace76e6e87eb678eb4a596f40f9463ca71e9f3c8589cd2ed8bcaae180ed8f553");
+        privateKeys.add("0xcfd696963c7be9c27c070fde26f71868d5872b0cb8489336fc54f3aac064b1bb");
+        privateKeys.add("0xc85843e370c0956187fd1224cb06154f9965e28751829abedd3c2df5ad4762c7");
+        privateKeys.add("0xdb41b9dd82694edaf05fea9743713e3fa73540f54e3a046651a5732ec936a720");
+        privateKeys.add("0xd3d0061fe46ae70f6df51d48d6cc69abe1b316347b3ead4018f1e34ca543373d");
+        privateKeys.add("0xad82becdcf2f6eeabc535c5c9a37ea45df93192d20ba3243a1a1b66a6ebb35bb");
+        privateKeys.add("0xb436b293e8d2fce2d67ff22e1067c804da1b2d20686de111762d9f93e5e66449");
+        privateKeys.add("0xcdd21cf48b6e3f3accf57bf8e00dccb67db9902a0abb6172ab47c0707f384205");
+        privateKeys.add("0x24793cf4a1dad93413592df26b4be89857f1fa483448f7c36690908659f83455");
+        List<String> txids = safe4.safe3.batchRedeemSafe3("0x020274d1ddb0d006eb9a3c4871091c191c46a01c3fb8f09cfd1ae9192f893712", privateKeys);
         System.out.println(txids);
         Assertions.assertTrue(txids.size() > 0);
     }
 
     @Test
     public void testRedeemMasterNode() throws Exception {
-        // compressed-addr: Xy3pSqGgGHfS6suRbUFk2mYaBD8oTYApAZ, privateKey: 0x18E14A7B6A307F426A94F8114701E7C8E774E7F9A47E2C2035DB29A206321725
-        // uncompressed-addr: XanKmaz3PS6CCMFyh4o9BLM5bWyowyrnGR, privateKey: 0x18E14A7B6A307F426A94F8114701E7C8E774E7F9A47E2C2035DB29A206321725
-        List<String> txids = safe4.safe3.redeemMasterNode("0x18E14A7B6A307F426A94F8114701E7C8E774E7F9A47E2C2035DB29A206321725", "enode://NodeInfo@127.0.0.1:8545");
+        List<String> privateKeys = new ArrayList<>();
+        privateKeys.add("0x7f5eb9b7027b6c138caf1c48317d75589101956a9cf370258737bed0f5613a9a");
+        privateKeys.add("0xeb8d00dc153abb29a37ecd479692263881b1abd898215b285cbd6eef4d7b9701");
+        privateKeys.add("0xace76e6e87eb678eb4a596f40f9463ca71e9f3c8589cd2ed8bcaae180ed8f553");
+        privateKeys.add("0xcfd696963c7be9c27c070fde26f71868d5872b0cb8489336fc54f3aac064b1bb");
+        privateKeys.add("0xc85843e370c0956187fd1224cb06154f9965e28751829abedd3c2df5ad4762c7");
+        privateKeys.add("0xdb41b9dd82694edaf05fea9743713e3fa73540f54e3a046651a5732ec936a720");
+        privateKeys.add("0xd3d0061fe46ae70f6df51d48d6cc69abe1b316347b3ead4018f1e34ca543373d");
+        privateKeys.add("0xad82becdcf2f6eeabc535c5c9a37ea45df93192d20ba3243a1a1b66a6ebb35bb");
+        privateKeys.add("0xb436b293e8d2fce2d67ff22e1067c804da1b2d20686de111762d9f93e5e66449");
+        privateKeys.add("0xcdd21cf48b6e3f3accf57bf8e00dccb67db9902a0abb6172ab47c0707f384205");
+        privateKeys.add("0x24793cf4a1dad93413592df26b4be89857f1fa483448f7c36690908659f83455");
+        List<String> enodes = new ArrayList<>();
+        for (int i = 0; i < privateKeys.size(); i++) {
+            enodes.add("enode://NodeInfo@127.0.0.1:8545");
+        }
+        List<String> txids = safe4.safe3.redeemMasterNode("0x020274d1ddb0d006eb9a3c4871091c191c46a01c3fb8f09cfd1ae9192f893712", privateKeys, enodes);
         System.out.println(txids);
         Assertions.assertTrue(txids.size() > 0);
     }
