@@ -31,6 +31,7 @@ public class Safe3 extends AbstractContract {
         BigInteger privKey;
         BigInteger pubKey;
         String safe3Addr;
+        byte[] sig;
         List<byte[]> availablePubKeys = new ArrayList<>();
         List<byte[]> availableSigs = new ArrayList<>();
         List<byte[]> lockedPubKeys = new ArrayList<>();
@@ -39,24 +40,26 @@ public class Safe3 extends AbstractContract {
             privKey = Numeric.toBigInt(privateKey);
             pubKey = Safe3Util.getCompressedPublicKey(privKey);
             safe3Addr = Safe3Util.getSafe3Addr(pubKey);
+            sig = Safe4Util.signMessage(Hash.sha256(safe3Addr.getBytes()), privKey);
             if (existAvailableNeedToRedeem(safe3Addr)) {
                 availablePubKeys.add(pubKey.toByteArray());
-                availableSigs.add(Safe4Util.signMessage(Hash.sha256(safe3Addr.getBytes()), privKey));
+                availableSigs.add(sig);
             }
             if (existLockedNeedToRedeem(safe3Addr)) {
                 lockedPubKeys.add(pubKey.toByteArray());
-                lockedSigs.add(Safe4Util.signMessage(Hash.sha256(safe3Addr.getBytes()), privKey));
+                lockedSigs.add(sig);
             }
 
             pubKey = Safe3Util.getUncompressedPublicKey(privKey);
             safe3Addr = Safe3Util.getSafe3Addr(pubKey);
+            sig = Safe4Util.signMessage(Hash.sha256(safe3Addr.getBytes()), privKey);
             if (existAvailableNeedToRedeem(safe3Addr)) {
                 availablePubKeys.add(pubKey.toByteArray());
-                availableSigs.add(Safe4Util.signMessage(Hash.sha256(safe3Addr.getBytes()), privKey));
+                availableSigs.add(sig);
             }
             if (existLockedNeedToRedeem(safe3Addr)) {
                 lockedPubKeys.add(pubKey.toByteArray());
-                lockedSigs.add(Safe4Util.signMessage(Hash.sha256(safe3Addr.getBytes()), privKey));
+                lockedSigs.add(sig);
             }
         }
 
@@ -73,28 +76,29 @@ public class Safe3 extends AbstractContract {
         return txids;
     }
 
-    public List<String> redeemMasterNode(String callerPrivateKey, List<String> privateKeys, List<String> enodes) throws Exception {
+    public List<String> batchRedeemMasterNode(String callerPrivateKey, List<String> privateKeys, List<String> enodes) throws Exception {
         BigInteger privKey;
         BigInteger pubKey;
         String safe3Addr;
+        byte[] sig;
         List<byte[]> pubKeys = new ArrayList<>();
         List<byte[]> sigs = new ArrayList<>();
-        List<byte[]> lockedPubKeys = new ArrayList<>();
-        List<byte[]> lockedSigs = new ArrayList<>();
         for (String privateKey : privateKeys) {
             privKey = Numeric.toBigInt(privateKey);
             pubKey = Safe3Util.getCompressedPublicKey(privKey);
             safe3Addr = Safe3Util.getSafe3Addr(pubKey);
+            sig = Safe4Util.signMessage(Hash.sha256(safe3Addr.getBytes()), privKey);
             if (existMasterNodeNeedToRedeem(safe3Addr)) {
                 pubKeys.add(pubKey.toByteArray());
-                sigs.add(Safe4Util.signMessage(Hash.sha256(safe3Addr.getBytes()), privKey));
+                sigs.add(sig);
             }
 
             pubKey = Safe3Util.getUncompressedPublicKey(privKey);
             safe3Addr = Safe3Util.getSafe3Addr(pubKey);
+            sig = Safe4Util.signMessage(Hash.sha256(safe3Addr.getBytes()), privKey);
             if (existMasterNodeNeedToRedeem(safe3Addr)) {
                 pubKeys.add(pubKey.toByteArray());
-                sigs.add(Safe4Util.signMessage(Hash.sha256(safe3Addr.getBytes()), privKey));
+                sigs.add(sig);
             }
         }
 

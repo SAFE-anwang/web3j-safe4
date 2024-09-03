@@ -61,7 +61,7 @@ public class Safe3Test {
         for (int i = 0; i < privateKeys.size(); i++) {
             enodes.add("enode://NodeInfo@127.0.0.1:8545");
         }
-        List<String> txids = safe4.safe3.redeemMasterNode("0x020274d1ddb0d006eb9a3c4871091c191c46a01c3fb8f09cfd1ae9192f893712", privateKeys, enodes);
+        List<String> txids = safe4.safe3.batchRedeemMasterNode("0x020274d1ddb0d006eb9a3c4871091c191c46a01c3fb8f09cfd1ae9192f893712", privateKeys, enodes);
         System.out.println(txids);
         Assertions.assertTrue(txids.size() > 0);
     }
