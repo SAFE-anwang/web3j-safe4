@@ -76,7 +76,7 @@ public class Safe3 extends AbstractContract {
         return txids;
     }
 
-    public List<String> batchRedeemMasterNode(String callerPrivateKey, List<String> privateKeys, List<String> enodes) throws Exception {
+    public String batchRedeemMasterNode(String callerPrivateKey, List<String> privateKeys, List<String> enodes) throws Exception {
         BigInteger privKey;
         BigInteger pubKey;
         String safe3Addr;
@@ -105,9 +105,9 @@ public class Safe3 extends AbstractContract {
         List<String> txids = new ArrayList<>();
         if (pubKeys.size() != 0) {
             Function function = new Function("batchRedeemMasterNode", Arrays.asList(new DynamicArray<>(DynamicBytes.class, Utils.typeMap(pubKeys, DynamicBytes.class)), new DynamicArray<>(DynamicBytes.class, Utils.typeMap(sigs, DynamicBytes.class)), new DynamicArray<>(Utf8String.class, Utils.typeMap(enodes, Utf8String.class))), Collections.emptyList());
-            txids.add(call(callerPrivateKey, function));
+            return call(callerPrivateKey, function);
         }
-        return txids;
+        return "";
     }
 
     public BigInteger getAllAvailableNum() throws Exception {
