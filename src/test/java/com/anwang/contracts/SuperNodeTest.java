@@ -144,6 +144,14 @@ public class SuperNodeTest {
     }
 
     @Test
+    public void testGetTops4Creator() throws Exception {
+        Address creator = new Address("0xa5cec2b8cda30da3f3170b4505cb44226b6c9dd2");
+        List<Address> addrs = safe4.supernode.getTops4Creator(creator);
+        System.out.println(addrs);
+        Assertions.assertTrue(addrs.size() > 0);
+    }
+
+    @Test
     public void testGetOfficials() throws Exception {
         List<Address> addrs = safe4.supernode.getOfficials();
         System.out.println(addrs);
@@ -184,6 +192,15 @@ public class SuperNodeTest {
         Address addr = new Address("0xd6ebea69f2d81b9ca259c0b6ed3d9ad6aa206ef1");
         BigInteger lockID = BigInteger.valueOf(14);
         Boolean flag = safe4.supernode.existLockID(addr, lockID);
+        System.out.println(flag);
+        Assertions.assertTrue(flag);
+    }
+
+    @Test
+    public void testExistFounder() throws Exception {
+        Address addr = new Address("0xd6ebea69f2d81b9ca259c0b6ed3d9ad6aa206ef1");
+        Address founder = new Address("0xd6ebea69f2d81b9ca259c0b6ed3d9ad6aa206ef1");
+        Boolean flag = safe4.supernode.existFounder(addr, founder);
         System.out.println(flag);
         Assertions.assertTrue(flag);
     }

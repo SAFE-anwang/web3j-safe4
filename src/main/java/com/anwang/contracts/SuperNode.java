@@ -113,6 +113,12 @@ public class SuperNode {
         return ((DynamicArray<Address>) someTypes.get(0)).getValue();
     }
 
+    public List<Address> getTops4Creator(Address creator) throws Exception {
+        Function function = new Function("getTops4Creator", Collections.singletonList(creator), Collections.singletonList(new TypeReference<DynamicArray<Address>>() {}));
+        List<Type> someTypes = storageContract.query(function);
+        return ((DynamicArray<Address>) someTypes.get(0)).getValue();
+    }
+
     public List<Address> getOfficials() throws Exception {
         Function function = new Function("getOfficials", Collections.emptyList(), Collections.singletonList(new TypeReference<DynamicArray<Address>>() {}));
         List<Type> someTypes = storageContract.query(function);
@@ -145,6 +151,12 @@ public class SuperNode {
 
     public Boolean existLockID(Address addr, BigInteger lockID) throws Exception {
         Function function = new Function("existLockID", Arrays.asList(addr, new Uint256(lockID)), Collections.singletonList(new TypeReference<Bool>() {}));
+        List<Type> someTypes = storageContract.query(function);
+        return ((Bool) someTypes.get(0)).getValue();
+    }
+
+    public Boolean existFounder(Address addr, Address founder) throws Exception {
+        Function function = new Function("existFounder", Arrays.asList(addr, founder), Collections.singletonList(new TypeReference<Bool>() {}));
         List<Type> someTypes = storageContract.query(function);
         return ((Bool) someTypes.get(0)).getValue();
     }
