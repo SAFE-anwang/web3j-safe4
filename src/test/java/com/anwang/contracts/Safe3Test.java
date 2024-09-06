@@ -6,6 +6,7 @@ import com.anwang.types.safe3.LockedSafe3Info;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.web3j.abi.datatypes.Address;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.http.HttpService;
 
@@ -38,7 +39,7 @@ public class Safe3Test {
         privateKeys.add("0xb436b293e8d2fce2d67ff22e1067c804da1b2d20686de111762d9f93e5e66449");
         privateKeys.add("0xcdd21cf48b6e3f3accf57bf8e00dccb67db9902a0abb6172ab47c0707f384205");
         privateKeys.add("0x24793cf4a1dad93413592df26b4be89857f1fa483448f7c36690908659f83455");
-        List<String> txids = safe4.safe3.batchRedeemSafe3("0x020274d1ddb0d006eb9a3c4871091c191c46a01c3fb8f09cfd1ae9192f893712", privateKeys);
+        List<String> txids = safe4.safe3.batchRedeemSafe3("0x020274d1ddb0d006eb9a3c4871091c191c46a01c3fb8f09cfd1ae9192f893712", privateKeys, new Address("0x9432920f31f9f81b8d0002231c111d7e5eb1e4e1"));
         System.out.println(txids);
         Assertions.assertTrue(txids.size() > 0);
     }
@@ -61,7 +62,7 @@ public class Safe3Test {
         for (int i = 0; i < privateKeys.size(); i++) {
             enodes.add("enode://NodeInfo@127.0.0.1:8545");
         }
-        String txid = safe4.safe3.batchRedeemMasterNode("0x020274d1ddb0d006eb9a3c4871091c191c46a01c3fb8f09cfd1ae9192f893712", privateKeys, enodes);
+        String txid = safe4.safe3.batchRedeemMasterNode("0x020274d1ddb0d006eb9a3c4871091c191c46a01c3fb8f09cfd1ae9192f893712", privateKeys, enodes, new Address("0x9432920f31f9f81b8d0002231c111d7e5eb1e4e1"));
         System.out.println(txid);
         Assertions.assertTrue(txid.length() > 0);
     }

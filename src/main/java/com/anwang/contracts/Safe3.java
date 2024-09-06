@@ -27,10 +27,11 @@ public class Safe3 extends AbstractContract {
     }
 
     // redeem for available & locked SAFE3
-    public List<String> batchRedeemSafe3(String callerPrivateKey, List<String> privateKeys) throws Exception {
+    public List<String> batchRedeemSafe3(String callerPrivateKey, List<String> privateKeys, Address targetAddr) throws Exception {
         BigInteger privKey;
         BigInteger pubKey;
         String safe3Addr;
+        byte[] buf;
         byte[] sig;
         List<byte[]> availablePubKeys = new ArrayList<>();
         List<byte[]> availableSigs = new ArrayList<>();
@@ -40,7 +41,10 @@ public class Safe3 extends AbstractContract {
             privKey = Numeric.toBigInt(privateKey);
             pubKey = Safe3Util.getCompressedPublicKey(privKey);
             safe3Addr = Safe3Util.getSafe3Addr(pubKey);
-            sig = Safe4Util.signMessage(Hash.sha256(safe3Addr.getBytes()), privKey);
+            buf = new byte[safe3Addr.getBytes().length + 20];
+            System.arraycopy(safe3Addr.getBytes(), 0, buf, 0, safe3Addr.getBytes().length);
+            System.arraycopy(Numeric.hexStringToByteArray(targetAddr.getValue()), 0, buf, safe3Addr.getBytes().length, 20);
+            sig = Safe4Util.signMessage(Hash.sha256(buf), privKey);
             if (existAvailableNeedToRedeem(safe3Addr)) {
                 availablePubKeys.add(pubKey.toByteArray());
                 availableSigs.add(sig);
@@ -52,7 +56,10 @@ public class Safe3 extends AbstractContract {
 
             pubKey = Safe3Util.getUncompressedPublicKey(privKey);
             safe3Addr = Safe3Util.getSafe3Addr(pubKey);
-            sig = Safe4Util.signMessage(Hash.sha256(safe3Addr.getBytes()), privKey);
+            buf = new byte[safe3Addr.getBytes().length + 20];
+            System.arraycopy(safe3Addr.getBytes(), 0, buf, 0, safe3Addr.getBytes().length);
+            System.arraycopy(Numeric.hexStringToByteArray(targetAddr.getValue()), 0, buf, safe3Addr.getBytes().length, 20);
+            sig = Safe4Util.signMessage(Hash.sha256(buf), privKey);
             if (existAvailableNeedToRedeem(safe3Addr)) {
                 availablePubKeys.add(pubKey.toByteArray());
                 availableSigs.add(sig);
@@ -65,21 +72,22 @@ public class Safe3 extends AbstractContract {
 
         List<String> txids = new ArrayList<>();
         if (availablePubKeys.size() != 0) {
-            Function function = new Function("batchRedeemAvailable", Arrays.asList(new DynamicArray<>(DynamicBytes.class, Utils.typeMap(availablePubKeys, DynamicBytes.class)), new DynamicArray<>(DynamicBytes.class, Utils.typeMap(availableSigs, DynamicBytes.class))), Collections.emptyList());
+            Function function = new Function("batchRedeemAvailable", Arrays.asList(new DynamicArray<>(DynamicBytes.class, Utils.typeMap(availablePubKeys, DynamicBytes.class)), new DynamicArray<>(DynamicBytes.class, Utils.typeMap(availableSigs, DynamicBytes.class)), targetAddr), Collections.emptyList());
             txids.add(call(callerPrivateKey, function));
         }
 
         if (lockedPubKeys.size() != 0) {
-            Function function = new Function("batchRedeemLocked", Arrays.asList(new DynamicArray<>(DynamicBytes.class, Utils.typeMap(availablePubKeys, DynamicBytes.class)), new DynamicArray<>(DynamicBytes.class, Utils.typeMap(availableSigs, DynamicBytes.class))), Collections.emptyList());
+            Function function = new Function("batchRedeemLocked", Arrays.asList(new DynamicArray<>(DynamicBytes.class, Utils.typeMap(availablePubKeys, DynamicBytes.class)), new DynamicArray<>(DynamicBytes.class, Utils.typeMap(availableSigs, DynamicBytes.class)), targetAddr), Collections.emptyList());
             txids.add(call(callerPrivateKey, function));
         }
         return txids;
     }
 
-    public String batchRedeemMasterNode(String callerPrivateKey, List<String> privateKeys, List<String> enodes) throws Exception {
+    public String batchRedeemMasterNode(String callerPrivateKey, List<String> privateKeys, List<String> enodes, Address targetAddr) throws Exception {
         BigInteger privKey;
         BigInteger pubKey;
         String safe3Addr;
+        byte[] buf;
         byte[] sig;
         List<byte[]> pubKeys = new ArrayList<>();
         List<byte[]> sigs = new ArrayList<>();
@@ -87,7 +95,10 @@ public class Safe3 extends AbstractContract {
             privKey = Numeric.toBigInt(privateKey);
             pubKey = Safe3Util.getCompressedPublicKey(privKey);
             safe3Addr = Safe3Util.getSafe3Addr(pubKey);
-            sig = Safe4Util.signMessage(Hash.sha256(safe3Addr.getBytes()), privKey);
+            buf = new byte[safe3Addr.getBytes().length + 20];
+            System.arraycopy(safe3Addr.getBytes(), 0, buf, 0, safe3Addr.getBytes().length);
+            System.arraycopy(Numeric.hexStringToByteArray(targetAddr.getValue()), 0, buf, safe3Addr.getBytes().length, 20);
+            sig = Safe4Util.signMessage(Hash.sha256(buf), privKey);
             if (existMasterNodeNeedToRedeem(safe3Addr)) {
                 pubKeys.add(pubKey.toByteArray());
                 sigs.add(sig);
@@ -95,7 +106,10 @@ public class Safe3 extends AbstractContract {
 
             pubKey = Safe3Util.getUncompressedPublicKey(privKey);
             safe3Addr = Safe3Util.getSafe3Addr(pubKey);
-            sig = Safe4Util.signMessage(Hash.sha256(safe3Addr.getBytes()), privKey);
+            buf = new byte[safe3Addr.getBytes().length + 20];
+            System.arraycopy(safe3Addr.getBytes(), 0, buf, 0, safe3Addr.getBytes().length);
+            System.arraycopy(Numeric.hexStringToByteArray(targetAddr.getValue()), 0, buf, safe3Addr.getBytes().length, 20);
+            sig = Safe4Util.signMessage(Hash.sha256(buf), privKey);
             if (existMasterNodeNeedToRedeem(safe3Addr)) {
                 pubKeys.add(pubKey.toByteArray());
                 sigs.add(sig);
@@ -104,7 +118,7 @@ public class Safe3 extends AbstractContract {
 
         List<String> txids = new ArrayList<>();
         if (pubKeys.size() != 0) {
-            Function function = new Function("batchRedeemMasterNode", Arrays.asList(new DynamicArray<>(DynamicBytes.class, Utils.typeMap(pubKeys, DynamicBytes.class)), new DynamicArray<>(DynamicBytes.class, Utils.typeMap(sigs, DynamicBytes.class)), new DynamicArray<>(Utf8String.class, Utils.typeMap(enodes, Utf8String.class))), Collections.emptyList());
+            Function function = new Function("batchRedeemMasterNode", Arrays.asList(new DynamicArray<>(DynamicBytes.class, Utils.typeMap(pubKeys, DynamicBytes.class)), new DynamicArray<>(DynamicBytes.class, Utils.typeMap(sigs, DynamicBytes.class)), new DynamicArray<>(Utf8String.class, Utils.typeMap(enodes, Utf8String.class)), targetAddr), Collections.emptyList());
             return call(callerPrivateKey, function);
         }
         return "";
