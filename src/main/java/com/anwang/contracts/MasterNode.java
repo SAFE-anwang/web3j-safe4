@@ -144,4 +144,22 @@ public class MasterNode {
         List<Type> someTypes = storageContract.query(function);
         return ((Bool) someTypes.get(0)).getValue();
     }
+
+    public Boolean existNodeAddress(Address addr) throws Exception {
+        Function function = new Function("existNodeAddress", Collections.singletonList(addr), Collections.singletonList(new TypeReference<Bool>() {}));
+        List<Type> someTypes = storageContract.query(function);
+        return ((Bool) someTypes.get(0)).getValue();
+    }
+
+    public Boolean existNodeEnode(String enode) throws Exception {
+        Function function = new Function("existNodeEnode", Collections.singletonList(new Utf8String(enode)), Collections.singletonList(new TypeReference<Bool>() {}));
+        List<Type> someTypes = storageContract.query(function);
+        return ((Bool) someTypes.get(0)).getValue();
+    }
+
+    public Boolean existNodeFounder(Address addr) throws Exception {
+        Function function = new Function("existNodeFounder", Collections.singletonList(addr), Collections.singletonList(new TypeReference<Bool>() {}));
+        List<Type> someTypes = storageContract.query(function);
+        return ((Bool) someTypes.get(0)).getValue();
+    }
 }
