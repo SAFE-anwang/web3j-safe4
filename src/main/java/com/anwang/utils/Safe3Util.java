@@ -62,4 +62,29 @@ public class Safe3Util {
         d.doFinal(r, 0);
         return r;
     }
+
+    public static String getSecretKey(BigInteger privateKey, Boolean isCompress) {
+        byte[] data;
+        int len = 33;
+        if (isCompress) {
+            len += 1;
+        }
+        data = new byte[len];
+        data[0] = (byte) 0xCC;
+        if(privateKey.toByteArray().length == 33) {
+            System.arraycopy(privateKey.toByteArray(), 1, data, 1, privateKey.toByteArray().length - 1);
+        } else {
+            System.arraycopy(privateKey.toByteArray(), 0, data, 1, privateKey.toByteArray().length);
+        }
+        if (isCompress) {
+            data[33] = 0x01;
+        }
+        byte[] hash = sha256(data);
+        hash = sha256(hash);
+
+        byte[] buf = new byte[data.length + 4];
+        System.arraycopy(data, 0, buf, 0, data.length);
+        System.arraycopy(hash, 0, buf, data.length, 4);
+        return Base58.base58Encode(buf);
+    }
 }
