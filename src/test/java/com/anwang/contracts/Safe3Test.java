@@ -26,6 +26,40 @@ public class Safe3Test {
     }
 
     @Test
+    public void testAddSafe3() throws Exception {
+//        String callerPrivateKey = "0x78cc1725d7e8ce249d6849b36785bb7bae695b667da24240cf29caf10c14473a";
+//        List<String> txids = new ArrayList<>();
+//        int count = 1;
+//        for (int k = 0; k < count; k++) {
+//            ECKeyPair ecKeyPair = Keys.createEcKeyPair();
+//            String privateKey = Numeric.toHexStringWithPrefixZeroPadded(ecKeyPair.getPrivateKey(), 64);
+//            BigInteger privKey = Numeric.toBigInt(privateKey);
+//            BigInteger compressedPublicKey = Safe3Util.getCompressedPublicKey(privKey);
+//            String safe3Addr = Safe3Util.getSafe3Addr(compressedPublicKey);
+//            String safe4Addr = new Address(getAddress(Sign.publicKeyFromPrivate(privKey))).toString();
+//
+//            System.out.println("\n" + (k + 1) + ". " + privateKey + ", Bitcoin Secret Key: " + Safe3Util.getSecretKey(privKey, true));
+//            System.out.println("safe3 addr: " + safe3Addr);
+//            System.out.println("safe4 addr: " + safe4Addr);
+//            txids.addAll(safe4.safe3.addSafe3(callerPrivateKey, safe3Addr));
+//        }
+//        Assertions.assertTrue(txids.size() > 0);
+
+        String callerPrivateKey = "0x78cc1725d7e8ce249d6849b36785bb7bae695b667da24240cf29caf10c14473a";
+        String safe3Addr = "XkahCNxbcsBCdBwMrKXBsAxYkQXgn43tfp";
+        List<String> txids = safe4.safe3.addSafe3(callerPrivateKey, safe3Addr);
+        Assertions.assertTrue(txids.size() > 0);
+    }
+
+    @Test
+    public void testRestSafe3() throws Exception {
+        String callerPrivateKey = "0x78cc1725d7e8ce249d6849b36785bb7bae695b667da24240cf29caf10c14473a";
+        String safe3Addr = "XkahCNxbcsBCdBwMrKXBsAxYkQXgn43tfp";
+        String txid = safe4.safe3.resetSafe3(callerPrivateKey, safe3Addr);
+        Assertions.assertTrue(txid.length() > 0);
+    }
+
+    @Test
     public void testRedeemSafe() throws Exception {
         List<String> privateKeys = new ArrayList<>();
         privateKeys.add("0x7f5eb9b7027b6c138caf1c48317d75589101956a9cf370258737bed0f5613a9a");

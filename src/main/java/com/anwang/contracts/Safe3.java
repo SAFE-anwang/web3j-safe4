@@ -14,16 +14,37 @@ import org.web3j.protocol.Web3j;
 import org.web3j.utils.Numeric;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Safe3 extends AbstractContract {
 
     public Safe3(Web3j web3j, long chainId) {
         super(web3j, chainId, Safe4Contract.Safe3ContractAddr);
+    }
+
+    // add Safe3 record, just for testnet
+    public List<String> addSafe3(String callerPrivateKey, String safe3Addr) throws Exception {
+        if (chainId != 6666666) {
+            throw new Exception("Just for testnet");
+        }
+
+        List<String> txids = new ArrayList<>();
+        Random random = new Random(System.currentTimeMillis());
+        BigInteger amount = new BigInteger(String.valueOf(random.nextInt(5) + 1)).multiply(new BigInteger("100000000"));
+        Function function = new Function("addAvailable", Arrays.asList(new Utf8String(safe3Addr), new Uint256(amount)), Collections.emptyList());
+        txids.add(call(callerPrivateKey, function));
+
+        int count = random.nextInt(5) + 1;
+        for (int i = 0; i < count; i++) {
+            amount = new BigInteger(String.valueOf(random.nextInt(10) + 1)).multiply(new BigInteger("100000000"));
+            function = new Function("addLocked", Arrays.asList(new Utf8String(safe3Addr), new Uint256(amount)), Collections.emptyList());
+            txids.add(call(callerPrivateKey, function));
+        }
+
+        function = new Function("addMasterNode", Arrays.asList(new Utf8String(safe3Addr)), Collections.emptyList());
+        txids.add(call(callerPrivateKey, function));
+        return txids;
     }
 
     // reset Safe3 record, just for testnet
