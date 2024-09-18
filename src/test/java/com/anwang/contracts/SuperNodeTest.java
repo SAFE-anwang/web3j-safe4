@@ -137,6 +137,22 @@ public class SuperNodeTest {
     }
 
     @Test
+    public void testGetAddrNum4Partner() throws Exception {
+        Address partner = new Address("0x536c8071e1083639fc7fac7fc8db04a698c409a1");
+        BigInteger num = safe4.supernode.getAddrNum4Partner(partner);
+        System.out.println(num);
+        Assertions.assertTrue(num.compareTo(BigInteger.ZERO) > 0);
+    }
+
+    @Test
+    public void testGetAddrs4Partner() throws Exception {
+        Address partner = new Address("0x536c8071e1083639fc7fac7fc8db04a698c409a1");
+        List<Address> addrs = safe4.supernode.getAddrs4Partner(partner, BigInteger.ZERO, BigInteger.valueOf(100));
+        System.out.println(addrs);
+        Assertions.assertTrue(addrs.size() > 0);
+    }
+
+    @Test
     public void testGetTops() throws Exception {
         List<Address> addrs = safe4.supernode.getTops();
         System.out.println(addrs);
@@ -198,9 +214,8 @@ public class SuperNodeTest {
 
     @Test
     public void testExistFounder() throws Exception {
-        Address addr = new Address("0xd6ebea69f2d81b9ca259c0b6ed3d9ad6aa206ef1");
         Address founder = new Address("0xd6ebea69f2d81b9ca259c0b6ed3d9ad6aa206ef1");
-        Boolean flag = safe4.supernode.existFounder(addr, founder);
+        Boolean flag = safe4.supernode.existFounder(founder);
         System.out.println(flag);
         Assertions.assertTrue(flag);
     }

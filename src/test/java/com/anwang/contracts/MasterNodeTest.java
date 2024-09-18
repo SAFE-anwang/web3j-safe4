@@ -136,6 +136,22 @@ public class MasterNodeTest {
     }
 
     @Test
+    public void testGetAddrNum4Partner() throws Exception {
+        Address partner = new Address("0x536c8071e1083639fc7fac7fc8db04a698c409a1");
+        BigInteger num = safe4.masternode.getAddrNum4Partner(partner);
+        System.out.println(num);
+        Assertions.assertTrue(num.compareTo(BigInteger.ZERO) > 0);
+    }
+
+    @Test
+    public void testGetAddrs4Partner() throws Exception {
+        Address partner = new Address("0x536c8071e1083639fc7fac7fc8db04a698c409a1");
+        List<Address> addrs = safe4.masternode.getAddrs4Partner(partner, BigInteger.ZERO, BigInteger.valueOf(100));
+        System.out.println(addrs);
+        Assertions.assertTrue(addrs.size() > 0);
+    }
+
+    @Test
     public void testGetOfficials() throws Exception {
         List<Address> addrs = safe4.masternode.getOfficials();
         System.out.println(addrs);
@@ -169,6 +185,14 @@ public class MasterNodeTest {
         Address addr = new Address("0xd52114c4071b5bfbd06a657a3db538bfd559a481");
         BigInteger lockID = BigInteger.valueOf(15);
         Boolean flag = safe4.masternode.existLockID(addr, lockID);
+        System.out.println(flag);
+        Assertions.assertTrue(flag);
+    }
+
+    @Test
+    public void testExistFounder() throws Exception {
+        Address founder = new Address("0xd52114c4071b5bfbd06a657a3db538bfd559a481");
+        Boolean flag = safe4.masternode.existFounder(founder);
         System.out.println(flag);
         Assertions.assertTrue(flag);
     }
