@@ -64,7 +64,7 @@ public abstract class AbstractContract {
         if (ethEstimateGas.getError() != null) {
             throw new Exception(ethEstimateGas.getError().getMessage());
         }
-        BigInteger gasLimit = ethEstimateGas.getAmountUsed();
+        BigInteger gasLimit = ethEstimateGas.getAmountUsed().multiply(BigInteger.valueOf(6)).divide(BigInteger.valueOf(5));
         RawTransaction rawTransaction = RawTransaction.createTransaction(nonce, gasPrice, gasLimit, contractAddr, value, data);
         final String signedTransactionData = Numeric.toHexString(TransactionEncoder.signMessage(rawTransaction, chainId, credentials));
         EthSendTransaction ethSendTransaction = web3j.ethSendRawTransaction(signedTransactionData).sendAsync().get();
