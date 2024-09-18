@@ -26,6 +26,15 @@ public class Safe3 extends AbstractContract {
         super(web3j, chainId, Safe4Contract.Safe3ContractAddr);
     }
 
+    // reset Safe3 record, just for testnet
+    public String resetSafe3(String callerPrivateKey, String safe3Addr) throws Exception {
+        if (chainId != 6666666) {
+            throw new Exception("Just for testnet");
+        }
+        Function function = new Function("reset", Collections.singletonList(new Utf8String(safe3Addr)), Collections.emptyList());
+        return call(callerPrivateKey, function);
+    }
+
     // redeem for available & locked SAFE3
     public List<String> batchRedeemSafe3(String callerPrivateKey, List<String> privateKeys, Address targetAddr) throws Exception {
         BigInteger privKey;
