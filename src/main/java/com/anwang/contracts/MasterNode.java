@@ -109,6 +109,18 @@ public class MasterNode {
         return ((DynamicArray<Address>) someTypes.get(0)).getValue();
     }
 
+    public BigInteger getAddrNum4Partner(Address partner) throws Exception {
+        Function function = new Function("getAddrNum4Partner", Collections.singletonList(partner), Collections.singletonList(new TypeReference<Uint256>() {}));
+        List<Type> someTypes = storageContract.query(function);
+        return ((Uint256) someTypes.get(0)).getValue();
+    }
+
+    public List<Address> getAddrs4Partner(Address partner, BigInteger start, BigInteger count) throws Exception {
+        Function function = new Function("getAddrs4Partner", Arrays.asList(partner, new Uint256(start), new Uint256(count)), Collections.singletonList(new TypeReference<DynamicArray<Address>>() {}));
+        List<Type> someTypes = storageContract.query(function);
+        return ((DynamicArray<Address>) someTypes.get(0)).getValue();
+    }
+
     public List<Address> getOfficials() throws Exception {
         Function function = new Function("getOfficials", Collections.emptyList(), Collections.singletonList(new TypeReference<DynamicArray<Address>>() {}));
         List<Type> someTypes = storageContract.query(function);
@@ -135,6 +147,12 @@ public class MasterNode {
 
     public Boolean existLockID(Address addr, BigInteger lockID) throws Exception {
         Function function = new Function("existLockID", Arrays.asList(addr, new Uint256(lockID)), Collections.singletonList(new TypeReference<Bool>() {}));
+        List<Type> someTypes = storageContract.query(function);
+        return ((Bool) someTypes.get(0)).getValue();
+    }
+
+    public Boolean existFounder(Address founder) throws Exception {
+        Function function = new Function("existFounder", Collections.singletonList(founder), Collections.singletonList(new TypeReference<Bool>() {}));
         List<Type> someTypes = storageContract.query(function);
         return ((Bool) someTypes.get(0)).getValue();
     }
