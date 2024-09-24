@@ -6,6 +6,7 @@ import com.anwang.types.proposal.ProposalVoteInfo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.web3j.abi.datatypes.Address;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.http.HttpService;
 
@@ -133,14 +134,14 @@ public class ProposalTest {
 
     @Test
     public void testGetMineNum() throws Exception {
-        BigInteger num = safe4.proposal.getMineNum("0xe171bcc091332eaa8fd76f529f880bd210b3187354706599b033df8155a94d84");
+        BigInteger num = safe4.proposal.getMineNum(new Address("0xd52114c4071b5bfbd06a657a3db538bfd559a481"));
         System.out.println(num);
         Assertions.assertTrue(num.compareTo(BigInteger.ZERO) > 0);
     }
 
     @Test
     public void testGetMines() throws Exception {
-        List<BigInteger> ids = safe4.proposal.getMines("0xe171bcc091332eaa8fd76f529f880bd210b3187354706599b033df8155a94d84", BigInteger.ZERO, BigInteger.valueOf(100));
+        List<BigInteger> ids = safe4.proposal.getMines(new Address("0xd52114c4071b5bfbd06a657a3db538bfd559a481"), BigInteger.ZERO, BigInteger.valueOf(100));
         System.out.println(ids);
         Assertions.assertTrue(ids.size() > 0);
     }

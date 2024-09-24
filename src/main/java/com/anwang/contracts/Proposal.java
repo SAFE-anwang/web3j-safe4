@@ -96,15 +96,15 @@ public class Proposal extends AbstractContract {
         return ((DynamicArray<Uint256>) someTypes.get(0)).getValue().stream().map(v -> v.getValue()).collect(Collectors.toList());
     }
 
-    public BigInteger getMineNum(String privateKey) throws Exception {
-        Function function = new Function("getMineNum", Collections.emptyList(), Collections.singletonList(new TypeReference<Uint256>() {}));
-        List<Type> someTypes = query(function, getAddressFromPrivateKey(privateKey));
+    public BigInteger getMineNum(Address creator) throws Exception {
+        Function function = new Function("getMineNum", Collections.singletonList(creator), Collections.singletonList(new TypeReference<Uint256>() {}));
+        List<Type> someTypes = query(function);
         return ((Uint256) someTypes.get(0)).getValue();
     }
 
-    public List<BigInteger> getMines(String privateKey, BigInteger start, BigInteger count) throws Exception {
-        Function function = new Function("getMines", Arrays.asList(new Uint256(start), new Uint256(count)), Collections.singletonList(new TypeReference<DynamicArray<Uint256>>() {}));
-        List<Type> someTypes = query(function, getAddressFromPrivateKey(privateKey));
+    public List<BigInteger> getMines(Address creator, BigInteger start, BigInteger count) throws Exception {
+        Function function = new Function("getMines", Arrays.asList(creator, new Uint256(start), new Uint256(count)), Collections.singletonList(new TypeReference<DynamicArray<Uint256>>() {}));
+        List<Type> someTypes = query(function);
         return ((DynamicArray<Uint256>) someTypes.get(0)).getValue().stream().map(v -> v.getValue()).collect(Collectors.toList());
     }
 
