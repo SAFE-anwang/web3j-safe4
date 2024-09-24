@@ -6,7 +6,7 @@
 
     <groupId>com.anwang</groupId>
     <artifactId>web3j-safe4</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <packaging>jar</packaging>
     <name>Safe4 API</name>
     <description>Safe4 extension API for JAVA</description>
@@ -34,7 +34,7 @@
         <url>https://github.com/SAFE-anwang/web3j-safe4</url>
         <connection>scm:git:https://github.com/SAFE-anwang/web3j-safe4.git</connection>
         <developerConnection>scm:git:https://github.com/SAFE-anwang/web3j-safe4.git</developerConnection>
-        <tag>1.0.1</tag>
+        <tag>1.0.2</tag>
     </scm>
 
     <properties>
