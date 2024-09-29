@@ -31,13 +31,13 @@ public class Safe3 extends AbstractContract {
 
         List<String> txids = new ArrayList<>();
         Random random = new Random(System.currentTimeMillis());
-        BigInteger amount = new BigInteger(String.valueOf(random.nextInt(5) + 1)).multiply(new BigInteger("100000000"));
+        BigInteger amount = new BigInteger(String.valueOf(random.nextInt(5) + 1)).multiply(new BigInteger("1000000000000000000"));
         Function function = new Function("addAvailable", Arrays.asList(new Utf8String(safe3Addr), new Uint256(amount)), Collections.emptyList());
         txids.add(call(callerPrivateKey, function));
 
         int count = random.nextInt(5) + 1;
         for (int i = 0; i < count; i++) {
-            amount = new BigInteger(String.valueOf(random.nextInt(10) + 1)).multiply(new BigInteger("100000000"));
+            amount = new BigInteger(String.valueOf(random.nextInt(10) + 1)).multiply(new BigInteger("1000000000000000000"));
             function = new Function("addLocked", Arrays.asList(new Utf8String(safe3Addr), new Uint256(amount)), Collections.emptyList());
             txids.add(call(callerPrivateKey, function));
         }
