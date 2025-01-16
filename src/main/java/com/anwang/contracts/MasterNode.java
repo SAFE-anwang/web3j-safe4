@@ -163,6 +163,12 @@ public class MasterNode {
         return ((Bool) someTypes.get(0)).getValue();
     }
 
+    public Boolean isUnion(Address addr) throws Exception {
+        Function function = new Function("isUnion", Collections.singletonList(addr), Collections.singletonList(new TypeReference<Bool>() {}));
+        List<Type> someTypes = storageContract.query(function);
+        return ((Bool) someTypes.get(0)).getValue();
+    }
+
     public Boolean existNodeAddress(Address addr) throws Exception {
         Function function = new Function("existNodeAddress", Collections.singletonList(addr), Collections.singletonList(new TypeReference<Bool>() {}));
         List<Type> someTypes = storageContract.query(function);

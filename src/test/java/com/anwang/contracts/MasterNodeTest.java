@@ -206,6 +206,14 @@ public class MasterNodeTest {
     }
 
     @Test
+    public void testIsUnion() throws Exception {
+        Address addr = new Address("0xd52114c4071b5bfbd06a657a3db538bfd559a481");
+        Boolean flag = safe4.masternode.isUnion(addr);
+        System.out.println(flag);
+        Assertions.assertTrue(!flag);
+    }
+
+    @Test
     public void testExistNodeAddress() throws Exception {
         Boolean flag = safe4.masternode.existNodeAddress(new Address("0xd52114c4071b5bfbd06a657a3db538bfd559a481"));
         System.out.println(flag);

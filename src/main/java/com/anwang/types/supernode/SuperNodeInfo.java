@@ -18,11 +18,12 @@ public class SuperNodeInfo extends DynamicStruct {
     public BigInteger state;
     public List<SuperNodeMemberInfo> founders;
     public SuperNodeIncentivePlan incentivePlan;
+    public Boolean isUnion;
     public BigInteger lastRewardHeight;
     public BigInteger createHeight;
     public BigInteger updateHeight;
 
-    public SuperNodeInfo(BigInteger id, String name, Address addr, Address creator, String enode, String description, Boolean isOfficial, BigInteger state, List<SuperNodeMemberInfo> founders, SuperNodeIncentivePlan incentivePlan, BigInteger lastRewardHeight, BigInteger createHeight, BigInteger updateHeight) {
+    public SuperNodeInfo(BigInteger id, String name, Address addr, Address creator, String enode, String description, Boolean isOfficial, BigInteger state, List<SuperNodeMemberInfo> founders, SuperNodeIncentivePlan incentivePlan, Boolean isUnion, BigInteger lastRewardHeight, BigInteger createHeight, BigInteger updateHeight) {
         super(new Uint256(id),
                 new Utf8String(name),
                 addr,
@@ -33,6 +34,7 @@ public class SuperNodeInfo extends DynamicStruct {
                 new Uint256(state),
                 new DynamicArray<>(SuperNodeMemberInfo.class, founders),
                 incentivePlan,
+                new Bool(isUnion),
                 new Uint256(lastRewardHeight),
                 new Uint256(createHeight),
                 new Uint256(updateHeight));
@@ -46,6 +48,7 @@ public class SuperNodeInfo extends DynamicStruct {
         this.state = state;
         this.founders = founders;
         this.incentivePlan = incentivePlan;
+        this.isUnion = isUnion;
         this.lastRewardHeight = lastRewardHeight;
         this.createHeight = createHeight;
         this.updateHeight = updateHeight;
@@ -61,10 +64,11 @@ public class SuperNodeInfo extends DynamicStruct {
                          @Parameterized(type = Uint256.class) Uint256 state,
                          @Parameterized(type = SuperNodeMemberInfo.class) DynamicArray<SuperNodeMemberInfo> founders,
                          @Parameterized(type = SuperNodeIncentivePlan.class) SuperNodeIncentivePlan incentivePlan,
+                         @Parameterized(type = Bool.class) Bool isUnion,
                          @Parameterized(type = Uint256.class) Uint256 lastRewardHeight,
                          @Parameterized(type = Uint256.class) Uint256 createHeight,
                          @Parameterized(type = Uint256.class) Uint256 updateHeight) {
-        super(id, name, addr, creator, enode, description, isOfficial, state, founders, incentivePlan, lastRewardHeight, createHeight, updateHeight);
+        super(id, name, addr, creator, enode, description, isOfficial, state, founders, incentivePlan, isUnion, lastRewardHeight, createHeight, updateHeight);
         this.id = id.getValue();
         this.name = name.getValue();
         this.addr = addr;
@@ -75,6 +79,7 @@ public class SuperNodeInfo extends DynamicStruct {
         this.state = state.getValue();
         this.founders = founders.getValue();
         this.incentivePlan = incentivePlan;
+        this.isUnion = isUnion.getValue();
         this.lastRewardHeight = lastRewardHeight.getValue();
         this.createHeight = createHeight.getValue();
         this.updateHeight = updateHeight.getValue();
@@ -93,6 +98,7 @@ public class SuperNodeInfo extends DynamicStruct {
                 ", state=" + state +
                 ", founders=" + founders +
                 ", incentivePlan=" + incentivePlan +
+                ", isUnion=" + isUnion +
                 ", lastRewardHeight=" + lastRewardHeight +
                 ", createHeight=" + createHeight +
                 ", updateHeight=" + updateHeight +

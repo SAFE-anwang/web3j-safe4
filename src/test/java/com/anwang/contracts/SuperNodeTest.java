@@ -237,6 +237,14 @@ public class SuperNodeTest {
     }
 
     @Test
+    public void testIsUnion() throws Exception {
+        Address addr = new Address("0x4d244c17d2a957f4a150408f8f4d19382ae8e2c8");
+        Boolean flag = safe4.supernode.isUnion(addr);
+        System.out.println(flag);
+        Assertions.assertTrue(!flag);
+    }
+
+    @Test
     public void testExistNodeAddress() throws Exception {
         Boolean flag = safe4.supernode.existNodeAddress(new Address("0x4d244c17d2a957f4a150408f8f4d19382ae8e2c8"));
         System.out.println(flag);
