@@ -57,6 +57,12 @@ public class AccountManager extends AbstractContract {
         return call(privateKey, function);
     }
 
+    public BigInteger getImmatureAmount(Address addr) throws Exception {
+        Function function = new Function("getImmatureAmount", Collections.singletonList(addr), Collections.singletonList(new TypeReference<Uint256>() {}));
+        List<Type> someTypes = query(function);
+        return ((Uint256) someTypes.get(0)).getValue();
+    }
+
     public AccountAmountInfo getTotalAmount(Address addr) throws Exception {
         Function function = new Function("getTotalAmount", Collections.singletonList(addr), Collections.singletonList(new TypeReference<AccountAmountInfo>() {}));
         List<Type> someTypes = query(function);
