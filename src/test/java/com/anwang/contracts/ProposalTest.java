@@ -32,6 +32,13 @@ public class ProposalTest {
     }
 
     @Test
+    public void testGetImmatureBalance() throws Exception {
+        BigInteger immatureBalance = safe4.proposal.getImmatureBalance();
+        System.out.println(immatureBalance);
+        Assertions.assertTrue(immatureBalance.compareTo(BigInteger.ZERO) > 0);
+    }
+
+    @Test
     public void testCreate() throws Exception {
         // addr: 0xd52114c4071b5bfbd06a657a3db538bfd559a481, privateKey: 0xe171bcc091332eaa8fd76f529f880bd210b3187354706599b033df8155a94d84
         String title = "propsal-2";

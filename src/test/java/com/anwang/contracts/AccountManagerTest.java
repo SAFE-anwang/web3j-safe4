@@ -85,6 +85,13 @@ public class AccountManagerTest {
     }
 
     @Test
+    public void testGetImmatureAmount() throws Exception {
+        BigInteger info = safe4.account.getImmatureAmount(new Address("0x64ae0d18085d0c3ec202a208e96bc2fc24e4a7e8"));
+        System.out.println(info);
+        Assertions.assertTrue(info.compareTo(BigInteger.ZERO) > 0);
+    }
+
+    @Test
     public void testGetTotalAmount() throws Exception {
         AccountAmountInfo info = safe4.account.getTotalAmount(new Address("0x64ae0d18085d0c3ec202a208e96bc2fc24e4a7e8"));
         System.out.println(info.toString());
