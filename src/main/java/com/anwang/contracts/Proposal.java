@@ -26,6 +26,12 @@ public class Proposal extends AbstractContract {
         return ((Uint256) someTypes.get(0)).getValue();
     }
 
+    public BigInteger getImmatureBalance() throws Exception {
+        Function function = new Function("getImmatureBalance", Collections.emptyList(), Collections.singletonList(new TypeReference<Uint256>() {}));
+        List<Type> someTypes = query(function);
+        return ((Uint256) someTypes.get(0)).getValue();
+    }
+
     public String create(String privateKey, String title, BigInteger payAmount, BigInteger payTimes, BigInteger startPayTime, BigInteger endPayTime, String description) throws Exception {
         Function function = new Function("create", Arrays.asList(new Utf8String(title), new Uint256(payAmount), new Uint256(payTimes), new Uint256(startPayTime), new Uint256(endPayTime), new Utf8String(description)), Collections.singletonList(new TypeReference<Uint256>() {}));
         return call(privateKey, new BigInteger("1000000000000000000"), function);
