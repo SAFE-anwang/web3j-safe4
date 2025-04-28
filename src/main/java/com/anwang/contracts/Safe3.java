@@ -67,6 +67,7 @@ public class Safe3 extends AbstractContract {
         List<byte[]> availableSigs = new ArrayList<>();
         List<byte[]> lockedPubKeys = new ArrayList<>();
         List<byte[]> lockedSigs = new ArrayList<>();
+        List<BigInteger> lockedNums = new ArrayList<>();
         for (String privateKey : privateKeys) {
             privKey = Numeric.toBigInt(privateKey);
             pubKey = Safe3Util.getCompressedPublicKey(privKey);
@@ -82,6 +83,7 @@ public class Safe3 extends AbstractContract {
             if (existLockedNeedToRedeem(safe3Addr)) {
                 lockedPubKeys.add(pubKey.toByteArray());
                 lockedSigs.add(sig);
+                lockedNums.add(getLockedNum(safe3Addr));
             }
 
             pubKey = Safe3Util.getUncompressedPublicKey(privKey);
@@ -97,18 +99,68 @@ public class Safe3 extends AbstractContract {
             if (existLockedNeedToRedeem(safe3Addr)) {
                 lockedPubKeys.add(pubKey.toByteArray());
                 lockedSigs.add(sig);
+                lockedNums.add(getLockedNum(safe3Addr));
             }
         }
 
         List<String> txids = new ArrayList<>();
         if (availablePubKeys.size() != 0) {
-            Function function = new Function("batchRedeemAvailable", Arrays.asList(new DynamicArray<>(DynamicBytes.class, Utils.typeMap(availablePubKeys, DynamicBytes.class)), new DynamicArray<>(DynamicBytes.class, Utils.typeMap(availableSigs, DynamicBytes.class)), targetAddr), Collections.emptyList());
-            txids.add(call(callerPrivateKey, function));
+            int i = 0;
+            for(; i < availablePubKeys.size() / 20; i++) {
+                Function function = new Function("batchRedeemAvailable", Arrays.asList(new DynamicArray<>(DynamicBytes.class, Utils.typeMap(availablePubKeys.subList(i*20, (i+1)*20), DynamicBytes.class)), new DynamicArray<>(DynamicBytes.class, Utils.typeMap(availableSigs.subList(i*20, (i+1)*20), DynamicBytes.class)), targetAddr), Collections.emptyList());
+                txids.add("available: " + call(callerPrivateKey, function));
+            }
+            if(availablePubKeys.size() % 20 != 0) {
+                Function function = new Function("batchRedeemAvailable", Arrays.asList(new DynamicArray<>(DynamicBytes.class, Utils.typeMap(availablePubKeys.subList(i*20, availablePubKeys.size()), DynamicBytes.class)), new DynamicArray<>(DynamicBytes.class, Utils.typeMap(availableSigs.subList(i*20,availableSigs.size()), DynamicBytes.class)), targetAddr), Collections.emptyList());
+                txids.add("available: " + call(callerPrivateKey, function));
+            }
         }
 
         if (lockedPubKeys.size() != 0) {
-            Function function = new Function("batchRedeemLocked", Arrays.asList(new DynamicArray<>(DynamicBytes.class, Utils.typeMap(lockedPubKeys, DynamicBytes.class)), new DynamicArray<>(DynamicBytes.class, Utils.typeMap(lockedSigs, DynamicBytes.class)), targetAddr), Collections.emptyList());
-            txids.add(call(callerPrivateKey, function));
+            // one batch: 20 address
+            while(true) {
+                int totalLockedNum = 0;
+                List<byte[]> tempPubkeys = new ArrayList<>();
+                List<byte[]> tempSigs = new ArrayList<>();
+                int i = 0;
+                for (; i < lockedNums.size(); i++) {
+                    int remainLockedNum = lockedNums.get(i).intValue();
+                    totalLockedNum += remainLockedNum;
+                    if (totalLockedNum == 0) {
+                        continue;
+                    }
+                    if (totalLockedNum >= 100) {
+                        tempPubkeys.add(lockedPubKeys.get(i));
+                        tempSigs.add(lockedSigs.get(i));
+                        Function function = new Function("batchRedeemLocked", Arrays.asList(new DynamicArray<>(DynamicBytes.class, Utils.typeMap(tempPubkeys, DynamicBytes.class)), new DynamicArray<>(DynamicBytes.class, Utils.typeMap(tempSigs, DynamicBytes.class)), targetAddr), Collections.emptyList());
+                        txids.add("lock: " + call(callerPrivateKey, function));
+
+                        if (totalLockedNum == 100) {
+                            lockedNums.set(i, BigInteger.ZERO);
+                        } else {
+                            lockedNums.set(i, BigInteger.valueOf(totalLockedNum - 100));
+                        }
+                        break;
+                    } else {
+                        lockedNums.set(i, BigInteger.ZERO);
+                        tempPubkeys.add(lockedPubKeys.get(i));
+                        tempSigs.add(lockedSigs.get(i));
+                        if(tempPubkeys.size() == 20) {
+                            Function function = new Function("batchRedeemLocked", Arrays.asList(new DynamicArray<>(DynamicBytes.class, Utils.typeMap(tempPubkeys, DynamicBytes.class)), new DynamicArray<>(DynamicBytes.class, Utils.typeMap(tempSigs, DynamicBytes.class)), targetAddr), Collections.emptyList());
+                            txids.add("lock: " + call(callerPrivateKey, function));
+                            break;
+                        }
+                    }
+                }
+                if(totalLockedNum == 0) {
+                    break;
+                }
+                if(i == lockedNums.size()) {
+                    Function function = new Function("batchRedeemLocked", Arrays.asList(new DynamicArray<>(DynamicBytes.class, Utils.typeMap(tempPubkeys, DynamicBytes.class)), new DynamicArray<>(DynamicBytes.class, Utils.typeMap(tempSigs, DynamicBytes.class)), targetAddr), Collections.emptyList());
+                    txids.add("lock: " + call(callerPrivateKey, function));
+                    break;
+                }
+            }
         }
         return txids;
     }
