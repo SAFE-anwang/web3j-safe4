@@ -107,7 +107,7 @@ public class Safe3 extends AbstractContract {
         }
 
         if (lockedPubKeys.size() != 0) {
-            Function function = new Function("batchRedeemLocked", Arrays.asList(new DynamicArray<>(DynamicBytes.class, Utils.typeMap(availablePubKeys, DynamicBytes.class)), new DynamicArray<>(DynamicBytes.class, Utils.typeMap(availableSigs, DynamicBytes.class)), targetAddr), Collections.emptyList());
+            Function function = new Function("batchRedeemLocked", Arrays.asList(new DynamicArray<>(DynamicBytes.class, Utils.typeMap(lockedPubKeys, DynamicBytes.class)), new DynamicArray<>(DynamicBytes.class, Utils.typeMap(lockedSigs, DynamicBytes.class)), targetAddr), Collections.emptyList());
             txids.add(call(callerPrivateKey, function));
         }
         return txids;
