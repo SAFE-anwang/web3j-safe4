@@ -108,11 +108,11 @@ public class Safe3 extends AbstractContract {
             int i = 0;
             for(; i < availablePubKeys.size() / 20; i++) {
                 Function function = new Function("batchRedeemAvailable", Arrays.asList(new DynamicArray<>(DynamicBytes.class, Utils.typeMap(availablePubKeys.subList(i*20, (i+1)*20), DynamicBytes.class)), new DynamicArray<>(DynamicBytes.class, Utils.typeMap(availableSigs.subList(i*20, (i+1)*20), DynamicBytes.class)), targetAddr), Collections.emptyList());
-                txids.add("available: " + call(callerPrivateKey, function));
+                txids.add(call(callerPrivateKey, function));
             }
             if(availablePubKeys.size() % 20 != 0) {
-                Function function = new Function("batchRedeemAvailable", Arrays.asList(new DynamicArray<>(DynamicBytes.class, Utils.typeMap(availablePubKeys.subList(i*20, availablePubKeys.size()), DynamicBytes.class)), new DynamicArray<>(DynamicBytes.class, Utils.typeMap(availableSigs.subList(i*20,availableSigs.size()), DynamicBytes.class)), targetAddr), Collections.emptyList());
-                txids.add("available: " + call(callerPrivateKey, function));
+                Function function = new Function("batchRedeemAvailable", Arrays.asList(new DynamicArray<>(DynamicBytes.class, Utils.typeMap(availablePubKeys.subList(i*20, availablePubKeys.size()), DynamicBytes.class)), new DynamicArray<>(DynamicBytes.class, Utils.typeMap(availableSigs.subList(i*20, availableSigs.size()), DynamicBytes.class)), targetAddr), Collections.emptyList());
+                txids.add(call(callerPrivateKey, function));
             }
         }
 
@@ -133,7 +133,7 @@ public class Safe3 extends AbstractContract {
                         tempPubkeys.add(lockedPubKeys.get(i));
                         tempSigs.add(lockedSigs.get(i));
                         Function function = new Function("batchRedeemLocked", Arrays.asList(new DynamicArray<>(DynamicBytes.class, Utils.typeMap(tempPubkeys, DynamicBytes.class)), new DynamicArray<>(DynamicBytes.class, Utils.typeMap(tempSigs, DynamicBytes.class)), targetAddr), Collections.emptyList());
-                        txids.add("lock: " + call(callerPrivateKey, function));
+                        txids.add(call(callerPrivateKey, function));
 
                         if (totalLockedNum == 100) {
                             lockedNums.set(i, BigInteger.ZERO);
@@ -147,7 +147,7 @@ public class Safe3 extends AbstractContract {
                         tempSigs.add(lockedSigs.get(i));
                         if(tempPubkeys.size() == 20) {
                             Function function = new Function("batchRedeemLocked", Arrays.asList(new DynamicArray<>(DynamicBytes.class, Utils.typeMap(tempPubkeys, DynamicBytes.class)), new DynamicArray<>(DynamicBytes.class, Utils.typeMap(tempSigs, DynamicBytes.class)), targetAddr), Collections.emptyList());
-                            txids.add("lock: " + call(callerPrivateKey, function));
+                            txids.add(call(callerPrivateKey, function));
                             break;
                         }
                     }
@@ -157,7 +157,7 @@ public class Safe3 extends AbstractContract {
                 }
                 if(i == lockedNums.size()) {
                     Function function = new Function("batchRedeemLocked", Arrays.asList(new DynamicArray<>(DynamicBytes.class, Utils.typeMap(tempPubkeys, DynamicBytes.class)), new DynamicArray<>(DynamicBytes.class, Utils.typeMap(tempSigs, DynamicBytes.class)), targetAddr), Collections.emptyList());
-                    txids.add("lock: " + call(callerPrivateKey, function));
+                    txids.add(call(callerPrivateKey, function));
                     break;
                 }
             }
@@ -165,7 +165,7 @@ public class Safe3 extends AbstractContract {
         return txids;
     }
 
-    public String batchRedeemMasterNode(String callerPrivateKey, List<String> privateKeys, List<String> enodes, Address targetAddr) throws Exception {
+    public List<String> batchRedeemMasterNode(String callerPrivateKey, List<String> privateKeys, List<String> enodes, Address targetAddr) throws Exception {
         BigInteger privKey;
         BigInteger pubKey;
         String safe3Addr;
@@ -200,10 +200,17 @@ public class Safe3 extends AbstractContract {
 
         List<String> txids = new ArrayList<>();
         if (pubKeys.size() != 0) {
-            Function function = new Function("batchRedeemMasterNode", Arrays.asList(new DynamicArray<>(DynamicBytes.class, Utils.typeMap(pubKeys, DynamicBytes.class)), new DynamicArray<>(DynamicBytes.class, Utils.typeMap(sigs, DynamicBytes.class)), new DynamicArray<>(Utf8String.class, Utils.typeMap(enodes, Utf8String.class)), targetAddr), Collections.emptyList());
-            return call(callerPrivateKey, function);
+            int i = 0;
+            for(; i < pubKeys.size() / 20; i++) {
+                Function function = new Function("batchRedeemMasterNode", Arrays.asList(new DynamicArray<>(DynamicBytes.class, Utils.typeMap(pubKeys.subList(i*20, (i+1)*20), DynamicBytes.class)), new DynamicArray<>(DynamicBytes.class, Utils.typeMap(sigs.subList(i*20, (i+1)*20), DynamicBytes.class)), new DynamicArray<>(Utf8String.class, Utils.typeMap(enodes.subList(i*20, (i+1)*20), Utf8String.class)), targetAddr), Collections.emptyList());
+                txids.add(call(callerPrivateKey, function));
+            }
+            if(pubKeys.size() % 20 != 0) {
+                Function function = new Function("batchRedeemMasterNode", Arrays.asList(new DynamicArray<>(DynamicBytes.class, Utils.typeMap(pubKeys.subList(i*20, pubKeys.size()), DynamicBytes.class)), new DynamicArray<>(DynamicBytes.class, Utils.typeMap(sigs.subList(i*20, sigs.size()), DynamicBytes.class)), new DynamicArray<>(Utf8String.class, Utils.typeMap(enodes.subList(i*20, enodes.size()), Utf8String.class)), targetAddr), Collections.emptyList());
+                txids.add(call(callerPrivateKey, function));
+            }
         }
-        return "";
+        return txids;
     }
 
     public BigInteger getAllAvailableNum() throws Exception {
