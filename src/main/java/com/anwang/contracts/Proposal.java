@@ -90,6 +90,12 @@ public class Proposal extends AbstractContract {
         return ((DynamicArray<ProposalVoteInfo>) someTypes.get(0)).getValue();
     }
 
+    public List<BigInteger> getRewardIDs(BigInteger id) throws Exception {
+        Function function = new Function("getRewardIDs", Collections.singletonList(new Uint256(id)), Collections.singletonList(new TypeReference<DynamicArray<Uint256>>() {}));
+        List<Type> someTypes = query(function);
+        return ((DynamicArray<Uint256>) someTypes.get(0)).getValue().stream().map(v -> v.getValue()).collect(Collectors.toList());
+    }
+
     public BigInteger getNum() throws Exception {
         Function function = new Function("getNum", Collections.emptyList(), Collections.singletonList(new TypeReference<Uint256>() {}));
         List<Type> someTypes = query(function);

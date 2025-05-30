@@ -126,6 +126,13 @@ public class ProposalTest {
     }
 
     @Test
+    public void testGetRewardIDs() throws Exception {
+        List<BigInteger> rewardIDs = safe4.proposal.getRewardIDs(BigInteger.ONE);
+        System.out.println(rewardIDs);
+        Assertions.assertTrue(rewardIDs.size() > 0);
+    }
+
+    @Test
     public void testGetNum() throws Exception {
         BigInteger num = safe4.proposal.getNum();
         System.out.println(num);
