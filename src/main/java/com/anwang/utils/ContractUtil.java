@@ -1,4 +1,4 @@
-package com.anwang.contracts;
+package com.anwang.utils;
 
 import org.web3j.abi.FunctionEncoder;
 import org.web3j.abi.FunctionReturnDecoder;
@@ -20,12 +20,12 @@ import java.util.List;
 
 import static org.web3j.crypto.Keys.getAddress;
 
-public abstract class AbstractContract {
-    protected Web3j web3j;
-    protected long chainId;
-    protected String contractAddr;
+public class ContractUtil {
+    public Web3j web3j;
+    public long chainId;
+    public String contractAddr;
 
-    AbstractContract(Web3j web3j, long chainId, String contractAddr) {
+    public ContractUtil(Web3j web3j, long chainId, String contractAddr) {
         this.web3j = web3j;
         this.chainId = chainId;
         this.contractAddr = contractAddr;
