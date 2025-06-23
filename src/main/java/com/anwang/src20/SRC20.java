@@ -28,7 +28,6 @@ public class SRC20 {
     public List<String> deploy(String privateKey, String name, String symbol, BigInteger totalSupply) throws Exception {
         String data = bytecode + FunctionEncoder.encodeConstructor(Arrays.asList(new Utf8String(name), new Utf8String(symbol), new Uint256(totalSupply)));
         String ret = contractUtil.deploy(privateKey, data);
-        System.out.println(ret);
         return Arrays.asList(ret.split("-"));
     }
 
@@ -91,6 +90,9 @@ public class SRC20 {
     }
 
     public String setLogo(String privateKey, BigInteger value, byte[] logo) throws Exception {
+        if (logo.length > 128 * 1024) {
+            throw new Exception("oversize logo, max: 128 KB");
+        }
         Function function = new Function("setLogo", Collections.singletonList(new DynamicBytes(logo)), Collections.emptyList());
         return contractUtil.call(privateKey, value, function);
     }
