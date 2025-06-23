@@ -5,17 +5,18 @@ import org.web3j.abi.FunctionReturnDecoder;
 import org.web3j.abi.datatypes.Address;
 import org.web3j.abi.datatypes.Function;
 import org.web3j.abi.datatypes.Type;
-import org.web3j.crypto.Credentials;
-import org.web3j.crypto.RawTransaction;
-import org.web3j.crypto.Sign;
-import org.web3j.crypto.TransactionEncoder;
+import org.web3j.crypto.*;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.core.DefaultBlockParameterName;
 import org.web3j.protocol.core.methods.request.Transaction;
 import org.web3j.protocol.core.methods.response.*;
+import org.web3j.rlp.RlpEncoder;
+import org.web3j.rlp.RlpList;
+import org.web3j.rlp.RlpString;
 import org.web3j.utils.Numeric;
 
 import java.math.BigInteger;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.web3j.crypto.Keys.getAddress;
@@ -48,6 +49,37 @@ public class ContractUtil {
         BigInteger privKey = Numeric.toBigInt(privateKey);
         final BigInteger publicKey = Sign.publicKeyFromPrivate(privKey);
         return new Address(getAddress(publicKey)).toString();
+    }
+
+    private String calcContractAddress(String address, BigInteger nonce) {
+        byte[] addressAsBytes = Numeric.hexStringToByteArray(address);
+        byte[] hash =
+                Hash.sha3(RlpEncoder.encode(
+                        new RlpList(
+                                RlpString.create(addressAsBytes),
+                                RlpString.create((nonce)))));
+        hash = Arrays.copyOfRange(hash, 12, hash.length);
+        return Numeric.toHexString(hash);
+    }
+
+    public String deploy(String privateKey, String bin) throws Exception {
+        Credentials credentials = Credentials.create(privateKey);
+        String address = getAddressFromPrivateKey(privateKey);
+        BigInteger nonce = getNonce(address);
+        BigInteger gasPrice = getGasPrice();
+        Transaction transaction = Transaction.createContractTransaction(address, nonce, gasPrice, bin);
+        EthEstimateGas ethEstimateGas = web3j.ethEstimateGas(transaction).send();
+        if (ethEstimateGas.getError() != null) {
+            throw new Exception(ethEstimateGas.getError().getMessage());
+        }
+        BigInteger gasLimit = ethEstimateGas.getAmountUsed().multiply(BigInteger.valueOf(6)).divide(BigInteger.valueOf(5));
+        RawTransaction rawTransaction = RawTransaction.createContractTransaction(nonce, gasPrice, gasLimit, BigInteger.ZERO, bin);
+        final String signedTransactionData = Numeric.toHexString(TransactionEncoder.signMessage(rawTransaction, chainId, credentials));
+        EthSendTransaction ethSendTransaction = web3j.ethSendRawTransaction(signedTransactionData).sendAsync().get();
+        if (ethSendTransaction.hasError()) {
+            throw new Exception(ethSendTransaction.getError().getMessage());
+        }
+        return calcContractAddress(address, nonce) + "-" + ethSendTransaction.getTransactionHash();
     }
 
     public String call(String privateKey, Function function) throws Exception {
