@@ -31,10 +31,6 @@ public class SRC20Mintable {
         return Arrays.asList(ret.split("-"));
     }
 
-    public void load(String contractAddr) {
-        contractUtil.contractAddr = contractAddr;
-    }
-
     // for ERC20
     public String mint(String privateKey, Address to, BigInteger amount) throws Exception {
         Function function = new Function("mint", Arrays.asList(to, new Uint256(amount)), Collections.emptyList());

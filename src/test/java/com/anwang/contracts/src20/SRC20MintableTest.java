@@ -21,11 +21,12 @@ public class SRC20MintableTest {
     @BeforeEach
     public void init() {
         web3j = Web3j.build(new HttpService("http://127.0.0.1:8545"));
-        src20 = new SRC20Mintable(web3j, 6666666);
+        src20 = new SRC20Mintable(web3j, 6666666, "0x6b196c90d9aa6b37112b9e59a00fcdda2a254884");
     }
 
     @Test
     public void testDeploy() throws Exception {
+        src20 = new SRC20Mintable(web3j, 6666666);
         String name = "LMB102";
         String symbol = "LMB102";
         BigInteger totalSupply = new BigInteger("10000000000000000000000000000"); // 1B
@@ -37,7 +38,6 @@ public class SRC20MintableTest {
 
     @Test
     public void testMint() throws Exception {
-        src20.load("0x6b196c90d9aa6b37112b9e59a00fcdda2a254884");
         String txid = src20.mint("0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010", new Address("0xAC110c0f70867F77D9d230e377043F52480A0B7d"), new BigInteger("10000000000000000000000000000"));
         System.out.println(txid);
         Assertions.assertTrue(txid.length() != 0);
@@ -45,7 +45,6 @@ public class SRC20MintableTest {
 
     @Test
     public void testTotalSupply() throws Exception {
-        src20.load("0x6b196c90d9aa6b37112b9e59a00fcdda2a254884");
         BigInteger totalSupply = src20.totalSupply();
         System.out.println("totalSupply: " + totalSupply);
         Assertions.assertEquals(0, totalSupply.compareTo(new BigInteger("10000000000000000000000000000")));
@@ -53,7 +52,6 @@ public class SRC20MintableTest {
 
     @Test
     public void testSetLogo() throws Exception {
-        src20.load("0x6b196c90d9aa6b37112b9e59a00fcdda2a254884");
         byte[] logo = Files.readAllBytes(Paths.get("C:\\Users\\Administrator\\Desktop\\102.png"));
         String txid = src20.setLogo("0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010", logo);
         System.out.println(txid);

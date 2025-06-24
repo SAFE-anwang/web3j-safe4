@@ -31,10 +31,6 @@ public class SRC20Burnable {
         return Arrays.asList(ret.split("-"));
     }
 
-    public void load(String contractAddr) {
-        contractUtil.contractAddr = contractAddr;
-    }
-
     // for ERC20
     public String burn(String privateKey, BigInteger amount) throws Exception {
         Function function = new Function("burn", Collections.singletonList(new Uint256(amount)), Collections.emptyList());
