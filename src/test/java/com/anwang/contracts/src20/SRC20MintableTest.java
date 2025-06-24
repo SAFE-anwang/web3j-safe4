@@ -55,8 +55,7 @@ public class SRC20MintableTest {
     public void testSetLogo() throws Exception {
         src20.load("0x6b196c90d9aa6b37112b9e59a00fcdda2a254884");
         byte[] logo = Files.readAllBytes(Paths.get("C:\\Users\\Administrator\\Desktop\\102.png"));
-        BigInteger value = src20.getLogoPayAmount();
-        String txid = src20.setLogo("0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010", value, logo);
+        String txid = src20.setLogo("0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010", logo);
         System.out.println(txid);
         Assertions.assertTrue(txid.length() != 0);
     }

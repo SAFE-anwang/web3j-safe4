@@ -99,12 +99,12 @@ public class SRC20Burnable {
         return contractUtil.call(privateKey, function);
     }
 
-    public String setLogo(String privateKey, BigInteger value, byte[] logo) throws Exception {
+    public String setLogo(String privateKey, byte[] logo) throws Exception {
         if (logo.length > 128 * 1024) {
             throw new Exception("oversize logo, max: 128 KB");
         }
         Function function = new Function("setLogo", Collections.singletonList(new DynamicBytes(logo)), Collections.emptyList());
-        return contractUtil.call(privateKey, value, function);
+        return contractUtil.call(privateKey, getLogoPayAmount(), function);
     }
 
     public String setDescription(String privateKey, String description) throws Exception {
