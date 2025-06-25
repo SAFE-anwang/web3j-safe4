@@ -10,22 +10,22 @@ public class SuperNodeMemberInfo extends StaticStruct {
     public BigInteger lockID;
     public Address addr;
     public BigInteger amount;
-    public BigInteger height;
+    public BigInteger unlockHeight;
 
-    public SuperNodeMemberInfo(BigInteger lockID, Address addr, BigInteger amount, BigInteger height) {
-        super(new Uint256(lockID), addr, new Uint256(amount), new Uint256(height));
+    public SuperNodeMemberInfo(BigInteger lockID, Address addr, BigInteger amount, BigInteger unlockHeight) {
+        super(new Uint256(lockID), addr, new Uint256(amount), new Uint256(unlockHeight));
         this.lockID = lockID;
         this.addr = addr;
         this.amount = amount;
-        this.height = height;
+        this.unlockHeight = unlockHeight;
     }
 
-    public SuperNodeMemberInfo(Uint256 lockID, Address addr, Uint256 amount, Uint256 height) {
-        super(lockID, addr, amount, height);
+    public SuperNodeMemberInfo(Uint256 lockID, Address addr, Uint256 amount, Uint256 unlockHeight) {
+        super(lockID, addr, amount, unlockHeight);
         this.lockID = lockID.getValue();
         this.addr = addr;
         this.amount = amount.getValue();
-        this.height = height.getValue();
+        this.unlockHeight = unlockHeight.getValue();
     }
 
     @Override
@@ -34,7 +34,7 @@ public class SuperNodeMemberInfo extends StaticStruct {
                 "lockID=" + lockID +
                 ", addr=" + addr +
                 ", amount=" + amount +
-                ", height=" + height +
+                ", unlockHeight=" + unlockHeight +
                 '}';
     }
 }
