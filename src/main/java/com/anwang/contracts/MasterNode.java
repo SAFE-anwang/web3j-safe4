@@ -50,8 +50,18 @@ public class MasterNode {
         return logicContract.contractUtil.call(privateKey, function);
     }
 
+    public String changeEnodeByID(String privateKey, BigInteger id, String enode) throws Exception {
+        Function function = new Function("changeEnodeByID", Arrays.asList(new Uint256(id), new Utf8String(enode)), Collections.emptyList());
+        return logicContract.contractUtil.call(privateKey, function);
+    }
+
     public String changeDescription(String privateKey, Address addr, String description) throws Exception {
         Function function = new Function("changeDescription", Arrays.asList(addr, new Utf8String(description)), Collections.emptyList());
+        return logicContract.contractUtil.call(privateKey, function);
+    }
+
+    public String changeDescriptionByID(String privateKey, BigInteger id, String description) throws Exception {
+        Function function = new Function("changeDescriptionByID", Arrays.asList(new Uint256(id), new Utf8String(description)), Collections.emptyList());
         return logicContract.contractUtil.call(privateKey, function);
     }
 

@@ -49,13 +49,33 @@ public class SuperNode {
         return logicContract.contractUtil.call(privateKey, function);
     }
 
+    public String changeNameByID(String privateKey, BigInteger id, String name) throws Exception {
+        Function function = new Function("changeNameByID", Arrays.asList(new Uint256(id), new Utf8String(name)), Collections.emptyList());
+        return logicContract.contractUtil.call(privateKey, function);
+    }
+
     public String changeEnode(String privateKey, Address addr, String enode) throws Exception {
         Function function = new Function("changeEnode", Arrays.asList(addr, new Utf8String(enode)), Collections.emptyList());
         return logicContract.contractUtil.call(privateKey, function);
     }
 
+    public String changeEnodeByID(String privateKey, BigInteger id, String enode) throws Exception {
+        Function function = new Function("changeEnodeByID", Arrays.asList(new Uint256(id), new Utf8String(enode)), Collections.emptyList());
+        return logicContract.contractUtil.call(privateKey, function);
+    }
+
     public String changeDescription(String privateKey, Address addr, String description) throws Exception {
         Function function = new Function("changeDescription", Arrays.asList(addr, new Utf8String(description)), Collections.emptyList());
+        return logicContract.contractUtil.call(privateKey, function);
+    }
+
+    public String changeDescriptionByID(String privateKey, BigInteger id, String description) throws Exception {
+        Function function = new Function("changeDescriptionByID", Arrays.asList(new Uint256(id), new Utf8String(description)), Collections.emptyList());
+        return logicContract.contractUtil.call(privateKey, function);
+    }
+
+    public String changeIncentivePlan(String privateKey, BigInteger id, BigInteger creatorIncentive, BigInteger partnerIncentive, BigInteger voterIncentive) throws Exception {
+        Function function = new Function("changeIncentivePlan", Arrays.asList(new Uint256(id), new Uint256(creatorIncentive), new Uint256(partnerIncentive), new Uint256(voterIncentive)), Collections.emptyList());
         return logicContract.contractUtil.call(privateKey, function);
     }
 
