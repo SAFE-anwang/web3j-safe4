@@ -38,7 +38,20 @@ public class SRC20Mintable {
     }
 
     public String transfer(String privateKey, Address to, BigInteger amount) throws Exception {
-        Function function = new Function("transfer", Arrays.asList(to, new Uint256(amount)), Collections.emptyList());
+        Function function = new Function("transfer", Arrays.asList(to, new Uint256(amount)), Collections.singletonList(new TypeReference<Bool>() {
+        }));
+        return contractUtil.call(privateKey, function);
+    }
+
+    public String approve(String privateKey, Address spender, BigInteger amount) throws Exception {
+        Function function = new Function("allowance", Arrays.asList(spender, new Uint256(amount)), Collections.singletonList(new TypeReference<Bool>() {
+        }));
+        return contractUtil.call(privateKey, function);
+    }
+
+    public String transferFrom(String privateKey, Address from, Address to, BigInteger amount) throws Exception {
+        Function function = new Function("transferFrom", Arrays.asList(from, to, new Uint256(amount)), Collections.singletonList(new TypeReference<Bool>() {
+        }));
         return contractUtil.call(privateKey, function);
     }
 
@@ -79,6 +92,13 @@ public class SRC20Mintable {
 
     public BigInteger balanceOf(Address account) throws Exception {
         Function function = new Function("balanceOf", Collections.singletonList(account), Collections.singletonList(new TypeReference<Uint256>() {
+        }));
+        List<Type> someTypes = contractUtil.query(function);
+        return ((Uint256) someTypes.get(0)).getValue();
+    }
+
+    public BigInteger allowance(Address owner, Address spender) throws Exception {
+        Function function = new Function("allowance", Arrays.asList(owner, spender), Collections.singletonList(new TypeReference<Uint256>() {
         }));
         List<Type> someTypes = contractUtil.query(function);
         return ((Uint256) someTypes.get(0)).getValue();
