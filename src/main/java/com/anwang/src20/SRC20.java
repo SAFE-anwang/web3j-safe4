@@ -39,7 +39,7 @@ public class SRC20 {
     }
 
     public String approve(String privateKey, Address spender, BigInteger amount) throws Exception {
-        Function function = new Function("allowance", Arrays.asList(spender, new Uint256(amount)), Collections.singletonList(new TypeReference<Bool>() {
+        Function function = new Function("approve", Arrays.asList(spender, new Uint256(amount)), Collections.singletonList(new TypeReference<Bool>() {
         }));
         return contractUtil.call(privateKey, function);
     }
