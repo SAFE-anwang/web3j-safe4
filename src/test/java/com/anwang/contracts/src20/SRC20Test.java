@@ -22,7 +22,7 @@ public class SRC20Test {
     @BeforeEach
     public void init() {
         web3j = Web3j.build(new HttpService("http://127.0.0.1:8545"));
-        src20 = new SRC20(web3j, 6666666, "0x005dff8772323b5c870c14461b2bee43d36f8786");
+        src20 = new SRC20(web3j, 6666666, "0x6b3914aF517A56D47A9997397325B7F37414A49c");
     }
 
     @Test
@@ -40,6 +40,13 @@ public class SRC20Test {
     @Test
     public void testTransfer() throws Exception {
         String txid = src20.transfer("0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010", new Address("0x4c207825db1c46Dd836123E58ecaE85de7025879"), new BigInteger("100000000000000000000"));
+        System.out.println(txid);
+        Assertions.assertTrue(txid.length() != 0);
+    }
+
+    @Test
+    public void testApprove() throws Exception {
+        String txid = src20.approve("0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010", new Address("0x4f203092FB68732D8484c099a72dDc5a195f26f9"), new BigInteger("1000000000000000000"));
         System.out.println(txid);
         Assertions.assertTrue(txid.length() != 0);
     }
@@ -84,6 +91,13 @@ public class SRC20Test {
         BigInteger balance = src20.balanceOf(new Address("0x4c207825db1c46Dd836123E58ecaE85de7025879"));
         System.out.println("balance: " + balance);
         Assertions.assertEquals(0, balance.compareTo(new BigInteger("100000000000000000000")));
+    }
+
+    @Test
+    public void testAllowance() throws Exception {
+        BigInteger allowance = src20.allowance(new Address("0xa5CEc2B8CdA30dA3F3170b4505CB44226b6c9Dd2"), new Address("0x4f203092FB68732D8484c099a72dDc5a195f26f9"));
+        System.out.println("allowance: " + allowance);
+        Assertions.assertEquals(0, allowance.compareTo(new BigInteger("1000000000000000000")));
     }
 
     @Test
