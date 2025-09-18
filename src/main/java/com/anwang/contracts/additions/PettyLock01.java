@@ -22,7 +22,7 @@ public class PettyLock01 {
         if (chainId == 6666666) {
             contractUtil = new ContractUtil(web3j, chainId, "0xF6A2C019beF11825E73ed219c7b0582324dE91b2");
         } else {
-            contractUtil = new ContractUtil(web3j, chainId, ""); // TODO: wait for deploying
+            contractUtil = new ContractUtil(web3j, chainId, "0x5A9CDa846D12e047d87c06f633f2c4f344b33C97");
         }
     }
 
