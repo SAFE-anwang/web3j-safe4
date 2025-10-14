@@ -25,6 +25,7 @@ public class Safe3 {
         contractUtil = new ContractUtil(web3j, chainId, Safe4Contract.Safe3ContractAddr);
     }
 
+    /*
     // add Safe3 record, just for testnet
     public List<String> addSafe3(String callerPrivateKey, String safe3Addr) throws Exception {
         if (contractUtil.chainId != 6666666) {
@@ -33,13 +34,13 @@ public class Safe3 {
 
         List<String> txids = new ArrayList<>();
         Random random = new Random(System.currentTimeMillis());
-        BigInteger amount = new BigInteger(String.valueOf(random.nextInt(5) + 1)).multiply(new BigInteger("1000000000000000000"));
+        BigInteger amount = new BigInteger(String.valueOf(random.nextInt(5) + 1)).multiply(new BigInteger("100000000"));
         Function function = new Function("addAvailable", Arrays.asList(new Utf8String(safe3Addr), new Uint256(amount)), Collections.emptyList());
         txids.add(contractUtil.call(callerPrivateKey, function));
 
         int count = random.nextInt(5) + 1;
         for (int i = 0; i < count; i++) {
-            amount = new BigInteger(String.valueOf(random.nextInt(10) + 1)).multiply(new BigInteger("1000000000000000000"));
+            amount = new BigInteger(String.valueOf(random.nextInt(10) + 1)).multiply(new BigInteger("100000000"));
             function = new Function("addLocked", Arrays.asList(new Utf8String(safe3Addr), new Uint256(amount)), Collections.emptyList());
             txids.add(contractUtil.call(callerPrivateKey, function));
         }
@@ -57,6 +58,12 @@ public class Safe3 {
         Function function = new Function("reset", Collections.singletonList(new Utf8String(safe3Addr)), Collections.emptyList());
         return contractUtil.call(callerPrivateKey, function);
     }
+    */
+
+    public String initPetty(String callerPrivateKey, List<String> safe3Addrs, List<BigInteger> amounts) throws Exception {
+        Function function = new Function("initPetty", Arrays.asList(new DynamicArray<>(Utf8String.class, Utils.typeMap(safe3Addrs, Utf8String.class)), new DynamicArray<>(Uint256.class, Utils.typeMap(amounts, Uint256.class))), Collections.emptyList());
+        return contractUtil.call(callerPrivateKey, function);
+    }
 
     // redeem for available & locked SAFE3
     public List<String> batchRedeemSafe3(String callerPrivateKey, List<String> privateKeys, Address targetAddr) throws Exception {
@@ -70,6 +77,8 @@ public class Safe3 {
         List<byte[]> lockedPubKeys = new ArrayList<>();
         List<byte[]> lockedSigs = new ArrayList<>();
         List<BigInteger> lockedNums = new ArrayList<>();
+        List<byte[]> pettyPubKeys = new ArrayList<>();
+        List<byte[]> pettySigs = new ArrayList<>();
         for (String privateKey : privateKeys) {
             privKey = Numeric.toBigInt(privateKey);
             pubKey = Safe3Util.getCompressedPublicKey(privKey);
@@ -87,6 +96,10 @@ public class Safe3 {
                 lockedSigs.add(sig);
                 lockedNums.add(getLockedNum(safe3Addr));
             }
+            if (existPettyNeedToRedeem(safe3Addr)) {
+                pettyPubKeys.add(pubKey.toByteArray());
+                pettySigs.add(sig);
+            }
 
             pubKey = Safe3Util.getUncompressedPublicKey(privKey);
             safe3Addr = Safe3Util.getSafe3Addr(pubKey);
@@ -102,6 +115,10 @@ public class Safe3 {
                 lockedPubKeys.add(pubKey.toByteArray());
                 lockedSigs.add(sig);
                 lockedNums.add(getLockedNum(safe3Addr));
+            }
+            if (existPettyNeedToRedeem(safe3Addr)) {
+                pettyPubKeys.add(pubKey.toByteArray());
+                pettySigs.add(sig);
             }
         }
 
@@ -162,6 +179,18 @@ public class Safe3 {
                     txids.add(contractUtil.call(callerPrivateKey, function));
                     break;
                 }
+            }
+        }
+
+        if (pettyPubKeys.size() != 0) {
+            int i = 0;
+            for (; i < pettyPubKeys.size() / 20; i++) {
+                Function function = new Function("batchRedeemPetty", Arrays.asList(new DynamicArray<>(DynamicBytes.class, Utils.typeMap(pettyPubKeys.subList(i * 20, (i + 1) * 20), DynamicBytes.class)), new DynamicArray<>(DynamicBytes.class, Utils.typeMap(pettySigs.subList(i * 20, (i + 1) * 20), DynamicBytes.class)), targetAddr), Collections.emptyList());
+                txids.add(contractUtil.call(callerPrivateKey, function));
+            }
+            if (pettyPubKeys.size() % 20 != 0) {
+                Function function = new Function("batchRedeemPetty", Arrays.asList(new DynamicArray<>(DynamicBytes.class, Utils.typeMap(pettyPubKeys.subList(i * 20, pettyPubKeys.size()), DynamicBytes.class)), new DynamicArray<>(DynamicBytes.class, Utils.typeMap(pettySigs.subList(i * 20, pettySigs.size()), DynamicBytes.class)), targetAddr), Collections.emptyList());
+                txids.add(contractUtil.call(callerPrivateKey, function));
             }
         }
         return txids;
@@ -271,6 +300,27 @@ public class Safe3 {
         return ((DynamicArray<LockedSafe3Info>) someTypes.get(0)).getValue();
     }
 
+    public BigInteger getAllPettyNum() throws Exception {
+        Function function = new Function("getAllPettyNum", Collections.emptyList(), Collections.singletonList(new TypeReference<Uint256>() {
+        }));
+        List<Type> someTypes = contractUtil.query(function);
+        return ((Uint256) someTypes.get(0)).getValue();
+    }
+
+    public List<AvailableSafe3Info> getPettyInfos(BigInteger start, BigInteger count) throws Exception {
+        Function function = new Function("getPettyInfos", Arrays.asList(new Uint256(start), new Uint256(count)), Collections.singletonList(new TypeReference<DynamicArray<AvailableSafe3Info>>() {
+        }));
+        List<Type> someTypes = contractUtil.query(function);
+        return ((DynamicArray<AvailableSafe3Info>) someTypes.get(0)).getValue();
+    }
+
+    public AvailableSafe3Info getPettyInfo(String safe3Addr) throws Exception {
+        Function function = new Function("getPettyInfo", Collections.singletonList(new Utf8String(safe3Addr)), Collections.singletonList(new TypeReference<AvailableSafe3Info>() {
+        }));
+        List<Type> someTypes = contractUtil.query(function);
+        return (AvailableSafe3Info) someTypes.get(0);
+    }
+
     public boolean existAvailableNeedToRedeem(String safe3Addr) throws Exception {
         Function function = new Function("existAvailableNeedToRedeem", Collections.singletonList(new Utf8String(safe3Addr)), Collections.singletonList(new TypeReference<Bool>() {
         }));
@@ -287,6 +337,13 @@ public class Safe3 {
 
     public boolean existMasterNodeNeedToRedeem(String safe3Addr) throws Exception {
         Function function = new Function("existMasterNodeNeedToRedeem", Collections.singletonList(new Utf8String(safe3Addr)), Collections.singletonList(new TypeReference<Bool>() {
+        }));
+        List<Type> someTypes = contractUtil.query(function);
+        return ((Bool) someTypes.get(0)).getValue();
+    }
+
+    public boolean existPettyNeedToRedeem(String safe3Addr) throws Exception {
+        Function function = new Function("existPettyNeedToRedeem", Collections.singletonList(new Utf8String(safe3Addr)), Collections.singletonList(new TypeReference<Bool>() {
         }));
         List<Type> someTypes = contractUtil.query(function);
         return ((Bool) someTypes.get(0)).getValue();
