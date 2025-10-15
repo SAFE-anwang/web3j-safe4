@@ -25,7 +25,6 @@ public class Safe3 {
         contractUtil = new ContractUtil(web3j, chainId, Safe4Contract.Safe3ContractAddr);
     }
 
-    /*
     // add Safe3 record, just for testnet
     public List<String> addSafe3(String callerPrivateKey, String safe3Addr) throws Exception {
         if (contractUtil.chainId != 6666666) {
@@ -47,22 +46,11 @@ public class Safe3 {
 
         function = new Function("addMasterNode", Arrays.asList(new Utf8String(safe3Addr)), Collections.emptyList());
         txids.add(contractUtil.call(callerPrivateKey, function));
+
+        amount = new BigInteger(String.valueOf(random.nextInt(30) + 1)).multiply(new BigInteger("100000000")).divide(BigInteger.TEN);
+        function = new Function("addPetty", Arrays.asList(new Utf8String(safe3Addr), new Uint256(amount)), Collections.emptyList());
+        txids.add(contractUtil.call(callerPrivateKey, function));
         return txids;
-    }
-
-    // reset Safe3 record, just for testnet
-    public String resetSafe3(String callerPrivateKey, String safe3Addr) throws Exception {
-        if (contractUtil.chainId != 6666666) {
-            throw new Exception("Just for testnet");
-        }
-        Function function = new Function("reset", Collections.singletonList(new Utf8String(safe3Addr)), Collections.emptyList());
-        return contractUtil.call(callerPrivateKey, function);
-    }
-    */
-
-    public String initPetty(String callerPrivateKey, List<String> safe3Addrs, List<BigInteger> amounts) throws Exception {
-        Function function = new Function("initPetty", Arrays.asList(new DynamicArray<>(Utf8String.class, Utils.typeMap(safe3Addrs, Utf8String.class)), new DynamicArray<>(Uint256.class, Utils.typeMap(amounts, Uint256.class))), Collections.emptyList());
-        return contractUtil.call(callerPrivateKey, function);
     }
 
     // redeem for available & locked SAFE3
