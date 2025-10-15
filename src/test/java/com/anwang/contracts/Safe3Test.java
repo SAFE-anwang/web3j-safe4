@@ -30,6 +30,7 @@ public class Safe3Test {
 //        String callerPrivateKey = "0x78cc1725d7e8ce249d6849b36785bb7bae695b667da24240cf29caf10c14473a";
 //        List<String> txids = new ArrayList<>();
 //        int count = 1;
+//        String str = "";
 //        for (int k = 0; k < count; k++) {
 //            ECKeyPair ecKeyPair = Keys.createEcKeyPair();
 //            String privateKey = Numeric.toHexStringWithPrefixZeroPadded(ecKeyPair.getPrivateKey(), 64);
@@ -42,21 +43,11 @@ public class Safe3Test {
 //            System.out.println("safe3 addr: " + safe3Addr);
 //            System.out.println("safe4 addr: " + safe4Addr);
 //            txids.addAll(safe4.safe3.addSafe3(callerPrivateKey, safe3Addr));
+//
+//            str += Safe3Util.getSecretKey(privKey, true) + " 2025-04-26T11:00:00Z change=1 # addr=" + safe3Addr + "\n";
 //        }
+//        System.out.println("\n\n" + str);
 //        Assertions.assertTrue(txids.size() > 0);
-
-        String callerPrivateKey = "0x78cc1725d7e8ce249d6849b36785bb7bae695b667da24240cf29caf10c14473a";
-        String safe3Addr = "XkahCNxbcsBCdBwMrKXBsAxYkQXgn43tfp";
-        List<String> txids = safe4.safe3.addSafe3(callerPrivateKey, safe3Addr);
-        Assertions.assertTrue(txids.size() > 0);
-    }
-
-    @Test
-    public void testRestSafe3() throws Exception {
-        String callerPrivateKey = "0x78cc1725d7e8ce249d6849b36785bb7bae695b667da24240cf29caf10c14473a";
-        String safe3Addr = "XkahCNxbcsBCdBwMrKXBsAxYkQXgn43tfp";
-        String txid = safe4.safe3.resetSafe3(callerPrivateKey, safe3Addr);
-        Assertions.assertTrue(txid.length() > 0);
     }
 
     @Test
@@ -158,6 +149,27 @@ public class Safe3Test {
     }
 
     @Test
+    public void testGetAllPettyNum() throws Exception {
+        BigInteger num = safe4.safe3.getAllPettyNum();
+        System.out.println(num);
+        Assertions.assertTrue(num.compareTo(BigInteger.ZERO) > 0);
+    }
+
+    @Test
+    public void testGetPettyInfos() throws Exception {
+        List<AvailableSafe3Info> infos = safe4.safe3.getPettyInfos(BigInteger.ZERO, BigInteger.TEN);
+        System.out.println(infos);
+        Assertions.assertTrue(infos.size() > 0);
+    }
+
+    @Test
+    public void testGetPettyInfo() throws Exception {
+        AvailableSafe3Info info = safe4.safe3.getPettyInfo("XbdnSBZKFhKjjXj95xcwQMmexA6sB3pgEp");
+        System.out.println(info);
+        Assertions.assertTrue(info.safe3Addr.length() > 0);
+    }
+
+    @Test
     public void testExistAvailableNeedToRedeem() throws Exception {
         Boolean flag = safe4.safe3.existAvailableNeedToRedeem("XuPmDoaNb6rbNywefkTbESHXiYqNpYvaPU");
         System.out.println(flag);
@@ -174,6 +186,13 @@ public class Safe3Test {
     @Test
     public void testExistMasterNodeNeedToRedeem() throws Exception {
         Boolean flag = safe4.safe3.existMasterNodeNeedToRedeem("Xm7bqZeKBooWuQxb2EWjJxN2qjQVgN4AuU");
+        System.out.println(flag);
+        Assertions.assertTrue(flag);
+    }
+
+    @Test
+    public void testExistPettyNeedToRedeem() throws Exception {
+        Boolean flag = safe4.safe3.existPettyNeedToRedeem("XbdnSBZKFhKjjXj95xcwQMmexA6sB3pgEp");
         System.out.println(flag);
         Assertions.assertTrue(flag);
     }
