@@ -107,6 +107,13 @@ public class SuperNodeTest {
     }
 
     @Test
+    public void testGetDisableHeight() throws Exception {
+        BigInteger disableHeight = safe4.supernode.getDisableHeight(BigInteger.valueOf(26));
+        System.out.println(disableHeight);
+        Assertions.assertTrue(disableHeight.compareTo(BigInteger.ZERO) > 0);
+    }
+
+    @Test
     public void testGetNum() throws Exception {
         BigInteger num = safe4.supernode.getNum();
         System.out.println(num);

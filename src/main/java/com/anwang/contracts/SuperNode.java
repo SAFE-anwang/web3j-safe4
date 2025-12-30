@@ -93,6 +93,13 @@ public class SuperNode {
         return (SuperNodeInfo) someTypes.get(0);
     }
 
+    public BigInteger getDisableHeight(BigInteger id) throws Exception {
+        Function function = new Function("getDisableHeight", Collections.singletonList(new Uint256(id)), Collections.singletonList(new TypeReference<Uint256>() {
+        }));
+        List<Type> someTypes = storageContract.contractUtil.query(function);
+        return ((Uint256) someTypes.get(0)).getValue();
+    }
+
     public BigInteger getNum() throws Exception {
         Function function = new Function("getNum", Collections.emptyList(), Collections.singletonList(new TypeReference<Uint256>() {
         }));
