@@ -42,20 +42,8 @@ public class AccountManager {
         return contractUtil.call(privateKey, value, function);
     }
 
-    public String withdraw(String privateKey) throws Exception {
-        Function function = new Function("withdraw", Collections.emptyList(), Collections.singletonList(new TypeReference<Uint256>() {
-        }));
-        return contractUtil.call(privateKey, function);
-    }
-
     public String withdrawByID(String privateKey, List<BigInteger> ids) throws Exception {
         Function function = new Function("withdrawByID", Collections.singletonList(new DynamicArray<>(Uint256.class, Utils.typeMap(ids, Uint256.class))), Collections.singletonList(new TypeReference<Uint256>() {
-        }));
-        return contractUtil.call(privateKey, function);
-    }
-
-    public String transfer(String privateKey, Address to, BigInteger amount, BigInteger lockDay) throws Exception {
-        Function function = new Function("transfer", Arrays.asList(to, new Uint256(amount), new Uint256(lockDay)), Collections.singletonList(new TypeReference<Uint256>() {
         }));
         return contractUtil.call(privateKey, function);
     }

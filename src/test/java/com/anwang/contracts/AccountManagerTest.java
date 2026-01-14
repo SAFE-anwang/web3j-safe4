@@ -54,25 +54,11 @@ public class AccountManagerTest {
     }
 
     @Test
-    public void testWithdraw() throws Exception {
-        String txid = safe4.account.withdraw("0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010");
-        System.out.println(txid);
-        Assertions.assertTrue((txid.length() > 0));
-    }
-
-    @Test
     public void testWithdrawByID() throws Exception {
         List<BigInteger> ids = new ArrayList<>();
         ids.add(BigInteger.ZERO);
         ids.add(BigInteger.valueOf(12));
         String txid = safe4.account.withdrawByID("0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010", ids);
-        System.out.println(txid);
-        Assertions.assertTrue((txid.length() > 0));
-    }
-
-    @Test
-    public void testTransfer() throws Exception {
-        String txid = safe4.account.transfer("0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010", new Address("0x64ae0d18085d0c3ec202a208e96bc2fc24e4a7e8"), new BigInteger("100000000000000000"), BigInteger.ONE);
         System.out.println(txid);
         Assertions.assertTrue((txid.length() > 0));
     }
