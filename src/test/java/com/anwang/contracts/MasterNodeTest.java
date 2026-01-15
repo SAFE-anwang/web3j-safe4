@@ -99,6 +99,13 @@ public class MasterNodeTest {
     }
 
     @Test
+    public void testGetIDsByEnode() throws Exception {
+        List<BigInteger> ids = safe4.masternode.getIDsByEnode("enode://965e8c4efc181a5277443be267d87f503b929db7a6cedc294180f9b4021903cd825f860d268237c9429a699915e729d7e8f87dc4175dc7e36d057bf3543db65a@113.46.196.57:30303");
+        System.out.println(ids);
+        Assertions.assertTrue(ids.size() <= 5);
+    }
+
+    @Test
     public void testGetNext() throws Exception {
         Address addr = safe4.masternode.getNext();
         System.out.println(addr);
@@ -231,6 +238,20 @@ public class MasterNodeTest {
     @Test
     public void testExistNodeFounder() throws Exception {
         Boolean flag = safe4.masternode.existNodeFounder(new Address("0x69a6d725f772e44f11bd6d21ec5a92fdc7eab652"));
+        System.out.println(flag);
+        Assertions.assertTrue(flag);
+    }
+
+    @Test
+    public void testIsBindEnode() throws Exception {
+        Boolean flag = safe4.masternode.isBindEnode(BigInteger.ONE, "enode://965e8c4efc181a5277443be267d87f503b929db7a6cedc294180f9b4021903cd825f860d268237c9429a699915e729d7e8f87dc4175dc7e36d057bf3543db65a@113.46.196.57:30303");
+        System.out.println(flag);
+        Assertions.assertTrue(flag);
+    }
+
+    @Test
+    public void testIsValidEnode() throws Exception {
+        Boolean flag = safe4.masternode.isValidEnode("enode://965e8c4efc181a5277443be267d87f503b929db7a6cedc294180f9b4021903cd825f860d268237c9429a699915e729d7e8f87dc4175dc7e36d057bf3543db65a@113.46.196.57:30303");
         System.out.println(flag);
         Assertions.assertTrue(flag);
     }

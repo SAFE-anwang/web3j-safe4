@@ -12,6 +12,7 @@ import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class MasterNode {
@@ -77,6 +78,13 @@ public class MasterNode {
         }));
         List<Type> someTypes = storageContract.contractUtil.query(function);
         return (MasterNodeInfo) someTypes.get(0);
+    }
+
+    public List<BigInteger> getIDsByEnode(String enode) throws Exception {
+        Function function = new Function("getIDsByEnode", Collections.singletonList(new Utf8String(enode)), Collections.singletonList(new TypeReference<DynamicArray<Uint256>>() {
+        }));
+        List<Type> someTypes = storageContract.contractUtil.query(function);
+        return ((DynamicArray<Uint256>) someTypes.get(0)).getValue().stream().map(v -> v.getValue()).collect(Collectors.toList());
     }
 
     public Address getNext() throws Exception {
@@ -203,6 +211,20 @@ public class MasterNode {
         }));
         List<Type> someTypes = storageContract.contractUtil.query(function);
         return ((Bool) someTypes.get(0)).getValue();
+    }
+
+    public Boolean isBindEnode(BigInteger id, String enode) throws Exception {
+        Function function = new Function("isBindEnode", Arrays.asList(new Uint256(id), new Utf8String(enode)), Collections.singletonList(new TypeReference<Bool>() {
+        }));
+        List<Type> someTYpes = storageContract.contractUtil.query(function);
+        return ((Bool) someTYpes.get(0)).getValue();
+    }
+
+    public Boolean isValidEnode(String enode) throws Exception {
+        Function function = new Function("isValidEnode", Collections.singletonList(new Utf8String(enode)), Collections.singletonList(new TypeReference<Bool>() {
+        }));
+        List<Type> someTYpes = storageContract.contractUtil.query(function);
+        return ((Bool) someTYpes.get(0)).getValue();
     }
 
     private class MasterNodeLogic {
