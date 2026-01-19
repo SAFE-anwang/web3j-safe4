@@ -1,6 +1,7 @@
 package com.anwang.contracts;
 
 import com.anwang.types.snvote.SNVoteRetInfo;
+import com.anwang.types.snvote.VoteRecord;
 import com.anwang.utils.ContractUtil;
 import com.anwang.utils.Safe4Contract;
 import org.web3j.abi.TypeReference;
@@ -40,6 +41,13 @@ public class SNVote {
     public String proxyVote(String privateKey, Address snAddr) throws Exception {
         Function function = new Function("proxyVote", Collections.singletonList(snAddr), Collections.emptyList());
         return contractUtil.call(privateKey, function);
+    }
+
+    public VoteRecord getRecordByID(BigInteger id) throws Exception {
+        Function function = new Function("getRecordByID", Collections.singletonList(new Uint256(id)), Collections.singletonList(new TypeReference<VoteRecord>() {
+        }));
+        List<Type> someTypes = contractUtil.query(function);
+        return (VoteRecord) someTypes.get(0);
     }
 
     public BigInteger getAmount4Voter(Address voterAddr) throws Exception {

@@ -2,6 +2,7 @@ package com.anwang.contracts;
 
 import com.anwang.Safe4;
 import com.anwang.types.snvote.SNVoteRetInfo;
+import com.anwang.types.snvote.VoteRecord;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -54,6 +55,13 @@ public class SNVoteTest {
         String txid = safe4.snvote.proxyVote("0x02b0f66ceddcf16601dfc462ee3dfcc9adca7bf76b872fc23ca88d0b82f2550f", new Address("0x4d244c17d2a957f4a150408f8f4d19382ae8e2c8"));
         System.out.println(txid);
         Assertions.assertTrue((txid.length() > 0));
+    }
+
+    @Test
+    public void testGetRecrodByID() throws Exception {
+        VoteRecord record = safe4.snvote.getRecordByID(BigInteger.valueOf(34515));
+        System.out.println(record);
+        Assertions.assertTrue(record.amount.compareTo(BigInteger.ZERO) > 0);
     }
 
     @Test
