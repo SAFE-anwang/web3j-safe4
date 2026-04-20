@@ -152,15 +152,15 @@ public class SRC721Burnable {
         return (Address) someTypes.get(0);
     }
 
-    public BigInteger tokenByIndex(BigInteger tokenId) throws Exception {
-        Function function = new Function("tokenByIndex", Collections.singletonList(new Uint256(tokenId)), Collections.singletonList(new TypeReference<Uint256>() {
+    public BigInteger tokenByIndex(BigInteger index) throws Exception {
+        Function function = new Function("tokenByIndex", Collections.singletonList(new Uint256(index)), Collections.singletonList(new TypeReference<Uint256>() {
         }));
         List<Type> someTypes = contractUtil.query(function);
         return ((Uint256) someTypes.get(0)).getValue();
     }
 
-    public BigInteger tokenOfOwnerByIndex(Address addr, BigInteger tokenId) throws Exception {
-        Function function = new Function("tokenOfOwnerByIndex", Arrays.asList(addr, new Uint256(tokenId)), Collections.singletonList(new TypeReference<Uint256>() {
+    public BigInteger tokenOfOwnerByIndex(Address owner, BigInteger index) throws Exception {
+        Function function = new Function("tokenOfOwnerByIndex", Arrays.asList(owner, new Uint256(index)), Collections.singletonList(new TypeReference<Uint256>() {
         }));
         List<Type> someTypes = contractUtil.query(function);
         return ((Uint256) someTypes.get(0)).getValue();
