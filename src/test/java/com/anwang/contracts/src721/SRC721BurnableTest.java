@@ -134,7 +134,7 @@ public class SRC721BurnableTest {
     @Test
     public void testOwner() throws Exception {
         Address owner = src721.owner();
-        System.out.println("owner: " + owner);
+        System.out.println("NFT contract owner: " + owner);
         Assertions.assertEquals(owner.getValue(), "0xa5cec2b8cda30da3f3170b4505cb44226b6c9dd2");
     }
 
@@ -196,9 +196,9 @@ public class SRC721BurnableTest {
 
     @Test
     public void testOwnerof() throws Exception {
-        Address ownerOf = src721.ownerOf(BigInteger.ZERO);
-        System.out.println("ownerOf: " + ownerOf);
-        Assertions.assertEquals(ownerOf.getValue(), "0x5e5e15a6bc5f699a246f59101f86307eda9859fa");
+        Address owner = src721.ownerOf(BigInteger.ZERO);
+        System.out.println("owner: " + owner);
+        Assertions.assertEquals(owner.getValue(), "0x5e5e15a6bc5f699a246f59101f86307eda9859fa");
     }
 
     @Test
