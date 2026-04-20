@@ -26,6 +26,9 @@ public class SRC721Burnable {
     }
 
     public List<String> deploy(String privateKey, String name, String symbol, String baseURI, BigInteger maxSupply, BigInteger mintPrice) throws Exception {
+        if (!baseURI.isEmpty() && baseURI.charAt(baseURI.length() - 1) != '/') {
+            baseURI += '/';
+        }
         String data = bytecode + FunctionEncoder.encodeConstructor(Arrays.asList(new Utf8String(name), new Utf8String(symbol), new Utf8String(baseURI), new Uint256(maxSupply), new Uint256(mintPrice)));
         String ret = contractUtil.deploy(privateKey, data);
         return Arrays.asList(ret.split("-"));
@@ -63,6 +66,9 @@ public class SRC721Burnable {
     }
 
     public String setBaseURI(String privateKey, String baseURI) throws Exception {
+        if (!baseURI.isEmpty() && baseURI.charAt(baseURI.length() - 1) != '/') {
+            baseURI += '/';
+        }
         Function function = new Function("setBaseURI", Collections.singletonList(new Utf8String(baseURI)), Collections.emptyList());
         return contractUtil.call(privateKey, function);
     }
