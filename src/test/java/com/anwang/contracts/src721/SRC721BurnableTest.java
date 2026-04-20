@@ -1,5 +1,6 @@
 package com.anwang.contracts.src721;
 
+import com.anwang.src721.SRC721;
 import com.anwang.src721.SRC721Burnable;
 import org.bouncycastle.util.encoders.Hex;
 import org.junit.jupiter.api.Assertions;
@@ -25,14 +26,14 @@ public class SRC721BurnableTest {
     public void init() {
         //web3j = Web3j.build(new HttpService("http://127.0.0.1:8545"));
         web3j = Web3j.build(new HttpService("http://10.0.0.142:8545"));
-        src721 = new SRC721Burnable(web3j, 6666666, "0xac9bca2387c2ee1f2898ab8705d3b60fd10f0f5a"); // NFT: LMB2, contract-addr: 0xac9bca2387c2ee1f2898ab8705d3b60fd10f0f5a, max supply: 10000, creator: 0xa5cec2b8cda30da3f3170b4505cb44226b6c9dd2
+        src721 = new SRC721Burnable(web3j, 6666666, "0x4265f7663fee9947eec495a741b34ee2bea57037"); // NFT: LMB4, contract-addr: 0x4265f7663fee9947eec495a741b34ee2bea57037, max supply: 10000, creator: 0xa5cec2b8cda30da3f3170b4505cb44226b6c9dd2
     }
 
     @Test
     public void testDeploy() throws Exception {
         src721 = new SRC721Burnable(web3j, 6666666);
-        String name = "LMB2";
-        String symbol = "LMB2";
+        String name = "LMB4";
+        String symbol = "LMB4";
         String baseURI = "https://www.test.com/";
         BigInteger maxSupply = new BigInteger("10000");
         BigInteger mintPrice = Convert.toWei("0.1", Convert.Unit.ETHER).toBigInteger(); // 0.1 SAFE
@@ -264,7 +265,7 @@ public class SRC721BurnableTest {
 
     @Test
     public void testSetDescription() throws Exception {
-        String txid = src721.setDescription("0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010", "LMB2 is a nft token for testing");
+        String txid = src721.setDescription("0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010", "LMB4 is a nft token for testing");
         System.out.println(txid);
         Assertions.assertTrue(txid.length() != 0);
     }
@@ -323,5 +324,19 @@ public class SRC721BurnableTest {
         String version = src721.version();
         System.out.println("version: " + version);
         Assertions.assertTrue(version.length() != 0);
+    }
+
+    @Test
+    public void testGetLogoPayAmount() throws Exception {
+        BigInteger payAmount = src721.getLogoPayAmount();
+        System.out.println("logo-pay-amount: " + payAmount);
+        Assertions.assertEquals(0, payAmount.compareTo(new BigInteger("100000000000000000000")));
+    }
+
+    @Test
+    public void testGetLogoPayAddress() throws Exception {
+        Address payAddress = src721.getLogoPayAddress();
+        System.out.println("logo-pay-address: " + payAddress);
+        Assertions.assertNotEquals(payAddress, Address.DEFAULT);
     }
 }
