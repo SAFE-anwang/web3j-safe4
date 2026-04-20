@@ -272,4 +272,11 @@ public class SRC721 {
         List<Type> someTypes = contractUtil.query(function);
         return ((Uint256) someTypes.get(0)).getValue();
     }
+
+    public Address getLogoPayAddress() throws Exception {
+        Function function = new Function("getLogoPayAddress", Collections.emptyList(), Collections.singletonList(new TypeReference<Address>() {
+        }));
+        List<Type> someTypes = contractUtil.query(function);
+        return (Address) someTypes.get(0);
+    }
 }
