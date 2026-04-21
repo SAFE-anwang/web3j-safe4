@@ -21,14 +21,14 @@ public class SRC20BurnableTest {
     @BeforeEach
     public void init() {
         web3j = Web3j.build(new HttpService("http://127.0.0.1:8545"));
-        src20 = new SRC20Burnable(web3j, 6666666, "0x55a628d5c68adbcba3c5e1a6f6ad2f114f5a9b40");
+        src20 = new SRC20Burnable(web3j, 6666666, "0x5f7ee338f76ac35fb322bf9b10c83b4d67137abb");
     }
 
     @Test
     public void testDeploy() throws Exception {
         src20 = new SRC20Burnable(web3j, 6666666);
-        String name = "LMB101";
-        String symbol = "LMB101";
+        String name = "LMB201";
+        String symbol = "LMB201";
         BigInteger totalSupply = new BigInteger("10000000000000000000000000000"); // 1B
         List<String> ret = src20.deploy("0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010", name, symbol, totalSupply);
         System.out.println("contract address: " + ret.get(0));
@@ -59,9 +59,16 @@ public class SRC20BurnableTest {
 
     @Test
     public void testSetLogo() throws Exception {
-        byte[] logo = Files.readAllBytes(Paths.get("C:\\Users\\Administrator\\Desktop\\101.png"));
+        byte[] logo = Files.readAllBytes(Paths.get("C:\\Users\\Administrator\\Desktop\\100.png"));
         String txid = src20.setLogo("0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010", logo);
         System.out.println(txid);
         Assertions.assertTrue(txid.length() != 0);
+    }
+
+    @Test
+    public void testVersion() throws Exception {
+        String version = src20.version();
+        System.out.println("version: " + version);
+        Assertions.assertTrue(version.length() != 0);
     }
 }
