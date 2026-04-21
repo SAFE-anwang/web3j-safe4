@@ -22,14 +22,14 @@ public class SRC20Test {
     @BeforeEach
     public void init() {
         web3j = Web3j.build(new HttpService("http://127.0.0.1:8545"));
-        src20 = new SRC20(web3j, 6666666, "0x6b3914aF517A56D47A9997397325B7F37414A49c"); // SRC20: ABCD, contract-addr: 0x6b3914aF517A56D47A9997397325B7F37414A49c, total: 10000, creator: 0x4c207825db1c46Dd836123E58ecaE85de7025879
+        src20 = new SRC20(web3j, 6666666, "0x8be5e62ace72f08c1270127851683e964bd8d7f9"); // SRC20: ABCD, contract-addr: 0x8be5e62ace72f08c1270127851683e964bd8d7f9, total: 10000, creator: 0x4c207825db1c46Dd836123E58ecaE85de7025879
     }
 
     @Test
     public void testDeploy() throws Exception {
         src20 = new SRC20(web3j, 6666666);
-        String name = "LMB100";
-        String symbol = "LMB100";
+        String name = "LMB200";
+        String symbol = "LMB200";
         BigInteger totalSupply = new BigInteger("10000000000000000000000000000"); // 1B
         List<String> ret = src20.deploy("0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010", name, symbol, totalSupply); // 0xa5cec2b8cda30da3f3170b4505cb44226b6c9dd2: privateKey: 0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010
         System.out.println("contract address: " + ret.get(0));
@@ -117,7 +117,7 @@ public class SRC20Test {
 
     @Test
     public void testSetDescription() throws Exception {
-        String txid = src20.setDescription("0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010", "LMB100 is a test token");
+        String txid = src20.setDescription("0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010", "LMB200 is a test token");
         System.out.println(txid);
         Assertions.assertTrue(txid.length() != 0);
     }
@@ -176,5 +176,19 @@ public class SRC20Test {
         String version = src20.version();
         System.out.println("version: " + version);
         Assertions.assertTrue(version.length() != 0);
+    }
+
+    @Test
+    public void testGetLogoPayAmount() throws Exception {
+        BigInteger payAmount = src20.getLogoPayAmount();
+        System.out.println("logo-pay-amount: " + payAmount);
+        Assertions.assertEquals(0, payAmount.compareTo(new BigInteger("100000000000000000000")));
+    }
+
+    @Test
+    public void testGetLogoPayAddress() throws Exception {
+        Address payAddress = src20.getLogoPayAddress();
+        System.out.println("logo-pay-address: " + payAddress);
+        Assertions.assertNotEquals(payAddress, Address.DEFAULT);
     }
 }
