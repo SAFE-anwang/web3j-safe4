@@ -18,11 +18,12 @@ public class DAppInfo extends DynamicStruct {
     public String officialUrl;
     public String officialEmail;
     public Address officialAccount;
+    public String description;
     public String keyword;
     public BigInteger fraudNum;
     public Boolean isFrozen;
 
-    public DAppInfo(BigInteger id, String name, Address contractAddr, String runUrl, String gitUrl, String officialUrl, String officialEmail, Address officialAccount, String keyword, BigInteger fraudNum, Boolean isFrozen) {
+    public DAppInfo(BigInteger id, String name, Address contractAddr, String runUrl, String gitUrl, String officialUrl, String officialEmail, Address officialAccount, String description, String keyword, BigInteger fraudNum, Boolean isFrozen) {
         super(new Uint256(id),
                 new Utf8String(name),
                 contractAddr,
@@ -31,6 +32,7 @@ public class DAppInfo extends DynamicStruct {
                 new Utf8String(officialUrl),
                 new Utf8String(officialEmail),
                 officialAccount,
+                new Utf8String(description),
                 new Utf8String(keyword),
                 new Uint256(fraudNum),
                 new Bool(isFrozen));
@@ -42,6 +44,7 @@ public class DAppInfo extends DynamicStruct {
         this.officialUrl = officialUrl;
         this.officialEmail = officialEmail;
         this.officialAccount = officialAccount;
+        this.description = description;
         this.keyword = keyword;
         this.fraudNum = fraudNum;
         this.isFrozen = isFrozen;
@@ -55,10 +58,11 @@ public class DAppInfo extends DynamicStruct {
                     @Parameterized(type = Utf8String.class) Utf8String officialUrl,
                     @Parameterized(type = Utf8String.class) Utf8String officialEmail,
                     @Parameterized(type = Address.class) Address officialAccount,
+                    @Parameterized(type = Utf8String.class) Utf8String description,
                     @Parameterized(type = Utf8String.class) Utf8String keyword,
                     @Parameterized(type = Uint256.class) Uint256 fraudNum,
                     @Parameterized(type = Bool.class) Bool isFrozen) {
-        super(id, name, contractAddr, runUrl, gitUrl, officialUrl, officialEmail, officialAccount, keyword, fraudNum, isFrozen);
+        super(id, name, contractAddr, runUrl, gitUrl, officialUrl, officialEmail, officialAccount, description, keyword, fraudNum, isFrozen);
         this.id = id.getValue();
         this.name = name.getValue();
         this.contractAddr = contractAddr;
@@ -67,6 +71,7 @@ public class DAppInfo extends DynamicStruct {
         this.officialUrl = officialUrl.getValue();
         this.officialEmail = officialEmail.getValue();
         this.officialAccount = officialAccount;
+        this.description = description.getValue();
         this.keyword = keyword.getValue();
         this.fraudNum = fraudNum.getValue();
         this.isFrozen = isFrozen.getValue();
@@ -83,6 +88,7 @@ public class DAppInfo extends DynamicStruct {
                 ", officialUrl=" + officialUrl +
                 ", officialEmail=" + officialEmail +
                 ", officialAccount=" + officialAccount +
+                ", description=" + description +
                 ", keyword=" + keyword +
                 ", fraudNum=" + fraudNum +
                 ", isFrozen=" + isFrozen +

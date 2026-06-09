@@ -24,8 +24,8 @@ public class DAppManager {
         }
     }
 
-    public String register(String privateKey, String name, Address contractAddr, String runUrl, String gitUrl, String officialUrl, String officialEmail) throws Exception {
-        Function function = new Function("register", Arrays.asList(new Utf8String(name), contractAddr, new Utf8String(runUrl), new Utf8String(gitUrl), new Utf8String(officialUrl), new Utf8String(officialEmail)), Collections.emptyList());
+    public String register(String privateKey, String name, Address contractAddr, String runUrl, String description, String gitUrl, String officialUrl, String officialEmail) throws Exception {
+        Function function = new Function("register", Arrays.asList(new Utf8String(name), contractAddr, new Utf8String(runUrl), new Utf8String(description), new Utf8String(gitUrl), new Utf8String(officialUrl), new Utf8String(officialEmail)), Collections.emptyList());
         return contractUtil.call(privateKey, function);
     }
 
@@ -61,6 +61,11 @@ public class DAppManager {
 
     public String setOfficialAccouont(String privateKey, BigInteger id, Address account) throws Exception {
         Function function = new Function("setOfficialAccouont", Arrays.asList(new Uint256(id), account), Collections.emptyList());
+        return contractUtil.call(privateKey, function);
+    }
+
+    public String setDescription(String privateKey, BigInteger id, String description) throws Exception {
+        Function function = new Function("setDescription", Arrays.asList(new Uint256(id), new Utf8String(description)), Collections.emptyList());
         return contractUtil.call(privateKey, function);
     }
 
