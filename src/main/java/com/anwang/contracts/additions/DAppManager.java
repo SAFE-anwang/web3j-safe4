@@ -18,9 +18,9 @@ public class DAppManager {
 
     public DAppManager(Web3j web3j, long chainId) {
         if (chainId == 6666666) {
-            contractUtil = new ContractUtil(web3j, chainId, "0xD932a1638C8781171f7DE5b2F39E0EdEf93c5571");
+            contractUtil = new ContractUtil(web3j, chainId, "0x939Fb3Fe5E113647227110c222Eba933f3DB30e1");
         } else {
-            contractUtil = new ContractUtil(web3j, chainId, "0x5A9CDa846D12e047d87c06f633f2c4f344b33C97");
+            contractUtil = new ContractUtil(web3j, chainId, "");
         }
     }
 
