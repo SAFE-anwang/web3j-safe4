@@ -22,7 +22,7 @@ public class DAppManagerTest {
 
     @BeforeEach
     public void init() {
-        web3j = Web3j.build(new HttpService("http://127.0.0.1:40405"));
+        web3j = Web3j.build(new HttpService("http://127.0.0.1:8545"));
         safe4 = new Safe4(web3j, 6666666);
     }
 
@@ -41,7 +41,7 @@ public class DAppManagerTest {
     @Test
     public void testSetName() throws Exception {
         String name = "test_1";
-        String txid = safe4.dapp.setName("0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010", BigInteger.valueOf(2), name);
+        String txid = safe4.dapp.setName("0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010", BigInteger.valueOf(1), name);
         System.out.println(txid);
         Assertions.assertTrue((txid.length() > 0));
     }
@@ -49,7 +49,7 @@ public class DAppManagerTest {
     @Test
     public void testSetContractAddr() throws Exception {
         Address contractAddr = new Address("0x978926313e56dc33ec7d9137d8910ba7c822f5a8");
-        String txid = safe4.dapp.setContractAddr("0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010", BigInteger.valueOf(2), contractAddr);
+        String txid = safe4.dapp.setContractAddr("0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010", BigInteger.valueOf(1), contractAddr);
         System.out.println(txid);
         Assertions.assertTrue((txid.length() > 0));
     }
@@ -57,7 +57,7 @@ public class DAppManagerTest {
     @Test
     public void testSetRunUrl() throws Exception {
         String runUrl = "https://test_1.dapp.com";
-        String txid = safe4.dapp.setRunUrl("0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010", BigInteger.valueOf(2), runUrl);
+        String txid = safe4.dapp.setRunUrl("0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010", BigInteger.valueOf(1), runUrl);
         System.out.println(txid);
         Assertions.assertTrue((txid.length() > 0));
     }
@@ -65,7 +65,7 @@ public class DAppManagerTest {
     @Test
     public void testSetGitUrl() throws Exception {
         String gitUrl = "https://www.github.com/dapp/test_1";
-        String txid = safe4.dapp.setGitUrl("0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010", BigInteger.valueOf(2), gitUrl);
+        String txid = safe4.dapp.setGitUrl("0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010", BigInteger.valueOf(1), gitUrl);
         System.out.println(txid);
         Assertions.assertTrue((txid.length() > 0));
     }
@@ -73,7 +73,7 @@ public class DAppManagerTest {
     @Test
     public void testSetOfficialUrl() throws Exception {
         String officialUrl = "https://www.dapp.com";
-        String txid = safe4.dapp.setOfficialUrl("0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010", BigInteger.valueOf(2), officialUrl);
+        String txid = safe4.dapp.setOfficialUrl("0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010", BigInteger.valueOf(1), officialUrl);
         System.out.println(txid);
         Assertions.assertTrue((txid.length() > 0));
     }
@@ -81,7 +81,7 @@ public class DAppManagerTest {
     @Test
     public void testSetOfficialEmail() throws Exception {
         String officialEmail = "test_1@dapp.com";
-        String txid = safe4.dapp.setOfficialEmail("0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010", BigInteger.valueOf(2), officialEmail);
+        String txid = safe4.dapp.setOfficialEmail("0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010", BigInteger.valueOf(1), officialEmail);
         System.out.println(txid);
         Assertions.assertTrue((txid.length() > 0));
     }
@@ -89,7 +89,7 @@ public class DAppManagerTest {
     @Test
     public void testSetOfficialAccount() throws Exception {
         Address account = new Address("0xa5CEc2B8CdA30dA3F3170b4505CB44226b6c9Dd2");
-        String txid = safe4.dapp.setOfficialAccount("0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010", BigInteger.valueOf(2), account);
+        String txid = safe4.dapp.setOfficialAccount("0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010", BigInteger.valueOf(1), account);
         System.out.println(txid);
         Assertions.assertTrue((txid.length() > 0));
     }
@@ -97,7 +97,7 @@ public class DAppManagerTest {
     @Test
     public void testSetDescription() throws Exception {
         String description = "This is a dapp for testing!!!";
-        String txid = safe4.dapp.setDescription("0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010", BigInteger.valueOf(2), description);
+        String txid = safe4.dapp.setDescription("0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010", BigInteger.valueOf(1), description);
         System.out.println(txid);
         Assertions.assertTrue((txid.length() > 0));
     }
@@ -105,7 +105,7 @@ public class DAppManagerTest {
     @Test
     public void testSetKeyword() throws Exception {
         String keyword = "test|game";
-        String txid = safe4.dapp.setKeyword("0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010", BigInteger.valueOf(2), keyword);
+        String txid = safe4.dapp.setKeyword("0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010", BigInteger.valueOf(1), keyword);
         System.out.println(txid);
         Assertions.assertTrue((txid.length() > 0));
     }
@@ -113,28 +113,28 @@ public class DAppManagerTest {
     @Test
     public void testSetLogo() throws Exception {
         byte[] logo = Files.readAllBytes(Paths.get("C:\\Users\\Administrator\\Desktop\\100.png"));
-        String txid = safe4.dapp.setLogo("0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010", BigInteger.valueOf(2), logo);
+        String txid = safe4.dapp.setLogo("0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010", BigInteger.valueOf(1), logo);
         System.out.println(txid);
         Assertions.assertTrue(txid.length() != 0);
     }
 
     @Test
     public void testRemove() throws Exception {
-        String txid = safe4.dapp.remove("0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010", BigInteger.valueOf(2));
+        String txid = safe4.dapp.remove("0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010", BigInteger.valueOf(1));
         System.out.println(txid);
         Assertions.assertTrue(txid.length() != 0);
     }
 
     @Test
     public void testMarkFraud() throws Exception {
-        String txid = safe4.dapp.markFraud("0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010", BigInteger.valueOf(2), true);
+        String txid = safe4.dapp.markFraud("0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010", BigInteger.valueOf(1), true);
         System.out.println(txid);
         Assertions.assertTrue((txid.length() > 0));
     }
 
     @Test
     public void testGetInfo() throws Exception {
-        DAppInfo info = safe4.dapp.getInfo(BigInteger.valueOf(2));
+        DAppInfo info = safe4.dapp.getInfo(BigInteger.valueOf(1));
         System.out.println(info.toString());
         Assertions.assertTrue(info.id.compareTo(BigInteger.ZERO) > 0);
     }
@@ -162,7 +162,7 @@ public class DAppManagerTest {
 
     @Test
     public void testGetLogo() throws Exception {
-        byte[] logo = safe4.dapp.getLogo(BigInteger.valueOf(2));
+        byte[] logo = safe4.dapp.getLogo(BigInteger.valueOf(1));
         System.out.println("logo: " + Hex.toHexString(logo));
         Assertions.assertTrue(logo.length != 0);
     }
@@ -197,7 +197,7 @@ public class DAppManagerTest {
 
     @Test
     public void testExistID() throws Exception {
-        Boolean flag = safe4.dapp.existID(BigInteger.valueOf(2));
+        Boolean flag = safe4.dapp.existID(BigInteger.valueOf(1));
         System.out.println(flag);
         Assertions.assertTrue(flag);
     }
@@ -225,14 +225,14 @@ public class DAppManagerTest {
 
     @Test
     public void testIsMarkedFraud() throws Exception {
-        Boolean flag = safe4.dapp.isMarkedFraud(new Address("0xa5cec2b8cda30da3f3170b4505cb44226b6c9dd2"), BigInteger.valueOf(2));
+        Boolean flag = safe4.dapp.isMarkedFraud(new Address("0xa5cec2b8cda30da3f3170b4505cb44226b6c9dd2"), BigInteger.valueOf(1));
         System.out.println(flag);
         Assertions.assertTrue(flag);
     }
 
     @Test
     public void testIsFrozen() throws Exception {
-        Boolean flag = safe4.dapp.isFrozen(BigInteger.valueOf(2));
+        Boolean flag = safe4.dapp.isFrozen(BigInteger.valueOf(1));
         System.out.println(flag);
         Assertions.assertTrue(flag);
     }
