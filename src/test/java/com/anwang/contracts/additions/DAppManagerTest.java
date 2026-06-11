@@ -89,7 +89,7 @@ public class DAppManagerTest {
     @Test
     public void testSetOfficialAccount() throws Exception {
         Address account = new Address("0xa5CEc2B8CdA30dA3F3170b4505CB44226b6c9Dd2");
-        String txid = safe4.dapp.setOfficialAccouont("0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010", BigInteger.valueOf(2), account);
+        String txid = safe4.dapp.setOfficialAccount("0x7b281a9ba16001feb62a5929526ef8f69d6550c6acdc3f0579c69199c0b6a010", BigInteger.valueOf(2), account);
         System.out.println(txid);
         Assertions.assertTrue((txid.length() > 0));
     }

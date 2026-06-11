@@ -18,9 +18,9 @@ public class DAppManager {
 
     public DAppManager(Web3j web3j, long chainId) {
         if (chainId == 6666666) {
-            contractUtil = new ContractUtil(web3j, chainId, "0x2A861dF20bfaF45e9Ad2f299669143e328998516");
+            contractUtil = new ContractUtil(web3j, chainId, "0xA144cFd7A71fc7559Fe5b5E71593F0b61CDcC26E");
         } else {
-            contractUtil = new ContractUtil(web3j, chainId, "0x21C755C14a7AE0af06bb9Fafec8268F782402eF6");
+            contractUtil = new ContractUtil(web3j, chainId, "0x5F215D17d59A1fE3cb8798c6305a948DDFE10160");
         }
     }
 
@@ -59,8 +59,8 @@ public class DAppManager {
         return contractUtil.call(privateKey, function);
     }
 
-    public String setOfficialAccouont(String privateKey, BigInteger id, Address account) throws Exception {
-        Function function = new Function("setOfficialAccouont", Arrays.asList(new Uint256(id), account), Collections.emptyList());
+    public String setOfficialAccount(String privateKey, BigInteger id, Address account) throws Exception {
+        Function function = new Function("setOfficialAccount", Arrays.asList(new Uint256(id), account), Collections.emptyList());
         return contractUtil.call(privateKey, function);
     }
 
