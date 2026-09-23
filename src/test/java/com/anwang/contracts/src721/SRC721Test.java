@@ -1,6 +1,7 @@
 package com.anwang.contracts.src721;
 
 import com.anwang.src721.SRC721;
+import com.anwang.types.src721.AllowInfo;
 import org.bouncycastle.util.encoders.Hex;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -205,6 +206,20 @@ public class SRC721Test {
         BigInteger tokenId = src721.tokenOfOwnerByIndex(new Address("0xa5cec2b8cda30da3f3170b4505cb44226b6c9dd2"), BigInteger.TEN);
         System.out.println("tokenId: " + tokenId);
         Assertions.assertEquals(tokenId.compareTo(BigInteger.TEN), 0);
+    }
+
+    @Test
+    public void testGetAllowAddrNum() throws Exception {
+        BigInteger num = src721.getAllowAddrNum();
+        System.out.println("allow address num: " + num);
+        Assertions.assertTrue(num.intValue() > 0);
+    }
+
+    @Test
+    public void testGetAllowAddrs() throws Exception {
+        AllowInfo info = src721.getAllowAddrs(BigInteger.ZERO, BigInteger.valueOf(100));
+        System.out.println("allow address info: " + info);
+        Assertions.assertTrue(info.addrs.size() > 0);
     }
 
     @Test
